@@ -1,23 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Header from "./components/Header/Header";
+import Posts from "./components/Posts/Posts";
+import api from "./utils/Api";
 
 function App() {
+  const [posts, setPosts] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
+  const [searchActive, setSearchActive] = useState(false)
+
+  useEffect(() => {
+    api.getAppInfo().then(([postsData, currentUserData]) => {
+      setPosts(postsData);
+      setCurrentUser(currentUserData);
+    });
+    console.log(">>render<<")
+  }, []);
+
+  function handlePostLike(post) {
+    const isLiked = post.likes.some((el) => el === currentUser._id);
+    isLiked
+      ? api.deleteLikePost(post._id).then((newPost) => {
+          const newPosts = posts.map((curPost) =>
+            curPost._id === newPost._id ? newPost : curPost
+          );
+          setPosts([...newPosts]);
+        })
+      : api.getLikePost(post._id).then((newPost) => {
+          const newPosts = posts.map((curPost) =>
+            curPost._id === newPost._id ? newPost : curPost
+          );
+          setPosts([...newPosts]);
+        });
+  }
+
+  function handlePostDelete(post) {
+    const isAuthor = post.author._id === currentUser._id ? true : false;
+    isAuthor ? api.deletePost(post._id).then((delitingPost) => {
+      const newPosts = posts.filter((curPost) => curPost._id !== delitingPost._id)
+      setPosts([...newPosts]);
+    }) : alert("Вы не можете удалить чужой пост")
+  } 
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header currentUser={currentUser} />
+      <Posts
+        posts={posts}
+        currentUser={currentUser}
+        onPostLike={handlePostLike}
+        active={searchActive}
+        setActive={setSearchActive}
+        postDelete={handlePostDelete}
+      />
     </div>
   );
 }

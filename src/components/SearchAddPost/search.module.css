@@ -1,0 +1,46 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.input {
+
+    padding: 1px 15px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid rgb(0, 0, 0, 0.5);
+    width: .1%;
+    transform: scale(0);
+    transition: all .4s ease-out;
+}
+
+.input.active {
+    width: 40%;
+    transform: scale(1);
+}
+
+.input.active:focus {
+    box-shadow: 0 5px 10px -5px black;
+}
+
+
+.searchIcon {
+    padding: 2px;
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    border-radius: 20px;
+}
+
+.searchIcon:hover {
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    background-color: rgba(90, 90, 90, 0.1);
+    transition: all .4s;
+}
+
+.btn {
+    float:right;
+    margin: 5px 0;
+}
