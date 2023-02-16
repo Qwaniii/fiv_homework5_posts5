@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
+import Popup from "./components/Popup/Popup";
 import Posts from "./components/Posts/Posts";
 import useDebounce from "./hooks/useDebounse";
 import api from "./utils/Api";
@@ -11,9 +12,9 @@ function App() {
   const [searchActive, setSearchActive] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const debounceValue = useDebounce(searchQuery, 500);
+  const [modalActive, setModalActive] = useState(false);
 
-  console.log(searchQuery);
+  const debounceValue = useDebounce(searchQuery, 500);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,7 +28,6 @@ function App() {
       setPosts(postsData);
       setCurrentUser(currentUserData);
     });
-    console.log(">>render<<");
   }, []);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header currentUser={currentUser} />
+      <Header currentUser={currentUser} popupEdit={modalActive} setPopupEdit={setModalActive}/>
       <Posts
         posts={posts}
         currentUser={currentUser}
@@ -82,6 +82,9 @@ function App() {
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
       />
+      <Popup popup={modalActive} setPopup={setModalActive}>
+        <h1>Изменение информации о пользователе</h1>
+      </Popup>
     </div>
   );
 }

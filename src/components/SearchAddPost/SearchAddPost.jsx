@@ -39,7 +39,7 @@ export default function SearchAddPost({
             className={cn(s.input, { [s.active]: active })}
             type="text"
             placeholder="Поиск"
-            value={searchQuery}
+            value={active ? searchQuery : ""}
             onChange={(e) => setSearchQuery(e.target.value)}
           ></input>
           {active && (
@@ -60,7 +60,7 @@ export default function SearchAddPost({
           )}
         </Typography>
         <div className={s.btn}>
-          <Button size="large">Новый пост</Button>
+          <Button size="small">Новый пост</Button>
         </div>
         {/* <Typography variant="h3" component="div">
         

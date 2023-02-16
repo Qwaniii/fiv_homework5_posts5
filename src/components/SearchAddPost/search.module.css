@@ -42,13 +42,15 @@
 
 .btn {
     text-align: end;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 @media (max-width: 750px) {
     .search {
+        position: relative;
         display: flex;
         flex-direction: column;
+        height: 100px;
     }
 
     .wrapper {
@@ -59,6 +61,7 @@
 
     .title {
         padding: 10px 10px;
+        font-size: 3.5vw;
     }
 
     .input {
@@ -80,8 +83,10 @@
     }
 
     .btn {
+        position: absolute;
+        left: 23px;
+        top: 78px;
         padding: 0;
         text-align: start;
-
     }
 }
