@@ -12,3 +12,25 @@
     /* justify-content: space-between; */
 }
 
+@media (max-width: 1050px) {
+    .container {
+        padding: 130px 30px;
+    }
+
+    .inner {
+        justify-content: start;
+        gap: 2%;
+    }
+}
+
+@media (max-width: 750px) {
+    .container {
+        padding: 10px 80px;
+    }
+
+    .inner {
+        flex-direction: column;
+        align-items: center;
+    }
+
+}

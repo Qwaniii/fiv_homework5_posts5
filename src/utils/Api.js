@@ -60,6 +60,14 @@ class Api {
             }
         }).then(onResponce);
     }
+
+    search(searchQuery) {
+        return fetch(`${this._dataUrl}/posts/search/?query=${searchQuery}`, {
+            headers: {
+                authorization: this._token,
+            }
+        }).then(onResponce);
+    }
 }
 
 const config = {

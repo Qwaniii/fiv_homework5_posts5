@@ -11,20 +11,20 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-export default function DelBtn({ postDelete, user, post }) {
+export default function DelBtn({ postDelete, user, post, anchorEl , handleClick, handleClose }) {
 
   function deletePost() {
     postDelete(post);
   }
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   return (
     <div>

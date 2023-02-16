@@ -41,6 +41,47 @@
 }
 
 .btn {
-    float:right;
-    margin: 5px 0;
+    text-align: end;
+    padding-top: 15px;
+}
+
+@media (max-width: 750px) {
+    .search {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wrapper {
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title {
+        padding: 10px 10px;
+    }
+
+    .input {
+        position: absolute;
+        right: 0px;
+        top: 64px;
+    }
+
+    .searchIcon {
+        position: absolute;
+        right: 0px;
+        top: 63px;
+        border-radius: 20px;
+    }
+
+    .input.active {
+        width: 45%;
+        min-height: 22px;
+    }
+
+    .btn {
+        padding: 0;
+        text-align: start;
+
+    }
 }

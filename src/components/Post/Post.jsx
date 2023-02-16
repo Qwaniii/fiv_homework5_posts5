@@ -9,7 +9,7 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -30,7 +30,7 @@ import DelBtn from "../DelBtn/DelBtn";
 //   }),
 // }));
 
-export default function Post({ post, currentUser, onPostLike, postDelete }) {
+export default function Post({ post, currentUser, onPostLike, postDelete, anchorEl , handleClick, handleClose }) {
   const isLike = post.likes.some((id) => id === currentUser._id);
   function handleLikeClick() {
     onPostLike(post);
@@ -46,32 +46,34 @@ export default function Post({ post, currentUser, onPostLike, postDelete }) {
     <Card className={s.post}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar sx={{ bgcolor: grey[100] }} aria-label="recipe">
             {post.author.avatar && (
-              <img src={post.author.avatar} className={s.image}></img>
+              <img src={post.author.avatar} className={s.avatar}></img>
             )}
           </Avatar>
         }
         action={
           <IconButton aria-label="settings">
-            <DelBtn postDelete={postDelete} user={currentUser} post={post}/>
+            <DelBtn postDelete={postDelete} user={currentUser} post={post} anchorEl={anchorEl} handleClick={handleClick} handleClose={handleClose}/>
           </IconButton>
         }
         title={post.author.name}
         subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
       />
       <CardMedia
+        className={s.image}
         component="img"
         height="194"
         image={post.image}
         alt="Paella dish"
       />
-      <CardContent>
+      <CardContent className={s.text} >
         <Typography variant="body2" color="text.secondary">
           {post.title}
         </Typography>
         <Typography variant="body2" color="text.primary">
-          {post.text.slice(0, 40)}...
+          {post.text.slice(0, 200)}{post.text.length > 200 ? "..." : ""}
+          {/* {post.text} */}
         </Typography>
       </CardContent>
       <CardActions disableSpacing className={s.cardActions}>

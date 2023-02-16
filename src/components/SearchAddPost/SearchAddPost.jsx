@@ -1,14 +1,14 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import s from "./search.module.css"
-import cn from "classnames"
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import s from "./search.module.css";
+import cn from "classnames";
 
 // const bull = (
 //   <Box
@@ -19,15 +19,49 @@ import cn from "classnames"
 //   </Box>
 // );
 
-export default function SearchAddPost({ active, setActive }) {
+export default function SearchAddPost({
+  active,
+  setActive,
+  setSearchQuery,
+  searchQuery,
+}) {
   return (
     <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography className={s.wrapper} sx={{ fontSize: 26 }} color="text.secondary" gutterBottom>
-          Социально-новостные посты
-          <input className={cn(s.input, {[s.active]: active,})} type="text" placeholder='Поиск'></input>{active && <CloseOutlinedIcon className={s.searchIcon} onClick={() => setActive(false)}/>}{!active && <SearchOutlinedIcon className={s.searchIcon} onClick={() => setActive(true)}/>}
+      <CardContent className={s.search}>
+        <Typography
+          className={s.wrapper}
+          sx={{ fontSize: 26 }}
+          color="text.secondary"
+          gutterBottom
+        >
+          <span className={s.title}>Социально-новостные посты</span>
+          <input
+            className={cn(s.input, { [s.active]: active })}
+            type="text"
+            placeholder="Поиск"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          ></input>
+          {active && (
+            <CloseOutlinedIcon
+              className={s.searchIcon}
+              onClick={(e) => {
+                setActive(false);
+                e.preventDefault();
+                setSearchQuery("");
+              }}
+            />
+          )}
+          {!active && (
+            <SearchOutlinedIcon
+              className={s.searchIcon}
+              onClick={() => setActive(true)}
+            />
+          )}
         </Typography>
-        <Button className={s.btn} size="large">Новый пост</Button>
+        <div className={s.btn}>
+          <Button size="large">Новый пост</Button>
+        </div>
         {/* <Typography variant="h3" component="div">
         
         </Typography> */}

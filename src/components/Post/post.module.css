@@ -5,20 +5,21 @@
     padding-bottom: 50px;
 }
 
-.image {
-    width: 150%;
+.avatar {
+    height: 100%;
 }
 
 .icon {
     pointer-events: none;
 }
 
-
+.image {
+    background-size: contain;
+}
 
 .favorite {
     color: red;
 }
-
 
 .cardActions {
     position: absolute;
@@ -32,4 +33,33 @@
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+
+
+@media (max-width: 1050px) {
+    .post {
+        width: 49%;
+        min-width: none;
+        margin-bottom: 20px;
+    }
+
+    .image {
+
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 750px) {
+    .post {
+        width: 100%;
+        min-height: 450px;
+    }
+
+    .image {
+        height: auto;
+    }
+
+
 }

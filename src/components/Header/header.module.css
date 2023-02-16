@@ -58,3 +58,38 @@ a {
     text-decoration: none;
     
 }
+
+@media (max-width: 1100px) {
+    .container {
+        padding: 30px 60px;
+    }
+}
+
+@media (max-width: 750px) {
+    .header {
+        position: static;
+
+    }
+
+    .container {
+        padding: 5px 0;
+    }
+
+    .inner {
+        flex-direction: column;
+    }
+
+    .info {
+        margin-top: 10px;
+    }
+
+    .info span {
+        display: inline;
+        padding: 0 5px;
+    }
+
+    .info img {
+        display: none;
+    }
+
+}
