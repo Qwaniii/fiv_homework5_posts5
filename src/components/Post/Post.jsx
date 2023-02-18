@@ -18,6 +18,7 @@ import s from "./post.module.css";
 import Tags from "../Tags/Tags";
 import cn from "classnames";
 import DelBtn from "../DelBtn/DelBtn";
+import { Link } from "react-router-dom";
 
 // const ExpandMore = styled((props) => {
 //   const { expand, ...other } = props;
@@ -40,6 +41,7 @@ export default function Post({ post, currentUser, onPostLike, postDelete, anchor
   //   const handleExpandClick = () => {
   //     setExpanded(!expanded);
   //   };
+  const created = new Date(post.created_at)
 
   return (
     // <Card sx={{ width: 250 }}>
@@ -58,24 +60,27 @@ export default function Post({ post, currentUser, onPostLike, postDelete, anchor
           </IconButton>
         }
         title={post.author.name}
-        subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
+        // subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
+        subheader={created.toLocaleDateString('ru-RU', {month: "2-digit", day: "numeric", year: "numeric"})}
       />
-      <CardMedia
-        className={s.image}
-        component="img"
-        height="194"
-        image={post.image}
-        alt="Paella dish"
-      />
-      <CardContent className={s.text} >
-        <Typography variant="body2" color="text.secondary">
-          {post.title}
-        </Typography>
-        <Typography variant="body2" color="text.primary">
-          {post.text.slice(0, 200)}{post.text.length > 200 ? "..." : ""}
-          {/* {post.text} */}
-        </Typography>
-      </CardContent>
+      <Link to={`post/${post._id }`}>
+        <CardMedia
+          className={s.image}
+          component="img"
+          height="194"
+          image={post.image}
+          alt={post.title}
+        />
+        <CardContent className={s.text} >
+          <Typography variant="body2" color="text.secondary">
+            {post.title}
+          </Typography>
+          <Typography variant="body2" color="text.primary">
+            {post.text.slice(0, 200)}{post.text.length > 200 ? "..." : ""}
+            {/* {post.text} */}
+          </Typography>
+        </CardContent>
+      </Link>
       <CardActions disableSpacing className={s.cardActions}>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon

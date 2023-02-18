@@ -11,8 +11,8 @@ class Api {
 
     //Получение постов
 
-    getPostsList() {
-        return fetch(`${this._dataUrl}/posts`, {
+    getPostsList(page = 1) {
+        return fetch(`${this._dataUrl}/posts?page=${page}`, {
             headers: {
                 authorization: this._token,
             },
@@ -29,6 +29,15 @@ class Api {
 
     getAppInfo() {
         return Promise.all([this.getPostsList(), this.getUserInfo()]);
+    }
+
+    getPostById(postId) {
+        return fetch(`${this._dataUrl}/posts/${postId}`, {
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            }
+        }).then(onResponce);
     }
 
     getLikePost(postID) {
