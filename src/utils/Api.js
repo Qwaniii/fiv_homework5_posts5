@@ -60,6 +60,16 @@ class Api {
         }).then(onResponce);
     }
 
+    changeLikePostStatus(postId, like) {
+		return fetch(`${this._dataUrl}/posts/likes/${postId}`, {
+			method: like ? "DELETE" : "PUT",
+			headers: {
+				authorization: this._token,
+				"Content-Type": "application/json",
+			},
+		}).then(onResponce);
+	}
+
     deletePost(postID) {
         return fetch(`${this._dataUrl}/posts/${postID}`, {
             method: "DELETE",

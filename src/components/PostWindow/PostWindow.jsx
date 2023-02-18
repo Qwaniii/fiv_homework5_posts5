@@ -10,21 +10,25 @@ import Avatar from "@mui/material/Avatar";
 import { IconButton } from "@mui/material";
 import cn from "classnames"
 
-export default function PostWindow({ id, currentUser, onPostLike, posts, setPosts }) {
+export default function PostWindow({ id, currentUser, posts, setPosts }) {
 
     const [postWindow, setPostWindow] = useState({});
+
     const isLike = postWindow?.likes?.some((id) => id === currentUser._id);
+
     function handleLikeClick() {
-        onPostLike(postWindow);
-        console.log(posts)
-      }
+        api.changeLikePostStatus(postWindow._id, isLike).then((newPost) => {
+        setPostWindow(newPost)
+        const newPosts = posts.map((curPost) => curPost._id === newPost._id ? newPost : curPost)
+        setPosts(newPosts)
+        })
+    }
 
     useEffect(() => {
         api.getPostById(id).then((data) => setPostWindow(data));
     }, [id]);
 
     const date = new Date(postWindow.created_at)
-    console.log(postWindow)
 
     return (
         <div className={s.postwindow}>
@@ -71,7 +75,7 @@ export default function PostWindow({ id, currentUser, onPostLike, posts, setPost
                                         {postWindow?.likes?.length > 0 ? <span className={s.numLike}>{postWindow.likes.length}</span> : ""}
                                     </IconButton>
                                 </div>
-                                <div className={s.tag}>{postWindow?.tags?.map((tag, index) => <Tags tag={tag} key={index}/>)}</div>
+                                <div className={s.tag}>{postWindow.tags && postWindow?.tags?.map((tag, index) => <Tags tag={tag} key={index}/>)}</div>
                             </div>
                         </div>
                     </div>
