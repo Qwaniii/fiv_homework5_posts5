@@ -1,5 +1,6 @@
 import React from 'react'
 import Posts from '../components/Posts/Posts'
+import Spinner from '../components/Spinner/Spinner'
 
 export default function MainPage({
     posts,
@@ -12,7 +13,9 @@ export default function MainPage({
     handleClick,
     handleClose,
     setSearchQuery,
-    searchQuery
+    searchQuery,
+    isLoading,
+    setIsLoading
 }) {
   return (
     <div>
@@ -28,6 +31,8 @@ export default function MainPage({
         handleClose={handleClose}
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
         />
     </div>
   )

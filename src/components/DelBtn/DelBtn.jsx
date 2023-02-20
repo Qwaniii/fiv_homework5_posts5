@@ -50,6 +50,7 @@ export default function DelBtn({ postDelete, user, post, anchorEl , handleClick,
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
             width: '20ch',
+            boxShadow: '0px 5px 8px -2px rgb(0 0 0 / 20%)'
           },
         }}
       >

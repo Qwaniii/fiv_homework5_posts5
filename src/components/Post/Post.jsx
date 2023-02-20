@@ -31,75 +31,104 @@ import { Link } from "react-router-dom";
 //   }),
 // }));
 
-export default function Post({ post, currentUser, onPostLike, postDelete, anchorEl , handleClick, handleClose }) {
-  const isLike = post.likes.some((id) => id === currentUser._id);
-  function handleLikeClick() {
-    onPostLike(post);
-  }
-  //   const [expanded, setExpanded] = React.useState(false);
+export default function Post({
+    post,
+    currentUser,
+    onPostLike,
+    postDelete,
+    anchorEl,
+    handleClick,
+    handleClose,
+    setIsLoading
+}) {
+    const isLike = post.likes.some((id) => id === currentUser._id);
+    function handleLikeClick() {
+        onPostLike(post);
+    }
+    //   const [expanded, setExpanded] = React.useState(false);
 
-  //   const handleExpandClick = () => {
-  //     setExpanded(!expanded);
-  //   };
-  const created = new Date(post.created_at)
+    //   const handleExpandClick = () => {
+    //     setExpanded(!expanded);
+    //   };
+    const created = new Date(post.created_at);
 
-  return (
-    // <Card sx={{ width: 250 }}>
-    <Card className={s.post}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: grey[100] }} aria-label="recipe">
-            {post.author.avatar && (
-              <img src={post.author.avatar} className={s.avatar}></img>
-            )}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <DelBtn postDelete={postDelete} user={currentUser} post={post} anchorEl={anchorEl} handleClick={handleClick} handleClose={handleClose}/>
-          </IconButton>
-        }
-        title={post.author.name}
-        // subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
-        subheader={created.toLocaleDateString('ru-RU', {month: "2-digit", day: "numeric", year: "numeric"})}
-      />
-      <Link to={`post/${post._id }`}>
-        <CardMedia
-          className={s.image}
-          component="img"
-          height="194"
-          image={post.image}
-          alt={post.title}
-        />
-        <CardContent className={s.text} >
-          <Typography variant="body2" color="text.secondary">
-            {post.title}
-          </Typography>
-          <Typography variant="body2" color="text.primary">
-            {post.text.slice(0, 200)}{post.text.length > 200 ? "..." : ""}
-            {/* {post.text} */}
-          </Typography>
-        </CardContent>
-      </Link>
-      <CardActions disableSpacing className={s.cardActions}>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon
-            onClick={handleLikeClick}
-            className={cn({ [s.favorite]: isLike })}
-          />
-          {post.likes.length > 0 ? <span className={s.numbLike}>{post.likes.length}</span> : ""}
-          
-        </IconButton>
-        <IconButton aria-label="share" className={s.icon}>
-          {/* <ShareIcon /> */}
-          {post.tags.length < 3 &&
-            post.tags.map((tag, index) => <Tags tag={tag} key={index} />)}
-          {post.tags.length >= 3 &&
-            post.tags
-              .map((tag, index) => <Tags tag={tag} key={index} />)
-              .slice(0, 3)}
-        </IconButton>
-        {/* <ExpandMore
+    return (
+        // <Card sx={{ width: 250 }}>
+        <Card className={s.post}>
+            <CardHeader
+                avatar={
+                    <Avatar sx={{ bgcolor: grey[100] }} aria-label="recipe">
+                        {post.author.avatar && (
+                            <img
+                                src={post.author.avatar}
+                                className={s.avatar}
+                            ></img>
+                        )}
+                    </Avatar>
+                }
+                action={
+                    <IconButton aria-label="settings">
+                        <DelBtn
+                            postDelete={postDelete}
+                            user={currentUser}
+                            post={post}
+                            anchorEl={anchorEl}
+                            handleClick={handleClick}
+                            handleClose={handleClose}
+                        />
+                    </IconButton>
+                }
+                title={post.author.name}
+                // subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
+                subheader={created.toLocaleDateString("ru-RU", {
+                    month: "2-digit",
+                    day: "numeric",
+                    year: "numeric",
+                })}
+            />
+            <Link to={`post/${post._id}`} onClick={() => setIsLoading(false)}>
+                <CardMedia
+                    className={s.image}
+                    component="img"
+                    height="194"
+                    image={post.image}
+                    alt={post.title}
+                />
+                <CardContent className={s.text}>
+                    <Typography variant="body2" color="text.secondary">
+                        {post.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.primary">
+                        {post.text.slice(0, 200)}
+                        {post.text.length > 200 ? "..." : ""}
+                        {/* {post.text} */}
+                    </Typography>
+                </CardContent>
+            </Link>
+            <CardActions disableSpacing className={s.cardActions}>
+                <IconButton aria-label="add to favorites">
+                    <FavoriteIcon
+                        onClick={handleLikeClick}
+                        className={cn({ [s.favorite]: isLike })}
+                    />
+                    {post.likes.length > 0 ? (
+                        <span className={s.numbLike}>{post.likes.length}</span>
+                    ) : (
+                        ""
+                    )}
+                </IconButton>
+                <IconButton aria-label="share" className={s.icon}>
+                    {/* <ShareIcon /> */}
+                    {post.tags.length < 3 &&
+                        post.tags.map((tag, index) => (
+                            <Tags tag={tag} key={index} />
+                        ))}
+                    {post.tags.length >= 3 &&
+                        post.tags
+                            .map((tag, index) => <Tags tag={tag} key={index} />)
+                            .slice(0, 3)}
+                </IconButton>
+                {/* <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -107,8 +136,8 @@ export default function Post({ post, currentUser, onPostLike, postDelete, anchor
         >
           <ExpandMoreIcon />
         </ExpandMore> */}
-      </CardActions>
-      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
+            </CardActions>
+            {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
@@ -137,6 +166,6 @@ export default function Post({ post, currentUser, onPostLike, postDelete, anchor
           </Typography>
         </CardContent>
       </Collapse> */}
-    </Card>
-  );
+        </Card>
+    );
 }

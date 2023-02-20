@@ -1,3 +1,4 @@
+import { Switch } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -7,6 +8,7 @@ import Posts from "./components/Posts/Posts";
 import PostWindow from "./components/PostWindow/PostWindow";
 import useDebounce from "./hooks/useDebounse";
 import MainPage from "./Page/MainPage";
+import NotFoundPage from "./Page/NotFoundPage";
 import PostPage from "./Page/PostPage";
 import api from "./utils/Api";
 
@@ -18,6 +20,9 @@ function App() {
     const [searchQuery, setSearchQuery] = useState("");
     const [modalActive, setModalActive] = useState(false);
     const [postWindow, setPostWindow] = useState({});
+    const [scrollTop, setScrollTop] = useState(0);
+    const [isLoading, setIsLoading] = useState(false)
+
 
     const debounceValue = useDebounce(searchQuery, 500);
 
@@ -32,6 +37,7 @@ function App() {
         api.getAppInfo().then(([postsData, currentUserData]) => {
             setPosts(postsData);
             setCurrentUser(currentUserData);
+            setIsLoading(true)
         });
     }, []);
 
@@ -40,6 +46,18 @@ function App() {
             setPosts(data);
         });
     }, [debounceValue]);
+
+    useEffect(() => {
+        const handleScroll = event => {
+          setScrollTop(window.scrollY);
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+    
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
 
     function handlePostLike(post) {
         const isLiked = post.likes.some((el) => el === currentUser._id);
@@ -77,10 +95,11 @@ function App() {
                 currentUser={currentUser}
                 popupEdit={modalActive}
                 setPopupEdit={setModalActive}
+                scrollTop={scrollTop}
             />
             <Routes>
                 <Route
-                    path=""
+                    path="/"
                     element={
                         <MainPage
                             posts={posts}
@@ -94,6 +113,8 @@ function App() {
                             handleClose={handleClose}
                             setSearchQuery={setSearchQuery}
                             searchQuery={searchQuery}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
                         />
                     }
                 ></Route>
@@ -105,9 +126,15 @@ function App() {
                             onPostLike={handlePostLike}
                             posts={posts}
                             setPosts={setPosts}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
                         />
                     }
                 ></Route>
+                <Route 
+                    element={NotFoundPage}>
+
+                </Route>
             </Routes>
             <Popup popup={modalActive} setPopup={setModalActive}>
                 <h1>Изменение информации о пользователе</h1>
