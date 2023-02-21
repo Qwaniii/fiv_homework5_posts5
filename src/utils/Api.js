@@ -40,6 +40,15 @@ class Api {
         }).then(onResponce);
     }
 
+    getPostComments(postId) {
+        return fetch(`${this._dataUrl}/posts/comments/${postId}`, {
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            }
+        }).then(onResponce)
+    }
+
     getLikePost(postID) {
         return fetch(`${this._dataUrl}/posts/likes/${postID}`, {
             method: "PUT",

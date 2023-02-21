@@ -119,14 +119,14 @@ export default function Post({
                 </IconButton>
                 <IconButton aria-label="share" className={s.icon}>
                     {/* <ShareIcon /> */}
-                    {post.tags.length < 3 &&
-                        post.tags.map((tag, index) => (
-                            <Tags tag={tag} key={index} />
-                        ))}
-                    {post.tags.length >= 3 &&
+                    {post.tags.length < 4 &&
+                        post.tags.map((tag, index) =>  (tag.length < 15 && <Tags tag={tag} key={index} />))
+                    }
+                    {post.tags.length >= 4 &&
                         post.tags
-                            .map((tag, index) => <Tags tag={tag} key={index} />)
-                            .slice(0, 3)}
+                            .map((tag, index) => (tag.length < 15 && <Tags tag={tag} key={index}/>))
+                            // .slice(0, 3)
+                    }
                 </IconButton>
                 {/* <ExpandMore
           expand={expanded}

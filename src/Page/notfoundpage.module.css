@@ -1,5 +1,32 @@
 .container {
-    margin: 200px auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
     padding: 160px 0;
     max-width: 1000px;
+    justify-content: center;
+    align-items: center;
+}
+
+.notfound {
+    padding: 50px 0;
+    font-size: 40px;
+    color: lightgrey;
+}
+
+.btn {
+    padding: 10px 20px;
+    margin-top: 100px;
+    text-decoration: none;
+    cursor: pointer;
+    color: rgba(39, 39, 39, 0.5);
+    font-size: 20px;
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 15px;
+    transition: all .3s;
+}
+
+.btn:hover {
+    background-color: rgba(164, 163, 163, 0.5);
+    color: black;
 }

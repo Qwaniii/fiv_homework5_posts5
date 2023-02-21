@@ -6,12 +6,14 @@ import cn from "classnames"
 import { Link } from 'react-router-dom';
 
 export default function Header({ currentUser, popupEdit, setPopupEdit, scrollTop }) {
+    const scrollNum = 178
+
   return (
     <div>
-        <div className={cn(s.header, { [s.scroll]: scrollTop > 178 })}>
-            <div className={cn(s.container, {[s.scroll]: scrollTop > 178})}>
-                <div className={s.inner}>
-                    <Link to={"/"}>
+        <div className={cn(s.header, { [s.scroll]: scrollTop > scrollNum })}>
+            <div className={cn(s.container, {[s.scroll]: scrollTop > scrollNum})}>
+                <div className={cn(s.inner, {[s.scroll]: scrollTop > scrollNum})}>
+                    <Link to="/">
                         <div className={s.logo}>
                             <ImportContactsOutlinedIcon fontSize='large'/> POSTS
                         </div>
@@ -21,8 +23,8 @@ export default function Header({ currentUser, popupEdit, setPopupEdit, scrollTop
                         <a title="Редактировать" href="#"> {currentUser && 
                         <div className={cn(s.info, {[s.scroll]: scrollTop > 178})}> <img src={currentUser.avatar}></img>
                             <span>{currentUser.name}</span>
-                            {scrollTop <= 178 && <span>{currentUser.about}</span>}
-                            {scrollTop <= 178 && <span>{currentUser.email}</span>}
+                            {scrollTop <= scrollNum && <span>{currentUser.about}</span>}
+                            {scrollTop <= scrollNum && <span>{currentUser.email}</span>}
                         </div>
                         }</a>
                     </div>

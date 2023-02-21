@@ -31,7 +31,12 @@
     align-items: center;
     font-size: 20px;
     font-weight: 600;
+    height: 55px;
    
+}
+
+.inner.scroll {
+    height: initial;
 }
 
 .logo {
@@ -90,7 +95,7 @@ a {
 @media (max-width: 750px) {
     .header {
         position: static;
-
+        height: initial;
     }
 
     .container {
@@ -99,6 +104,7 @@ a {
 
     .inner {
         flex-direction: column;
+        height: initial;
     }
 
     .info {

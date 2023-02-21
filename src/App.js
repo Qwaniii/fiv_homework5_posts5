@@ -99,7 +99,7 @@ function App() {
             />
             <Routes>
                 <Route
-                    path="/"
+                    index
                     element={
                         <MainPage
                             posts={posts}
@@ -131,8 +131,8 @@ function App() {
                         />
                     }
                 ></Route>
-                <Route 
-                    element={NotFoundPage}>
+                <Route path="*"
+                    element={<NotFoundPage/>}>
 
                 </Route>
             </Routes>

@@ -10,6 +10,8 @@ import Avatar from "@mui/material/Avatar";
 import { IconButton, Typography } from "@mui/material";
 import cn from "classnames";
 import Spinner from "../Spinner/Spinner";
+import NotFoundPage from "../../Page/NotFoundPage";
+import Comments from "../Comments/Comments";
 
 export default function PostWindow({
     id,
@@ -20,6 +22,8 @@ export default function PostWindow({
     setIsLoading
 }) {
     const [postWindow, setPostWindow] = useState({});
+    const [postComments, setPostComments] = useState([]);
+    const [errorState, setErrorState] = useState(false)
 
     const isLike = postWindow?.likes?.some((id) => id === currentUser._id);
 
@@ -34,18 +38,28 @@ export default function PostWindow({
     }
 
     useEffect(() => {
-        api.getPostById(id).then((data) => {
-            setPostWindow(data)
-            setIsLoading(true)
-        })
+        api.getPostById(id)
+            .then((data) => {
+                setPostWindow(data)
+                setIsLoading(true)
+            })
+            .catch( err => setErrorState(true))
+        api.getPostComments(id)
+            .then((data) => {
+                setPostComments(data)
+            })
     }, [id]);
 
+
+
     const date = new Date(postWindow.created_at);
+
+    console.log(postWindow)
 
     return (
         <>
          {isLoading ? 
-            (<div className={s.postwindow}>
+           !errorState && (<div className={s.postwindow}>
                 <div className={s.container}>
                     <div className={s.wrapper}>
                         <div className={s.header}>
@@ -104,17 +118,30 @@ export default function PostWindow({
                                     <div className={s.tag}>
                                         {postWindow.tags &&
                                             postWindow?.tags?.map((tag, index) => (
-                                                <Tags tag={tag} key={index} />
+                                                tag.length < 15 && <Tags tag={tag} key={index} />
                                             ))}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className={s.footer}>Comments?</div>
+                    <div className={s.footerWrap}>
+                        <div></div>
+                        <div className={s.footer}>
+                        {postComments
+                            .map((comment, index) => <Comments comment={comment} key={comment._id} />)}
+                            {/* <Comments comment={postComments[0]}/> */}
+                            {/* {postComments.map((comment) => {
+                                <Comments 
+                                    comment={comment} 
+                                    key={comment._id}/>
+                            }) } */}
+                        </div>
+                    </div>
                 </div>
             </div>)
-            : <Spinner/>}      
+            : <Spinner/>}  
+            {errorState && <NotFoundPage/>}    
         </>                                 
     );
 }
