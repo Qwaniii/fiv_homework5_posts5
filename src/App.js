@@ -8,6 +8,7 @@ import Posts from "./components/Posts/Posts";
 import PostWindow from "./components/PostWindow/PostWindow";
 import { UserContext } from "./Context/UserContext";
 import useDebounce from "./hooks/useDebounse";
+import Newpost from "./NewPost/Newpost";
 import MainPage from "./Page/MainPage";
 import NotFoundPage from "./Page/NotFoundPage";
 import PostPage from "./Page/PostPage";
@@ -120,6 +121,7 @@ function App() {
                                 setIsLoading={setIsLoading}
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
+                                setPopupEdit={setModalActive}
                             />
                         }
                     ></Route>
@@ -140,7 +142,7 @@ function App() {
                     </Route>
                 </Routes>
                 <Popup popup={modalActive} setPopup={setModalActive}>
-                    <h1>Изменение информации о пользователе</h1>
+                        <Newpost setPopup={setModalActive}/>
                 </Popup>
             </UserContext.Provider>
         </div>

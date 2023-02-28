@@ -40,6 +40,16 @@ class Api {
         }).then(onResponce);
     }
 
+    setNewPost(data) {
+        return fetch(`${this._dataUrl}/posts`, {
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(onResponce);
+    }
+
     getPostComments(postId) {
         return fetch(`${this._dataUrl}/posts/comments/${postId}`, {
             headers: {

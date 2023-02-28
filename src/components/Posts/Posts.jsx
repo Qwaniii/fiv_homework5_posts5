@@ -19,7 +19,8 @@ export default function Posts({
   isLoading,
   setIsLoading,
   setSelectedTab,
-  selectedTab
+  selectedTab,
+  setPopupEdit
 }) {
 
   
@@ -43,6 +44,7 @@ export default function Posts({
             setActive={setActive}
             setSearchQuery={setSearchQuery}
             searchQuery={searchQuery}
+            setPopupEdit={setPopupEdit}
           />
 
           <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>

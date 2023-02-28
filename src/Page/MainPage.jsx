@@ -16,7 +16,8 @@ export default function MainPage({
     isLoading,
     setIsLoading,
     selectedTab,
-    setSelectedTab
+    setSelectedTab,
+    setPopupEdit
 }) {
   return (
     <div>
@@ -35,6 +36,7 @@ export default function MainPage({
         setIsLoading={setIsLoading}
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
+        setPopupEdit={setPopupEdit}
         />
     </div>
   )

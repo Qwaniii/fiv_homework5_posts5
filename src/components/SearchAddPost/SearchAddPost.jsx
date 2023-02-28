@@ -24,6 +24,7 @@ export default function SearchAddPost({
   setActive,
   setSearchQuery,
   searchQuery,
+  setPopupEdit
 }) {
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -60,7 +61,7 @@ export default function SearchAddPost({
           )}
         </Typography>
         <div className={s.btn}>
-          <Button size="small">Новый пост</Button>
+          <Button size="small"  onClick={() => setPopupEdit(true)}>Новый пост</Button>
         </div>
         {/* <Typography variant="h3" component="div">
         
