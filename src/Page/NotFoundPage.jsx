@@ -9,7 +9,7 @@ export default function NotFoundPage() {
         <div className={s.container}>
           <SearchOffIcon sx={{ fontSize: 80 }} color="disabled"/>
           <div className={s.notfound}>Страница не найдена</div>
-          <Link to="/" >
+          <Link to="fo_homework4_post4/" >
             <div className={s.btn}>На главную</div>
           </Link>
         </div>

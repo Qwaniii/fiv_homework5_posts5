@@ -4,7 +4,6 @@ import Spinner from '../components/Spinner/Spinner'
 
 export default function MainPage({
     posts,
-    currentUser,
     onPostLike,
     active,
     setActive,
@@ -15,13 +14,14 @@ export default function MainPage({
     setSearchQuery,
     searchQuery,
     isLoading,
-    setIsLoading
+    setIsLoading,
+    selectedTab,
+    setSelectedTab
 }) {
   return (
     <div>
         <Posts
         posts={posts}
-        currentUser={currentUser}
         onPostLike={onPostLike}
         active={active}
         setActive={setActive}
@@ -33,6 +33,8 @@ export default function MainPage({
         searchQuery={searchQuery}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
+        setSelectedTab={setSelectedTab}
+        selectedTab={selectedTab}
         />
     </div>
   )

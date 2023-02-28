@@ -18,6 +18,19 @@
 
 }
 
+.icon {
+    color: rgba(128, 128, 128, 0.3);
+    transition: color .3s;
+}
+
+.icon:hover {
+    color: rgba(128, 128, 128, 0.8);
+    transition: color .3s;
+}
+
+.icon:active {
+    color: red;
+}
 
 .inner {
     display: flex;
@@ -53,6 +66,10 @@
 
 .img img {
     width: 100%;
+}
+
+.delBtn {
+    justify-items: flex-end;
 }
 
 .right {

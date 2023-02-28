@@ -1,30 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import s from "./postwindow.module.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tags from "../Tags/Tags";
 import api from "../../utils/Api";
 import { PostAddRounded } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { IconButton, Typography } from "@mui/material";
 import cn from "classnames";
 import Spinner from "../Spinner/Spinner";
 import NotFoundPage from "../../Page/NotFoundPage";
 import Comments from "../Comments/Comments";
+import { UserContext } from "../../Context/UserContext";
+import DelBtn from "../DelBtn/DelBtn";
 
 export default function PostWindow({
     id,
-    currentUser,
     posts,
     setPosts,
     isLoading,
     setIsLoading
 }) {
+    const { currentUser } = useContext(UserContext)
+
     const [postWindow, setPostWindow] = useState({});
     const [postComments, setPostComments] = useState([]);
-    const [errorState, setErrorState] = useState(false)
+    const [errorState, setErrorState] = useState(false);
+    const navigate = useNavigate();
 
+    const isAuthor = postWindow?.author?._id === currentUser._id ? true : false;
     const isLike = postWindow?.likes?.some((id) => id === currentUser._id);
 
     function handleLikeClick() {
@@ -54,7 +59,6 @@ export default function PostWindow({
 
     const date = new Date(postWindow.created_at);
 
-    console.log(postWindow)
 
     return (
         <>
@@ -64,7 +68,7 @@ export default function PostWindow({
                     <div className={s.wrapper}>
                         <div className={s.header}>
                             <div className={s.inner}>
-                                <Link to="/">
+                                <Link onClick={() => navigate(-1)}>
                                     <ArrowBackIcon
                                         fontSize="large"
                                         className={s.icon}
@@ -87,6 +91,7 @@ export default function PostWindow({
                                             {date.getFullYear()}
                                         </p>
                                     </div>
+                                    {isAuthor && <div className={s.delBtn}><DelBtn/></div>}
                                 </span>
                             </div>
                         </div>
@@ -99,9 +104,8 @@ export default function PostWindow({
                             <Typography variant="body2" color="text.primary">{postWindow.text}</Typography>
                                 <div className={s.bottom}>
                                     <div className={s.like}>
-                                        <IconButton aria-label="add to favorites">
+                                        <IconButton aria-label="add to favorites" onClick={handleLikeClick}>
                                             <FavoriteIcon
-                                                onClick={handleLikeClick}
                                                 className={cn({
                                                     [s.favorite]: isLike,
                                                 })}

@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import Popup from "./components/Popup/Popup";
 import Posts from "./components/Posts/Posts";
 import PostWindow from "./components/PostWindow/PostWindow";
+import { UserContext } from "./Context/UserContext";
 import useDebounce from "./hooks/useDebounse";
 import MainPage from "./Page/MainPage";
 import NotFoundPage from "./Page/NotFoundPage";
@@ -21,7 +22,8 @@ function App() {
     const [modalActive, setModalActive] = useState(false);
     const [postWindow, setPostWindow] = useState({});
     const [scrollTop, setScrollTop] = useState(0);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedTab, setSelectedTab] = useState("stock");
 
 
     const debounceValue = useDebounce(searchQuery, 500);
@@ -77,68 +79,70 @@ function App() {
     }
 
     function handlePostDelete(post) {
-        const isAuthor = post.author._id === currentUser._id ? true : false;
-        isAuthor
-            ? api.deletePost(post._id).then((delitingPost) => {
-                  const newPosts = posts.filter(
-                      (curPost) => curPost._id !== delitingPost._id
-                  );
-                  setPosts([...newPosts]);
-              })
-            : alert("Вы не можете удалить чужой пост");
+        // const isAuthor = post.author._id === currentUser._id ? true : false;
+        // isAuthor
+        //     ? 
+        api.deletePost(post._id).then((delitingPost) => {
+                const newPosts = posts.filter(
+                    (curPost) => curPost._id !== delitingPost._id
+                );
+                setPosts(newPosts);
+            })
+            // : alert("Вы не можете удалить чужой пост");
         handleClose();
     }
 
     return (
         <div className="App">
-            <Header
-                currentUser={currentUser}
-                popupEdit={modalActive}
-                setPopupEdit={setModalActive}
-                scrollTop={scrollTop}
-            />
-            <Routes>
-                <Route
-                    index
-                    element={
-                        <MainPage
-                            posts={posts}
-                            currentUser={currentUser}
-                            onPostLike={handlePostLike}
-                            active={searchActive}
-                            setActive={setSearchActive}
-                            postDelete={handlePostDelete}
-                            anchorEl={anchorEl}
-                            handleClick={handleClick}
-                            handleClose={handleClose}
-                            setSearchQuery={setSearchQuery}
-                            searchQuery={searchQuery}
-                            isLoading={isLoading}
-                            setIsLoading={setIsLoading}
-                        />
-                    }
-                ></Route>
-                <Route
-                    path="post/:postId"
-                    element={
-                        <PostPage
-                            currentUser={currentUser}
-                            onPostLike={handlePostLike}
-                            posts={posts}
-                            setPosts={setPosts}
-                            isLoading={isLoading}
-                            setIsLoading={setIsLoading}
-                        />
-                    }
-                ></Route>
-                <Route path="*"
-                    element={<NotFoundPage/>}>
-
-                </Route>
-            </Routes>
-            <Popup popup={modalActive} setPopup={setModalActive}>
-                <h1>Изменение информации о пользователе</h1>
-            </Popup>
+            <UserContext.Provider value={{currentUser}} >
+                <Header
+                    popupEdit={modalActive}
+                    setPopupEdit={setModalActive}
+                    scrollTop={scrollTop}
+                />
+                <Routes>
+                    <Route
+                        // index
+                        path="fo_homework4_post4/"
+                        element={
+                            <MainPage
+                                posts={posts}
+                                onPostLike={handlePostLike}
+                                active={searchActive}
+                                setActive={setSearchActive}
+                                postDelete={handlePostDelete}
+                                anchorEl={anchorEl}
+                                handleClick={handleClick}
+                                handleClose={handleClose}
+                                setSearchQuery={setSearchQuery}
+                                searchQuery={searchQuery}
+                                isLoading={isLoading}
+                                setIsLoading={setIsLoading}
+                                setSelectedTab={setSelectedTab}
+                                selectedTab={selectedTab}
+                            />
+                        }
+                    ></Route>
+                    <Route
+                        path="fo_homework4_post4/post/:postId"
+                        element={
+                            <PostPage
+                                onPostLike={handlePostLike}
+                                posts={posts}
+                                setPosts={setPosts}
+                                isLoading={isLoading}
+                                setIsLoading={setIsLoading}
+                            />
+                        }
+                    ></Route>
+                    <Route path="*"
+                        element={<NotFoundPage/>}>
+                    </Route>
+                </Routes>
+                <Popup popup={modalActive} setPopup={setModalActive}>
+                    <h1>Изменение информации о пользователе</h1>
+                </Popup>
+            </UserContext.Provider>
         </div>
     );
 }

@@ -4,7 +4,6 @@ import PostWindow from "../components/PostWindow/PostWindow";
 
 
 export default function PostPage({
-    currentUser,
     onPostLike,
     posts,
     setPosts,
@@ -17,7 +16,6 @@ export default function PostPage({
         <div>
             <PostWindow
                 id={id.postId}
-                currentUser={currentUser}
                 onPostLike={onPostLike}
                 posts={posts}
                 setPosts={setPosts}

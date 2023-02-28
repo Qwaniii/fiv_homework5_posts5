@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Post from "../Post/Post";
 import SearchAddPost from "../SearchAddPost/SearchAddPost";
+import Sort from "../Sort/Sort";
 import Spinner from "../Spinner/Spinner";
 import s from "./posts.module.css";
 
 export default function Posts({
   posts,
-  currentUser,
   onPostLike,
   active,
   setActive,
@@ -17,8 +17,23 @@ export default function Posts({
   setSearchQuery,
   searchQuery,
   isLoading,
-  setIsLoading
+  setIsLoading,
+  setSelectedTab,
+  selectedTab
 }) {
+
+  
+
+  let  list = [];
+
+  if (selectedTab === "stock") {
+    list = posts.sort((a,b) => new Date(a.created_at) - new Date(b.created_at))
+  } else if (selectedTab === "new") {
+    list = posts.sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
+  } else if (selectedTab === "popular") {
+    list = posts.sort((a, b) => b?.likes?.length - a.likes?.length)
+  }
+
   return (
     <main>
       <div className={s.posts}>
@@ -29,14 +44,15 @@ export default function Posts({
             setSearchQuery={setSearchQuery}
             searchQuery={searchQuery}
           />
+
+          <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
           
           <div className={s.inner}>
             {isLoading ? 
-              posts
+                list
                 .map((item, index) => (
                   <Post
                     key={item._id}
-                    currentUser={currentUser}
                     post={item}
                     onPostLike={onPostLike}
                     postDelete={postDelete}
@@ -44,9 +60,8 @@ export default function Posts({
                     handleClose={handleClose}
                     handleClick={handleClick}
                     setIsLoading={setIsLoading}
-                  />
-                ))
-                .reverse() :
+                  />))
+                :
                 <Spinner/>}
           </div>
         </div>

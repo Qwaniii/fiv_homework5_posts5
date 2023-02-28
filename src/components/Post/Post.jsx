@@ -19,6 +19,7 @@ import Tags from "../Tags/Tags";
 import cn from "classnames";
 import DelBtn from "../DelBtn/DelBtn";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
 // const ExpandMore = styled((props) => {
 //   const { expand, ...other } = props;
@@ -33,7 +34,6 @@ import { Link } from "react-router-dom";
 
 export default function Post({
     post,
-    currentUser,
     onPostLike,
     postDelete,
     anchorEl,
@@ -41,7 +41,11 @@ export default function Post({
     handleClose,
     setIsLoading
 }) {
+    const { currentUser } = React.useContext(UserContext);
+
+    const isAuthor = post.author._id === currentUser._id ? true : false;
     const isLike = post.likes.some((id) => id === currentUser._id);
+
     function handleLikeClick() {
         onPostLike(post);
     }
@@ -66,8 +70,8 @@ export default function Post({
                         )}
                     </Avatar>
                 }
-                action={
-                    <IconButton aria-label="settings">
+                action={isAuthor  &&
+                    // <IconButton aria-label="settings">
                         <DelBtn
                             postDelete={postDelete}
                             user={currentUser}
@@ -76,7 +80,7 @@ export default function Post({
                             handleClick={handleClick}
                             handleClose={handleClose}
                         />
-                    </IconButton>
+                    // </IconButton>
                 }
                 title={post.author.name}
                 // subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
@@ -106,9 +110,8 @@ export default function Post({
                 </CardContent>
             </Link>
             <CardActions disableSpacing className={s.cardActions}>
-                <IconButton aria-label="add to favorites">
+                <IconButton aria-label="add to favorites" onClick={handleLikeClick}>
                     <FavoriteIcon
-                        onClick={handleLikeClick}
                         className={cn({ [s.favorite]: isLike })}
                     />
                     {post.likes.length > 0 ? (
