@@ -10,7 +10,6 @@ export default function Newpost({ setPopup }) {
     const [postTags, setPostTags] = useState([]);
     const [newPostData, setNewPostData] = useState({});
 
-    setNewPostData({title: title, text: postText, image: postImg, tags: postTags})
 
     function clearForm() {
         setTitle("");
@@ -21,26 +20,26 @@ export default function Newpost({ setPopup }) {
 
 
     function handleCreatePost(e, data) {
-        e.preventDefault();
         console.log(data)
         // api.setNewPost(data)
         //     .then((data) => console.log(data))
         //     .catch(err => console.log(err))
         setPopup(false);
         clearForm();
+        e.preventDefault();
     }
 
 
     return (
     <>
         <div className={s.container}>
-            <form action="">
-                <input type="text" placeholder="Заголовок поста" requred="true" value={title} onChange={(e) => {setTitle((e.target.value).toString())}}></input>
-                <textarea name="descr" placeholder="Тест поста" requred="true" onChange={(e) => {setPostText((e.target.value).toString())}} ></textarea>
+            <form action="" onSubmit={(e) => handleCreatePost(e, {title: title, text: postText, image: postImg, tags: postTags})}>
+                <input type="text" placeholder="Заголовок поста" value={title} onChange={(e) => {setTitle((e.target.value).toString())}} required></input>
+                <textarea name="descr" placeholder="Тест поста"  value={postText} onChange={(e) => {setPostText((e.target.value).toString())}} required></textarea>
                 <img src={postImg} alt="image"></img>
-                <input type="text" name="imgLink" placeholder="Ссылка на изображение" onChange={(e) => setPostImg((e.target.value).toString())}></input>
-                <input type="text" placeholder="Введите тэги, через запятую" onChange={(e) => setPostTags(((e.target.value).replace(/\s/g, "")).split(","))} ></input>
-                <button type="submit" onClick={(e) => handleCreatePost(e, newPostData)}>Создать пост</button>
+                <input type="text" name="imgLink" placeholder="Ссылка на изображение" value={postImg} onChange={(e) => setPostImg((e.target.value).toString())}></input>
+                <input type="text" placeholder="Введите тэги, через запятую" value={postTags.join()} onChange={(e) => setPostTags(((e.target.value).replace(/\s/g, "")).split(","))} ></input>
+                <input type="submit" value="Создать пост" ></input>
             </form>
         </div>
     </>
