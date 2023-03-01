@@ -66,10 +66,14 @@ export default function Post({
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: grey[100] }} aria-label="recipe">
-                        {post.author.avatar && (
+                        {post.author.avatar === currentUser.avatar ? (
                             <img
-                                src={post.author.avatar}
+                                src={currentUser.avatar}
                                 className={s.avatar}
+                            ></img>) : (
+                            <img
+                            src={post.author.avatar}
+                            className={s.avatar}
                             ></img>
                         )}
                     </Avatar>
@@ -83,7 +87,7 @@ export default function Post({
                         </div>
                     // </IconButton>
                 }
-                title={post.author.name}
+                title={(post.author.name === currentUser.name) ? currentUser.name : post.author.name}
                 // subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
                 subheader={created.toLocaleDateString("ru-RU", {
                     month: "2-digit",

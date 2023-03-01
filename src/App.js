@@ -42,7 +42,8 @@ function App() {
         api.getAppInfo().then(([postsData, currentUserData]) => {
             setPosts(postsData);
             setCurrentUser(currentUserData);
-            setIsLoading(true)
+            console.log("render cards & user")
+            setIsLoading(true);
         });
     }, []);
 
@@ -99,7 +100,7 @@ function App() {
 
     return (
         <div className="App">
-            <UserContext.Provider value={{currentUser}} >
+            <UserContext.Provider value={{currentUser, setCurrentUser}} >
                 <Header
                     popupEdit={modalUserActive}
                     setPopupEdit={setModalUserActive}
@@ -146,10 +147,10 @@ function App() {
                     </Route>
                 </Routes>
                 <Popup popup={modalActive} setPopup={setModalActive}>
-                        {modalActive && <Newpost setPopup={setModalActive}/>}
+                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts}/>}
                 </Popup>
                 <Popup popup={modalUserActive} setPopup={setModalUserActive}>
-                        {modalUserActive && <Edituser/>}
+                        {modalUserActive && <Edituser setPopup={setModalUserActive}/>}
                 </Popup>
             </UserContext.Provider>
         </div>

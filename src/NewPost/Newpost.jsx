@@ -3,7 +3,7 @@ import api from "../utils/Api";
 import s from "./newpost.module.css"
 
 
-export default function Newpost({ setPopup }) {
+export default function Newpost({ setPopup, setPosts }) {
     const [title, setTitle] = useState("");
     const [postText, setPostText] = useState("");
     const [postImg, setPostImg] = useState("https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg");
@@ -28,10 +28,13 @@ export default function Newpost({ setPopup }) {
         e.preventDefault();
         console.log(data)
         api.setNewPost(data)
-            .then((data) => console.log(data))
-            .catch(err => console.log(err))
+            .then((data) => {
+                setPosts((prevState) => [...prevState, data])
+            })
+            .catch(err => alert(`Не удалось создать пост, проверьте введенные данные. Ошибка - ${err}`))
         setPopup(false);
         clearForm();
+        
     }
 
     return (

@@ -27,7 +27,7 @@ class Api {
         }).then(onResponce);
     }
 
-    editUserInfo(data) {
+    editUserDataInfo(data) {
         return fetch(`${this._dataUrl}/users/me`, {
             method: "PATCH",
             headers: {
@@ -36,6 +36,21 @@ class Api {
             },
             body: JSON.stringify(data)
         }).then(onResponce)
+    }
+    
+    editUserAvatar(avatar) {
+        return fetch(`${this._dataUrl}/users/me/avatar`, {
+            method: "PATCH",
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(avatar)
+        }).then(onResponce)
+    }
+
+    editUserInfo(data, avatar) {
+        return Promise.all([this.editUserInfo(data), this.editUserAvatar(avatar)]);
     }
 
     getAppInfo() {
