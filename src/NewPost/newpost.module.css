@@ -2,8 +2,12 @@
     margin: 15px 40px;
 }
 
-.container form {
+.container > form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
+
+/* .image {
+    background-image: url();
+} */

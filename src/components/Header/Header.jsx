@@ -21,7 +21,7 @@ export default function Header({ popupEdit, setPopupEdit, scrollTop }) {
                             <ImportContactsOutlinedIcon fontSize='large'/> POSTS
                         </div>
                     </Link>
-                    <div className={s.enter}>
+                    <div className={s.enter} onClick={() => setPopupEdit(true)}>
                         {!currentUser && <a href="#" className={s.link}>Войти</a>}
                         <a title="Редактировать" href="#"> {currentUser && 
                         <div className={cn(s.info, {[s.scroll]: scrollTop > 178})}> <img src={currentUser.avatar}></img>

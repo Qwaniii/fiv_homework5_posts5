@@ -2,6 +2,7 @@ import { Switch } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Edituser from "./components/EditUser/Edituser";
 import Header from "./components/Header/Header";
 import Popup from "./components/Popup/Popup";
 import Posts from "./components/Posts/Posts";
@@ -21,6 +22,7 @@ function App() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [modalActive, setModalActive] = useState(false);
+    const [modalUserActive, setModalUserActive] = useState(false);
     const [postWindow, setPostWindow] = useState({});
     const [scrollTop, setScrollTop] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -83,22 +85,24 @@ function App() {
         // const isAuthor = post.author._id === currentUser._id ? true : false;
         // isAuthor
         //     ? 
+
         api.deletePost(post._id).then((delitingPost) => {
                 const newPosts = posts.filter(
                     (curPost) => curPost._id !== delitingPost._id
                 );
                 setPosts(newPosts);
             })
+
             // : alert("Вы не можете удалить чужой пост");
-        handleClose();
+        // handleClose();
     }
 
     return (
         <div className="App">
             <UserContext.Provider value={{currentUser}} >
                 <Header
-                    popupEdit={modalActive}
-                    setPopupEdit={setModalActive}
+                    popupEdit={modalUserActive}
+                    setPopupEdit={setModalUserActive}
                     scrollTop={scrollTop}
                 />
                 <Routes>
@@ -142,7 +146,10 @@ function App() {
                     </Route>
                 </Routes>
                 <Popup popup={modalActive} setPopup={setModalActive}>
-                        <Newpost setPopup={setModalActive}/>
+                        {modalActive && <Newpost setPopup={setModalActive}/>}
+                </Popup>
+                <Popup popup={modalUserActive} setPopup={setModalUserActive}>
+                        {modalUserActive && <Edituser/>}
                 </Popup>
             </UserContext.Provider>
         </div>

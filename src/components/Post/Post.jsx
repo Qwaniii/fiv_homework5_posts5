@@ -49,6 +49,10 @@ export default function Post({
     function handleLikeClick() {
         onPostLike(post);
     }
+
+    function deletePost() {
+        postDelete(post);
+      }
     //   const [expanded, setExpanded] = React.useState(false);
 
     //   const handleExpandClick = () => {
@@ -72,14 +76,11 @@ export default function Post({
                 }
                 action={isAuthor  &&
                     // <IconButton aria-label="settings">
-                        <DelBtn
-                            postDelete={postDelete}
-                            user={currentUser}
-                            post={post}
-                            anchorEl={anchorEl}
-                            handleClick={handleClick}
-                            handleClose={handleClose}
-                        />
+                        <div className={s.deleteBtn}>
+                            <DelBtn
+                                deletePost={deletePost}
+                            />
+                        </div>
                     // </IconButton>
                 }
                 title={post.author.name}

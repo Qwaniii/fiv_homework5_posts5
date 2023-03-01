@@ -27,6 +27,17 @@ class Api {
         }).then(onResponce);
     }
 
+    editUserInfo(data) {
+        return fetch(`${this._dataUrl}/users/me`, {
+            method: "PATCH",
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(onResponce)
+    }
+
     getAppInfo() {
         return Promise.all([this.getPostsList(), this.getUserInfo()]);
     }
@@ -42,6 +53,7 @@ class Api {
 
     setNewPost(data) {
         return fetch(`${this._dataUrl}/posts`, {
+            method: "POST",
             headers: {
                 authorization: this._token,
                 "Content-Type": "application/json"

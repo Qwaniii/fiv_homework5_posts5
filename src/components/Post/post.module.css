@@ -38,6 +38,27 @@
     right: -3px;
 }
 
+.deleteBtn {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    color: rgba(128, 128, 128, 0.5);
+    background-color: none;
+    cursor: pointer;
+    border-radius: 30px;
+    padding: 10px;
+    transition: all .3s;
+}
+
+.deleteBtn:hover {
+    color: rgb(69, 69, 69);
+    background-color: rgba(128, 128, 128, 0.05);
+    transition: all .3s;
+}
+
+.deleteBtn:active {
+    color: red;
+}
 
 
 @media (max-width: 1050px) {
