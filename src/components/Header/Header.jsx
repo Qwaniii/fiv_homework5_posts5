@@ -22,8 +22,8 @@ export default function Header({ popupEdit, setPopupEdit, scrollTop }) {
                         </div>
                     </Link>
                     <div className={s.enter} onClick={() => setPopupEdit(true)}>
-                        {!currentUser && <a href="#" className={s.link}>Войти</a>}
-                        <a title="Редактировать" href="#"> {currentUser && 
+                        {!currentUser && <a className={s.link}>Войти</a>}
+                        <a title="Редактировать"> {currentUser && 
                         <div className={cn(s.info, {[s.scroll]: scrollTop > 178})}> <img src={currentUser.avatar}></img>
                             <span>{currentUser.name}</span>
                             {scrollTop <= scrollNum && <span>{currentUser.about}</span>}

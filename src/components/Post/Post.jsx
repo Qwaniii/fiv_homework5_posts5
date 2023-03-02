@@ -20,6 +20,7 @@ import cn from "classnames";
 import DelBtn from "../DelBtn/DelBtn";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import ChatBubbleOutlinedIcon from '@mui/icons-material/ChatBubbleOutlined';
 
 // const ExpandMore = styled((props) => {
 //   const { expand, ...other } = props;
@@ -117,13 +118,23 @@ export default function Post({
             <CardActions disableSpacing className={s.cardActions}>
                 <IconButton aria-label="add to favorites" onClick={handleLikeClick}>
                     <FavoriteIcon
-                        className={cn({ [s.favorite]: isLike })}
+                        className={cn( { [s.favorite]: isLike })}
                     />
                     {post.likes.length > 0 ? (
-                        <span className={s.numbLike}>{post.likes.length}</span>
+                        <span className={cn(s.numbLike, {[s.favorite]: isLike})}>{post.likes.length}</span>
                     ) : (
                         ""
                     )}
+                </IconButton>
+                <IconButton className={s.comments}>
+                   {post.comments.length > 0 
+                    ? 
+                    <>
+                        <ChatBubbleOutlinedIcon fontSize="medium"/>
+                        <span className={s.numberComments}>{post.comments.length}</span>
+                    </>
+                    : ("")}
+                
                 </IconButton>
                 <IconButton aria-label="share" className={s.icon}>
                     {/* <ShareIcon /> */}

@@ -29,6 +29,8 @@ function App() {
     const [selectedTab, setSelectedTab] = useState("stock");
     const [anchorEditUser, setAnchorEditUser] = useState(false);
     const [anchorNewPost, setAnchorNewPost] = useState(false);
+    const [anchorAddDelComment, setAnchorAddDelComment] = useState(false);
+
 
     
 
@@ -43,13 +45,14 @@ function App() {
     };
 
     useEffect(() => {
+        setIsLoading(false)
         api.getAppInfo().then(([postsData, currentUserData]) => {
             setPosts(postsData);
             setCurrentUser(currentUserData);
             console.log("render cards & user")
             setIsLoading(true);
         });
-    }, [anchorEditUser, anchorNewPost]);
+    }, [anchorEditUser, anchorNewPost, anchorAddDelComment]);
 
     useEffect(() => {
         api.search(debounceValue).then((data) => {
@@ -146,6 +149,8 @@ function App() {
                                 setPosts={setPosts}
                                 isLoading={isLoading}
                                 setIsLoading={setIsLoading}
+                                anchorAddDelComment={anchorAddDelComment}
+                                setAnchorAddDelComment={setAnchorAddDelComment}
                             />
                         }
                     ></Route>

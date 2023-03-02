@@ -8,7 +8,9 @@ export default function PostPage({
     posts,
     setPosts,
     isLoading,
-    setIsLoading
+    setIsLoading,
+    anchorAddDelComment,
+    setAnchorAddDelComment
 }) {
     const id = useParams();
 
@@ -21,6 +23,8 @@ export default function PostPage({
                 setPosts={setPosts}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                anchorAddDelComment={anchorAddDelComment}
+                setAnchorAddDelComment={setAnchorAddDelComment}
             />
         </div>
     );

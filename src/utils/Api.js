@@ -86,6 +86,29 @@ class Api {
         }).then(onResponce)
     }
 
+    addNewComment(postId, text) {
+        return fetch(`${this._dataUrl}/posts/comments/${postId}`, {
+            method: "POST",
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(text)
+        }).then(onResponce)
+    }
+
+    deleteComment(postId, commentId) {
+        return fetch(`${this._dataUrl}/posts/comments/${postId}/${commentId}`, {
+            method: "DELETE",
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            }
+        }).then(onResponce)
+    }
+
+
+
     getLikePost(postID) {
         return fetch(`${this._dataUrl}/posts/likes/${postID}`, {
             method: "PUT",

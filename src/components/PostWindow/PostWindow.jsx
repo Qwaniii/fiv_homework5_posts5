@@ -7,7 +7,7 @@ import api from "../../utils/Api";
 import { PostAddRounded } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import { IconButton, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import cn from "classnames";
 import Spinner from "../Spinner/Spinner";
 import NotFoundPage from "../../Page/NotFoundPage";
@@ -20,17 +20,35 @@ export default function PostWindow({
     posts,
     setPosts,
     isLoading,
-    setIsLoading
+    setIsLoading,
+    anchorAddDelComment,
+    setAnchorAddDelComment
 }) {
     const { currentUser } = useContext(UserContext)
 
     const [postWindow, setPostWindow] = useState({});
     const [postComments, setPostComments] = useState([]);
     const [errorState, setErrorState] = useState(false);
+    const [textComment, setTextComment] = useState({text: ""});
     const navigate = useNavigate();
 
     const isAuthor = postWindow?.author?._id === currentUser._id ? true : false;
     const isLike = postWindow?.likes?.some((id) => id === currentUser._id);
+
+    useEffect(() => {
+        setIsLoading(false)
+        api.getPostById(id)
+            .then((data) => {
+                setPostWindow(data)
+                api.getPostComments(id)
+                .then((data) => {
+                    setPostComments(data);
+                })
+                .catch(err => console.log(err))
+            })
+            .catch( err => setErrorState(true))
+        setIsLoading(true);
+    }, [id, anchorAddDelComment]);
 
     function handleLikeClick() {
         api.changeLikePostStatus(postWindow._id, isLike).then((newPost) => {
@@ -42,18 +60,28 @@ export default function PostWindow({
         });
     }
 
-    useEffect(() => {
-        api.getPostById(id)
+    function handleAddComment(e, text) {
+        e.preventDefault();
+        api.addNewComment(id, text)
             .then((data) => {
-                setPostWindow(data)
-                setIsLoading(true)
+                console.log(data);
+                setAnchorAddDelComment(!anchorAddDelComment)
+                setTextComment({text: ""})
             })
-            .catch( err => setErrorState(true))
-        api.getPostComments(id)
-            .then((data) => {
-                setPostComments(data)
+            .catch((err) => console.log(err))
+    }
+
+    function handleDelPost(id) {
+        api.deletePost(id)
+            .then((delitingPost) => {
+                const newPosts = posts.filter(
+                    (curPost) => curPost._id !== delitingPost._id
+                );
+                setPosts(newPosts);
             })
-    }, [id]);
+            .catch(err => console.log(err))
+        navigate("/fo_homework4_post4")
+    }
 
 
 
@@ -91,7 +119,7 @@ export default function PostWindow({
                                             {date.getFullYear()}
                                         </p>
                                     </div>
-                                    {isAuthor && <div className={s.delBtn}><DelBtn/></div>}
+                                    {isAuthor && <div className={s.delBtn} onClick={() => handleDelPost(id)}><DelBtn/></div>}
                                 </span>
                             </div>
                         </div>
@@ -100,32 +128,32 @@ export default function PostWindow({
                                 <img src={postWindow.image} alt="Image"></img>
                             </div>
                             <div className={s.right}>
-                            <Typography variant="h5" color="text.secondary">{postWindow.title}</Typography>
-                            <Typography variant="body2" color="text.primary">{postWindow.text}</Typography>
-                                <div className={s.bottom}>
-                                    <div className={s.like}>
-                                        <IconButton aria-label="add to favorites" onClick={handleLikeClick}>
-                                            <FavoriteIcon
-                                                className={cn({
-                                                    [s.favorite]: isLike,
-                                                })}
-                                            />
-                                            {postWindow?.likes?.length > 0 ? (
-                                                <span className={s.numLike}>
-                                                    {postWindow.likes.length}
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
-                                        </IconButton>
+                                <Typography variant="h5" color="text.secondary" className={s.title}>{postWindow.title}</Typography>
+                                <Typography variant="body2" color="text.primary">{postWindow.text}</Typography>
+                                    <div className={s.bottom}>
+                                        <div className={s.like}>
+                                            <IconButton aria-label="add to favorites" onClick={handleLikeClick}>
+                                                <FavoriteIcon
+                                                    className={cn({
+                                                        [s.favorite]: isLike,
+                                                    })}
+                                                />
+                                                {postWindow?.likes?.length > 0 ? (
+                                                    <span className={s.numLike}>
+                                                        {postWindow.likes.length}
+                                                    </span>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </IconButton>
+                                        </div>
+                                        <div className={s.tag}>
+                                            {postWindow.tags &&
+                                                postWindow?.tags?.map((tag, index) => (
+                                                    tag.length < 15 && <Tags tag={tag} key={index} />
+                                                ))}
+                                        </div>
                                     </div>
-                                    <div className={s.tag}>
-                                        {postWindow.tags &&
-                                            postWindow?.tags?.map((tag, index) => (
-                                                tag.length < 15 && <Tags tag={tag} key={index} />
-                                            ))}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,13 +161,25 @@ export default function PostWindow({
                         <div></div>
                         <div className={s.footer}>
                         {postComments
-                            .map((comment, index) => <Comments comment={comment} key={comment._id} />)}
+                            .map((comment, index) => <Comments comment={comment} key={comment._id} setAnchor={setAnchorAddDelComment} anchor={anchorAddDelComment}/>)}
                             {/* <Comments comment={postComments[0]}/> */}
                             {/* {postComments.map((comment) => {
                                 <Comments 
                                     comment={comment} 
                                     key={comment._id}/>
                             }) } */}
+                        </div>
+                    </div>
+                    <div className={s.footerWrap}>
+                        <div></div>
+                        <div className={s.newComment}>
+                            <form className={s.form} onSubmit={(e) => handleAddComment(e, textComment)}>
+                                <textarea type="text" placeholder="Напишите комментарий" value={textComment.text} onChange={(e) => {
+                                    setTextComment((prevState) => ({...prevState, text: e.target.value.toString()}))
+                                }}></textarea>
+                                <Button size="small" className={s.commentBtn} onClick={(textComment.text).length > 0 ? (e) => handleAddComment(e, textComment) : () => alert("Напишите комментарий")}>добавить</Button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
