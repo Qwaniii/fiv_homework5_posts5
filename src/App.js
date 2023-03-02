@@ -27,6 +27,10 @@ function App() {
     const [scrollTop, setScrollTop] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState("stock");
+    const [anchorEditUser, setAnchorEditUser] = useState(false);
+    const [anchorNewPost, setAnchorNewPost] = useState(false);
+
+    
 
 
     const debounceValue = useDebounce(searchQuery, 500);
@@ -45,7 +49,7 @@ function App() {
             console.log("render cards & user")
             setIsLoading(true);
         });
-    }, []);
+    }, [anchorEditUser, anchorNewPost]);
 
     useEffect(() => {
         api.search(debounceValue).then((data) => {
@@ -98,9 +102,11 @@ function App() {
         // handleClose();
     }
 
+    (modalActive || modalUserActive) ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll"
+
     return (
-        <div className="App">
-            <UserContext.Provider value={{currentUser, setCurrentUser}} >
+        <div className="App" >
+            <UserContext.Provider value={{currentUser, setCurrentUser }} >
                 <Header
                     popupEdit={modalUserActive}
                     setPopupEdit={setModalUserActive}
@@ -127,6 +133,7 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
+                                
                             />
                         }
                     ></Route>
@@ -147,10 +154,10 @@ function App() {
                     </Route>
                 </Routes>
                 <Popup popup={modalActive} setPopup={setModalActive}>
-                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts}/>}
+                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost}/>}
                 </Popup>
                 <Popup popup={modalUserActive} setPopup={setModalUserActive}>
-                        {modalUserActive && <Edituser setPopup={setModalUserActive}/>}
+                        {modalUserActive && <Edituser setPopup={setModalUserActive} anchorEditUser={anchorEditUser} setAnchorEditUser={setAnchorEditUser}/>}
                 </Popup>
             </UserContext.Provider>
         </div>

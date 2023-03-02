@@ -3,11 +3,13 @@ import { UserContext } from "../../Context/UserContext";
 import api from "../../utils/Api";
 import s from "./edituser.module.css";
 
-export default function Edituser({ setPopup }) {
+export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }) {
+  
   const { currentUser, setCurrentUser } = useContext(UserContext);
-  const [nameUser, setNameUser] = useState(currentUser.name);
-  const [aboutUser, setAboutUser] = useState(currentUser.about);
-  const [avatarUser, setAvatarUser] = useState(currentUser.avatar);
+  const [avatarUser, setAvatarUser] = useState({avatar: currentUser.avatar});
+  const [userObj, setUserObj] = useState({name: currentUser.name, about: currentUser.about})
+
+
 
   function handleEditUserInfo(e, data, avatar) {
     e.preventDefault();
@@ -15,45 +17,49 @@ export default function Edituser({ setPopup }) {
       .editUserDataInfo(data)
       .then((resp) => {
         console.log("data",resp);
-        setCurrentUser(resp);
+        api
+          .editUserAvatar(avatar)
+          .then((resp) => {
+          console.log("avatar", resp)
+          setAnchorEditUser(!anchorEditUser)})
+          .catch((err) => alert("Ошибка, неправильный формат аватара", err));
       })
-      .catch((err) => alert(err));
-    // api
-    //   .editUserAvatar(avatar)
-    //   .then((resp) => {
-    //     console.log("avatar", resp)
-    //     setCurrentUser(resp)})
-    //   .catch((err) => alert(err));
+      .catch((err) => alert("Ошибка редактирования учетной записи",err));
+
     setPopup(false)
   }
-
+  
+  console.log(userObj)
+  console.log(avatarUser)
 
   return (
     <div className={s.container}>
-      <form onSubmit={(e) => handleEditUserInfo(e, {name: nameUser, about: aboutUser}, {avatar: avatarUser})}>
-        <img className={s.image} src={avatarUser} alt="image"></img>
+      <form onSubmit={(e) => {
+        handleEditUserInfo(e, userObj, avatarUser)}
+        }>
+        <img className={s.image} src={avatarUser.avatar} alt="image"></img>
         <label htmlFor="img">Image:</label>
         <input
           type="text"
           id="img"
           name="imgLink"
           placeholder="Ссылка на изображение"
-          value={avatarUser}
+          value={avatarUser.avatar}
           onChange={(e) => {
-            setAvatarUser(e.target.value.toString());
+            setAvatarUser((prevState) => ({...prevState, avatar: e.target.value.toString()}));
           }}
         ></input>
-        <input type="submit" value="Сохранить изменения"></input>
+        {/* <input type="submit" value="Сохранить изменения"></input>
       </form>
-      <form onSubmit={(e) => handleEditUserInfo(e, {name: nameUser, about: aboutUser}, {avatar: avatarUser})}>
+      <form onSubmit={(e) => handleEditUserInfo(e, {name: nameUser, about: aboutUser}, {avatar: avatarUser})}> */}
         <label htmlFor="name">Name:</label>
         <input
           type="text"
           id="name"
           placeholder="Имя"
-          value={nameUser}
+          value={userObj.name}
           onChange={(e) => {
-            setNameUser(e.target.value.toString());
+            setUserObj((prevState) => ({...prevState, name: e.target.value.toString()}));
           }}
           required
         ></input>
@@ -62,9 +68,9 @@ export default function Edituser({ setPopup }) {
           type="text"
           id="about"
           placeholder="Обо мне"
-          value={aboutUser}
+          value={userObj.about}
           onChange={(e) => {
-            setAboutUser(e.target.value.toString());
+            setUserObj((prevState) => ({...prevState, about: e.target.value.toString()}));
           }}
           required
         ></input>
@@ -77,7 +83,7 @@ export default function Edituser({ setPopup }) {
           disabled
         ></input>
         <input type="submit" value="Сохранить изменения"></input>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={() => setPopup(false)}>Cancel</button>
       </form>
     </div>
   );
