@@ -1,8 +1,8 @@
 
 
 .modal {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
@@ -11,12 +11,10 @@
     bottom: 0;
     z-index: 100;
     overflow-y: scroll;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: .1s;
+    transition: .3s;
+    outline: none;
 }
 
 .modal.active {
@@ -25,24 +23,62 @@
 }
 
 .content {
-    position: relative;
-    margin: 0 auto;
-    top: 50px;
-    width: 500px;
-    max-width: calc(100% - 100px);
+    box-sizing: border-box;
+    margin: 120px auto;
+    max-width: calc(100vw - 100px);
+    width: 600px;
     padding: 20px;
     border-radius: 10px;
     background-color: white;
-    transform: scale(0);
-    transform-origin: 700px -200px;
-    transition: all .1s;
- 
+    animation: transform-close 1s linear;
+    transform-origin: 700px 0px;
+    opacity: 0;
+
 }
 
 .content.active {
-    transform: scale(1);
-    transition: all .1s;
+    opacity: 1;
+    animation: transform-open .8s ease;
 }
+
+@keyframes transform-open {
+    from {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1.2);
+    }
+
+    60% {
+        transform: scale(0.85);
+    }
+
+    80% {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+/* @keyframes transform-close {
+    from {
+        width: inherit;
+        height: inherit;
+    }
+
+    80% {
+        width: 200px;
+        height: 200px;
+    }
+
+    to {
+        width: 0px;
+        height: 0px;
+    }
+} */
 
 
 /* 

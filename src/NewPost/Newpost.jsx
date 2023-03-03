@@ -8,53 +8,47 @@ export default function Newpost({
   anchorNewPost,
   setAnchorNewPost,
 }) {
-  const [title, setTitle] = useState("");
-  const [postText, setPostText] = useState("");
-  const [postImg, setPostImg] = useState(
-    "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
-  );
-  const [postTags, setPostTags] = useState([]);
+
   const [newPostData, setNewPostData] = useState({
     title: "",
     text: "",
     image:
-      "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg",
+      "",
     tags: [],
   });
 
-  function clearForm() {
-    setTitle("");
-    setPostText("");
-    setPostImg(
-      "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
-    );
-    setPostTags([]);
-  }
+  // function clearForm() {
+  //   setNewPostData = {}
+  // }
 
   function handleCreatePost(e, data) {
     e.preventDefault();
     console.log(data);
     api
       .setNewPost(data)
-      .then((data) => {
-        console.log(data);
+      .then((res) => {
+        console.log(res);
         setAnchorNewPost(!anchorNewPost)
       })
-      .catch((err) =>
+      .catch((err) =>{
         alert(
           `Не удалось создать пост, проверьте введенные данные. Ошибка - ${err}`
-        )
+        )}
       );
     setPopup(false);
-    clearForm();
+    // clearForm();
   }
 
-  console.log(newPostData)
+  const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
 
+  console.log(newPostData)
+  
   return (
     <>
       <div className={s.container}>
+        <h3>Создание поста</h3>
         <form
+          className={s.form}
           onSubmit={(e) =>
             handleCreatePost(e, newPostData)
           }
@@ -77,7 +71,9 @@ export default function Newpost({
             }}
             required
           ></textarea>
-          <img className={s.image} src={postImg} alt="image"></img>
+          {/* <div className={s.imgWrapper}> */}
+            <img className={s.image} src={newPostData.image.length < 1 ? backgroundImage : newPostData.image} alt={newPostData.title}></img>
+          {/* </div> */}
           <input
             type="text"
             name="imgLink"

@@ -34,11 +34,12 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
 
   return (
     <div className={s.container}>
-      <form onSubmit={(e) => {
+      <h3>Изменение данных</h3> 
+      <form className={s.formUser} onSubmit={(e) => {
         handleEditUserInfo(e, userObj, avatarUser)}
         }>
-        <img className={s.image} src={avatarUser.avatar} alt="image"></img>
-        <label htmlFor="img">Image:</label>
+        <div className={s.imgwrapper}><img className={s.image} src={avatarUser.avatar} alt={userObj.name}></img></div>
+        <span className={s.main}><label htmlFor="img">Изображение:</label>
         <input
           type="text"
           id="img"
@@ -48,11 +49,11 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
           onChange={(e) => {
             setAvatarUser((prevState) => ({...prevState, avatar: e.target.value.toString()}));
           }}
-        ></input>
+        ></input></span>
         {/* <input type="submit" value="Сохранить изменения"></input>
       </form>
       <form onSubmit={(e) => handleEditUserInfo(e, {name: nameUser, about: aboutUser}, {avatar: avatarUser})}> */}
-        <label htmlFor="name">Name:</label>
+        <span className={s.main}><label htmlFor="name">Имя:</label>
         <input
           type="text"
           id="name"
@@ -62,8 +63,8 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
             setUserObj((prevState) => ({...prevState, name: e.target.value.toString()}));
           }}
           required
-        ></input>
-        <label htmlFor="about">Информация:</label>
+        ></input></span>
+        <span className={s.main}><label htmlFor="about">Информация:</label>
         <input
           type="text"
           id="about"
@@ -73,17 +74,21 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
             setUserObj((prevState) => ({...prevState, about: e.target.value.toString()}));
           }}
           required
-        ></input>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          placeholder="E-email"
-          value={currentUser.email}
-          disabled
-        ></input>
-        <input type="submit" value="Сохранить изменения"></input>
-        <button type="button" onClick={() => setPopup(false)}>Cancel</button>
+        ></input></span>
+        <span className={s.main}>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="text"
+            id="email"
+            placeholder="E-email"
+            value={currentUser.email}
+            disabled
+          ></input>
+        </span>
+        <div className={s.footer}>
+          <input className={s.btn} type="submit" value="Сохранить"></input>
+          <button className={s.btn} type="button" onClick={() => setPopup(false)}>Отмена</button>
+        </div>
       </form>
     </div>
   );
