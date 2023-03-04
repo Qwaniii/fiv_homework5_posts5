@@ -10,7 +10,7 @@ export default function PostPage({
     isLoading,
     setIsLoading,
     anchorAddDelComment,
-    setAnchorAddDelComment
+    setAnchorAddDelComment,
 }) {
     const id = useParams();
 

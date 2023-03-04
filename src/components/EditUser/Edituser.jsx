@@ -39,17 +39,19 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
         handleEditUserInfo(e, userObj, avatarUser)}
         }>
         <div className={s.imgwrapper}><img className={s.image} src={avatarUser.avatar} alt={userObj.name}></img></div>
-        <span className={s.main}><label htmlFor="img">Изображение:</label>
-        <input
-          type="text"
-          id="img"
-          name="imgLink"
-          placeholder="Ссылка на изображение"
-          value={avatarUser.avatar}
-          onChange={(e) => {
-            setAvatarUser((prevState) => ({...prevState, avatar: e.target.value.toString()}));
-          }}
-        ></input></span>
+        <span className={s.main}>
+          <label htmlFor="img">Аватар:</label>
+          <input
+            type="text"
+            id="img"
+            name="imgLink"
+            placeholder="Ссылка на изображение"
+            value={avatarUser.avatar}
+            onChange={(e) => {
+              setAvatarUser((prevState) => ({...prevState, avatar: e.target.value.toString()}));
+            }}
+          ></input>
+        </span>
         {/* <input type="submit" value="Сохранить изменения"></input>
       </form>
       <form onSubmit={(e) => handleEditUserInfo(e, {name: nameUser, about: aboutUser}, {avatar: avatarUser})}> */}
@@ -64,7 +66,7 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
           }}
           required
         ></input></span>
-        <span className={s.main}><label htmlFor="about">Информация:</label>
+        <span className={s.main}><label htmlFor="about">Инфо:</label>
         <input
           type="text"
           id="about"
@@ -89,6 +91,7 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
           <input className={s.btn} type="submit" value="Сохранить"></input>
           <button className={s.btn} type="button" onClick={() => setPopup(false)}>Отмена</button>
         </div>
+        <span className={s.close} onClick={() => setPopup(false)}>&times;</span>
       </form>
     </div>
   );

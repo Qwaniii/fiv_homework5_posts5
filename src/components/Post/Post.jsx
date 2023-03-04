@@ -1,4 +1,4 @@
-import * as React from "react";
+import react, {useContext, useEffect} from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -40,9 +40,9 @@ export default function Post({
     anchorEl,
     handleClick,
     handleClose,
-    setIsLoading
+    setIsLoading,
 }) {
-    const { currentUser } = React.useContext(UserContext);
+    const { currentUser } = useContext(UserContext);
 
     const isAuthor = post.author._id === currentUser._id ? true : false;
     const isLike = post.likes.some((id) => id === currentUser._id);
@@ -59,6 +59,9 @@ export default function Post({
     //   const handleExpandClick = () => {
     //     setExpanded(!expanded);
     //   };
+
+
+
     const created = new Date(post.created_at);
 
     return (

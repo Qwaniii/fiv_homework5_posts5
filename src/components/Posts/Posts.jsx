@@ -20,7 +20,8 @@ export default function Posts({
   setIsLoading,
   setSelectedTab,
   selectedTab,
-  setPopupEdit
+  setPopupEdit,
+
 }) {
 
   

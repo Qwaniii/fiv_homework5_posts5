@@ -77,6 +77,17 @@ class Api {
         }).then(onResponce);
     }
 
+    editPostById(postId, data) {
+        return fetch(`${this._dataUrl}/posts/${postId}`, {
+            method: "PATCH",
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(onResponce);
+    }
+
     getPostComments(postId) {
         return fetch(`${this._dataUrl}/posts/comments/${postId}`, {
             headers: {

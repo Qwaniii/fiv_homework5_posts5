@@ -8,12 +8,13 @@ export default function Newpost({
   anchorNewPost,
   setAnchorNewPost,
 }) {
-
+  
+  const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
   const [newPostData, setNewPostData] = useState({
     title: "",
     text: "",
     image:
-      "",
+    backgroundImage,
     tags: [],
   });
 
@@ -39,7 +40,6 @@ export default function Newpost({
     // clearForm();
   }
 
-  const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
 
   console.log(newPostData)
   
@@ -72,14 +72,13 @@ export default function Newpost({
             required
           ></textarea>
           {/* <div className={s.imgWrapper}> */}
-            <img className={s.image} src={newPostData.image.length < 1 ? backgroundImage : newPostData.image} alt={newPostData.title}></img>
+            <img className={s.image} src={newPostData.image} alt={newPostData.title}></img>
           {/* </div> */}
           <input
             type="text"
             name="imgLink"
             placeholder="Ссылка на изображение"
-            value={newPostData.image}
-            onChange={(e) => setNewPostData((prevState) => ({...prevState, image: e.target.value.toString()}))}
+            onChange={(e) => setNewPostData((prevState) => ({...prevState, image: (e.target.value.toString() || backgroundImage)}))}
           ></input>
           <input
             type="text"
@@ -89,7 +88,11 @@ export default function Newpost({
               setNewPostData((prevState) => ({...prevState, tags: e.target.value.replace(/\s/g, "").split(",")}))
             }
           ></input>
-          <input type="submit" value="Создать пост"></input>
+          <div className={s.footer}>
+            <input className={s.btn} type="submit" value="Добавить пост"></input>
+            <button className={s.btn} type="button" onClick={() => setPopup(false)}>Отмена</button>
+          </div>
+          <span className={s.close} onClick={() => setPopup(false)}>&times;</span>
         </form>
       </div>
     </>

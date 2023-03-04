@@ -31,7 +31,6 @@ function App() {
     const [anchorNewPost, setAnchorNewPost] = useState(false);
     const [anchorAddDelComment, setAnchorAddDelComment] = useState(false);
 
-
     
 
 
@@ -45,10 +44,10 @@ function App() {
     };
 
     useEffect(() => {
-        setIsLoading(false)
         api.getAppInfo().then(([postsData, currentUserData]) => {
             setPosts(postsData);
             setCurrentUser(currentUserData);
+            // setNumberComments(postsData.map((item) => item.comments.length))
             console.log("render cards & user")
             setIsLoading(true);
         });
@@ -105,6 +104,7 @@ function App() {
         // handleClose();
     }
 
+
     (modalActive || modalUserActive) ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll"
 
     return (
@@ -136,7 +136,6 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
-                                
                             />
                         }
                     ></Route>

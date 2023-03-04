@@ -75,21 +75,40 @@
     width: 100%;
 }
 
-.delBtn {
+.btn {
+    display: flex;
     margin-left: auto;
     cursor: pointer;
-    padding: 10px;
     box-sizing: border-box;
-    border-radius: 50%;
     color: rgba(128, 128, 128, 0.4);
-    transition: all .3s;
+
+
 }
 
-.delBtn:hover {
+.edit {
+    margin-right: 5px;
+    padding: 7px;
+    border-radius: 50%;
+}
+
+.edit:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+    color: black;
+    transition: all .3s;
+    
+}
+
+.delete {
+    border-radius: 50%;
+    padding: 7px;
+}
+
+.delete:hover {
     background-color: rgba(128, 128, 128, 0.1);
     color: black;
     transition: all .3s;
 }
+
 
 .right {
     position: relative;
@@ -101,8 +120,18 @@
     box-sizing: border-box;
 }
 
+.updatePost {
+    display: flex;
+    justify-content:space-between;
+}
+
 .title {
     text-align: left;
+}
+
+.date {
+    font-size: 12px;
+    color: gray;
 }
 
 .bottom {

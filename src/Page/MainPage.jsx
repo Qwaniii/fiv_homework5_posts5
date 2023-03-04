@@ -17,7 +17,7 @@ export default function MainPage({
     setIsLoading,
     selectedTab,
     setSelectedTab,
-    setPopupEdit
+    setPopupEdit,
 }) {
   return (
     <div>
