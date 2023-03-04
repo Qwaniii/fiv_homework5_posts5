@@ -24,8 +24,8 @@ export default function PostWindow({
     setPosts,
     isLoading,
     setIsLoading,
-    anchorAddDelComment,
-    setAnchorAddDelComment,
+    anchorAddDelEditComment,
+    setAnchorAddDelEditComment,
 }) {
     const { currentUser } = useContext(UserContext)
 
@@ -58,7 +58,7 @@ export default function PostWindow({
             })
             .catch( err => setErrorState(true))
             setIsLoading(true);
-    }, [id, anchorAddDelComment]);
+    }, [id, anchorAddDelEditComment]);
     
     
     function handleEditPost(id, data) {
@@ -68,6 +68,8 @@ export default function PostWindow({
                 console.log(data)
             })
             .catch((err) => console.log(err))
+        setEditPost(false)
+        setAnchorAddDelEditComment(!anchorAddDelEditComment)
     }
 
     function handleLikeClick() {
@@ -85,25 +87,28 @@ export default function PostWindow({
         api.addNewComment(id, text)
             .then((data) => {
                 console.log(data);
-                setAnchorAddDelComment(!anchorAddDelComment)
+                setAnchorAddDelEditComment(!anchorAddDelEditComment)
                 setTextComment({text: ""})
             })
             .catch((err) => console.log(err))
     }
 
     function handleDelPost(id) {
-        api.deletePost(id)
-            .then((delitingPost) => {
-                const newPosts = posts.filter(
-                    (curPost) => curPost._id !== delitingPost._id
-                );
-                setPosts(newPosts);
-            })
-            .catch(err => console.log(err))
-        navigate("/fo_homework4_post4")
-    }
 
-    console.log(postWindow)
+        const deletePost = window.confirm("Удалить пост?")
+        
+        if(deletePost) {
+            api.deletePost(id)
+                .then((delitingPost) => {
+                    const newPosts = posts.filter(
+                        (curPost) => curPost._id !== delitingPost._id
+                    );
+                    setPosts(newPosts);
+                })
+                .catch(err => console.log(err))
+                navigate("/fo_homework4_post4")
+        }
+    }
 
 
     const date = new Date(postWindow.created_at);
@@ -145,7 +150,7 @@ export default function PostWindow({
                                     {isAuthor && (
                                      editPost 
                                         ? <div  className={s.btn} >
-                                            <span className={s.edit} onClick={() => handleEditPost(id, readyEditPost)}><SaveOutlinedIcon/></span>
+                                            <span className={`${s.edit} ${s.save}`} onClick={() => handleEditPost(id, readyEditPost)}><SaveOutlinedIcon/></span>
                                              <span className={s.delete} onClick={() => setEditPost(false)}><DoDisturbAltOutlinedIcon/></span>
                                         </div>
                                         : <div  className={s.btn} >
@@ -157,41 +162,41 @@ export default function PostWindow({
                         </div>
                         <div className={s.main}>
                             <div className={s.img}>
-                                <img src={editPost ? (readyEditPost.image || backgroundImage) : postWindow.image} alt="Image"></img>
+                                <img src={editPost ? (readyEditPost.image || backgroundImage) : postWindow.image} alt={postWindow.title}></img>
                             </div>
                             <div className={s.right}>
                                 <div className={s.updatePost}>
-                                    <Typography variant="h5" color="text.secondary" className={s.title}>
-                                        {editPost
-                                        ? <input type="text"  placeholder="Заголовок поста" value={readyEditPost.title}
-                                        onChange={(e) => {
-                                            setReadyEditPost((prevState) => ({...prevState, title: e.target.value.toString()}))
-                                        }}></input>
-                                        : postWindow.title}
-                                    </Typography>
                                     {date.getTime() !== update.getTime()
-                                    ? <div className={s.date}>
-                                        Изменено: {update.toLocaleDateString("ru-RU", {
-                                            month: "2-digit",
-                                            day: "numeric",
-                                            year: "numeric",
-                                        })}
-                                        <span className={s.time}>{update.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
-                                    </div>
-                                    : ""}
+                                            ? <div className={s.date}>
+                                                Изменено: {update.toLocaleDateString("ru-RU", {
+                                                    month: "2-digit",
+                                                    day: "numeric",
+                                                    year: "numeric",
+                                                })}
+                                                <span className={s.time}>{update.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                                            </div>
+                                            : ""}
                                 </div>
+                                <Typography variant="h5" color="text.secondary" className={s.title}>
+                                    {editPost
+                                    ? <input className={s.input} type="text"  placeholder="Заголовок поста" value={readyEditPost.title}
+                                    onChange={(e) => {
+                                        setReadyEditPost((prevState) => ({...prevState, title: e.target.value.toString()}))
+                                    }}></input>
+                                    : postWindow.title}
+                                </Typography>
                                 <Typography variant="body2" color="text.primary">
                                     {editPost 
-                                    ? <textarea type="text"  placeholder="Текст" value={readyEditPost.text}
+                                    ? <textarea className={s.textarea} type="text"  placeholder="Текст" value={readyEditPost.text}
                                     onChange={(e) => {
                                         setReadyEditPost((prevState) => ({...prevState, text: e.target.value.toString()}))
                                     }}></textarea> 
                                     : postWindow.text}
                                 </Typography>
-                                    {editPost && <input type="text" placeholder="Ссылка на изображение" value={readyEditPost.image}
+                                    {editPost && <><label htmlFor="inpImg">Изображение:</label><input id="inpImg" className={`${s.input} ${s.inpImg}`} type="text" placeholder="Ссылка на изображение" value={readyEditPost.image}
                                     onChange={(e) => {
                                         setReadyEditPost((prevState) => ({...prevState, image: (e.target.value.toString())}))
-                                    }}></input>}
+                                    }}></input></>}
                                     <div className={s.bottom}>
                                         <div className={s.like}>
                                             <IconButton aria-label="add to favorites" onClick={handleLikeClick}>
@@ -211,7 +216,7 @@ export default function PostWindow({
                                         </div>
                                         <div className={s.tag}>
                                             {editPost 
-                                            ? <input type="text"  placeholder="Введите тэги, через запятую" value={readyEditPost.tags}
+                                            ? <input className={`${s.input} ${s.inpTag}`} type="text"  placeholder="Введите тэги, через запятую" value={readyEditPost.tags}
                                             onChange={(e) => {
                                                 setReadyEditPost((prevState) => ({...prevState, tags: e.target.value.replace(/\s/g, "").split(",")}))
                                             }}></input> 
@@ -228,7 +233,7 @@ export default function PostWindow({
                         <div></div>
                         <div className={s.footer}>
                         {postComments
-                            .map((comment, index) => <Comments comment={comment} key={comment._id} setAnchor={setAnchorAddDelComment} anchor={anchorAddDelComment}/>)}
+                            .map((comment, index) => <Comments comment={comment} key={comment._id} setAnchor={setAnchorAddDelEditComment} anchor={anchorAddDelEditComment}/>)}
                             {/* <Comments comment={postComments[0]}/> */}
                             {/* {postComments.map((comment) => {
                                 <Comments 

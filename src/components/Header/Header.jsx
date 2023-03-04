@@ -16,7 +16,7 @@ export default function Header({ popupEdit, setPopupEdit, scrollTop }) {
         <div className={cn(s.header, { [s.scroll]: scrollTop > scrollNum })}>
             <div className={cn(s.container, {[s.scroll]: scrollTop > scrollNum})}>
                 <div className={cn(s.inner, {[s.scroll]: scrollTop > scrollNum})}>
-                    <Link to="fo_homework4_post4/">
+                    <Link to="/fo_homework4_post4">
                         <div className={s.logo}>
                             <ImportContactsOutlinedIcon fontSize='large'/> POSTS
                         </div>

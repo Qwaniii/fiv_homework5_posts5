@@ -29,7 +29,7 @@ function App() {
     const [selectedTab, setSelectedTab] = useState("stock");
     const [anchorEditUser, setAnchorEditUser] = useState(false);
     const [anchorNewPost, setAnchorNewPost] = useState(false);
-    const [anchorAddDelComment, setAnchorAddDelComment] = useState(false);
+    const [anchorAddDelEditComment, setAnchorAddDelEditComment] = useState(false);
 
     
 
@@ -51,7 +51,7 @@ function App() {
             console.log("render cards & user")
             setIsLoading(true);
         });
-    }, [anchorEditUser, anchorNewPost, anchorAddDelComment]);
+    }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment]);
 
     useEffect(() => {
         api.search(debounceValue).then((data) => {
@@ -92,14 +92,16 @@ function App() {
         // const isAuthor = post.author._id === currentUser._id ? true : false;
         // isAuthor
         //     ? 
-
+        const deletePost = window.confirm("Удалить пост?")
+        
+        if(deletePost) {
         api.deletePost(post._id).then((delitingPost) => {
                 const newPosts = posts.filter(
                     (curPost) => curPost._id !== delitingPost._id
                 );
                 setPosts(newPosts);
             })
-
+        }
             // : alert("Вы не можете удалить чужой пост");
         // handleClose();
     }
@@ -148,8 +150,8 @@ function App() {
                                 setPosts={setPosts}
                                 isLoading={isLoading}
                                 setIsLoading={setIsLoading}
-                                anchorAddDelComment={anchorAddDelComment}
-                                setAnchorAddDelComment={setAnchorAddDelComment}
+                                anchorAddDelEditComment={anchorAddDelEditComment}
+                                setAnchorAddDelEditComment={setAnchorAddDelEditComment}
                             />
                         }
                     ></Route>
