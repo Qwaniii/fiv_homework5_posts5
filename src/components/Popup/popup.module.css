@@ -14,6 +14,7 @@
     opacity: 0;
     pointer-events: none;
     transition: .3s;
+
     outline: none;
 }
 
@@ -33,6 +34,7 @@
     animation: transform-close 1s linear;
     transform-origin: 700px 0px;
     opacity: 0;
+
 
 }
 

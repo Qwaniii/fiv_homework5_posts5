@@ -133,6 +133,19 @@
     box-sizing: border-box;
 }
 
+.right::after {    
+    content: "";
+    width:85%;
+    height: 1px;
+    border-top: .5px solid lightgray;
+    position: absolute;
+    bottom: 45px;
+    left: 0;
+    right: 0;
+    transform: translateX(10%);
+
+}
+
 .updatePost {
     text-align: right;
 }
@@ -152,7 +165,7 @@
     bottom: 5px;
     left: 0;
 
-    /* transform: translate(50%); */
+    /* transform: translateX(50%); */
 
 }
 
