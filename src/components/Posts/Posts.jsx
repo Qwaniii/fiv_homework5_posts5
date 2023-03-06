@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LoginPage from "../../Page/LoginPage";
 import Post from "../Post/Post";
 import SearchAddPost from "../SearchAddPost/SearchAddPost";
 import Sort from "../Sort/Sort";
@@ -49,6 +50,8 @@ export default function Posts({
           />
 
           <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
+
+          {/* <LoginPage/> */}
           
           <div className={s.inner}>
             {isLoading ? 

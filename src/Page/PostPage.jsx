@@ -11,6 +11,9 @@ export default function PostPage({
     setIsLoading,
     anchorAddDelEditComment,
     setAnchorAddDelEditComment,
+    modalAbout,
+    setModalAbout,
+    anchorEditUser
 }) {
     const id = useParams();
 
@@ -25,6 +28,9 @@ export default function PostPage({
                 setIsLoading={setIsLoading}
                 anchorAddDelEditComment={anchorAddDelEditComment}
                 setAnchorAddDelEditComment={setAnchorAddDelEditComment}
+                anchorEditUser={anchorEditUser}
+                modalAbout={modalAbout}
+                setModalAbout={setModalAbout}
             />
         </div>
     );

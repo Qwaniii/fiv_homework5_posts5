@@ -118,7 +118,13 @@ class Api {
         }).then(onResponce)
     }
 
-
+    getInfoAboutUser(userId) {
+        return fetch(`${this._dataUrl}/users/${userId}`, {
+            headers: {
+                authorization: this._token,
+            }
+        }).then(onResponce)
+    }
 
     getLikePost(postID) {
         return fetch(`${this._dataUrl}/posts/likes/${postID}`, {
@@ -167,12 +173,23 @@ class Api {
             }
         }).then(onResponce);
     }
+
+    signIn(data) {
+        return fetch(`${this._dataUrl}/signin`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(onResponce)
+    }
 }
 
-const config = {
+export const config = {
     dataUrl: 'https://api.react-learning.ru/v2/group-10',
     // dataUrl: 'https://api.react-learning.ru',
     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2UyMTgxNzU5Yjk4YjAzOGY3N2IyN2MiLCJncm91cCI6Imdyb3VwLTEwIiwiaWF0IjoxNjc1NzYxODg2LCJleHAiOjE3MDcyOTc4ODZ9.kbO5ITay5Wc1iGc28jtfJQ6VVMk3StpsVWNFql8W7TE'
+    // token: sessionStorage.getItem('token')
 }
 
 const api = new Api(config);

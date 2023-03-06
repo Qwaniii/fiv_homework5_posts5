@@ -23,6 +23,7 @@ function App() {
     const [searchQuery, setSearchQuery] = useState("");
     const [modalActive, setModalActive] = useState(false);
     const [modalUserActive, setModalUserActive] = useState(false);
+    const [modalInfoAboutUser, setModalInfoAboutUser] = useState(false);
     const [postWindow, setPostWindow] = useState({});
     const [scrollTop, setScrollTop] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +33,6 @@ function App() {
     const [anchorAddDelEditComment, setAnchorAddDelEditComment] = useState(false);
 
     
-
 
     const debounceValue = useDebounce(searchQuery, 500);
 
@@ -152,6 +152,9 @@ function App() {
                                 setIsLoading={setIsLoading}
                                 anchorAddDelEditComment={anchorAddDelEditComment}
                                 setAnchorAddDelEditComment={setAnchorAddDelEditComment}
+                                anchorEditUser={anchorEditUser}
+                                modalAbout={modalInfoAboutUser}
+                                setModalAbout={setModalInfoAboutUser}
                             />
                         }
                     ></Route>
