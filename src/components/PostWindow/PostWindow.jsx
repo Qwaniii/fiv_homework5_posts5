@@ -17,6 +17,8 @@ import DelBtn from "../DelBtn/DelBtn";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
+import SecondPopup from "../PopupSecond/SecondPopup";
+import AboutAnotherUser from "../AboutAnotherUser/AboutAnotherUser";
 
 export default function PostWindow({
   id,
@@ -38,6 +40,7 @@ export default function PostWindow({
   const [textComment, setTextComment] = useState({ text: "" });
   const [editPost, setEditPost] = useState(false);
   const [readyEditPost, setReadyEditPost] = useState({});
+  const [commentInfo, setCommentInfo] = useState({});
   const navigate = useNavigate();
 
   const backgroundImage =
@@ -145,6 +148,7 @@ export default function PostWindow({
                       </Avatar>
                       <div className={s.authorInfo}>
                         <p>{postWindow?.author?.name}</p>
+                        {/* <p onClick={() => setModalAbout(true)}>{postWindow?.author?.name}</p> */}
                         <p>
                           {date.toLocaleDateString("ru-RU", {
                             month: "long",
@@ -329,15 +333,16 @@ export default function PostWindow({
               <div className={s.footerWrap}>
                 <div></div>
                 <div className={s.footer}>
-                  {postComments.map((comment, index) => (
-                    <Comments
-                      comment={comment}
-                      key={comment._id}
-                      setAnchor={setAnchorAddDelEditComment}
-                      anchor={anchorAddDelEditComment}
-                      modalAbout={modalAbout}
-                      setModalAbout={setModalAbout}
-                    />
+                  {postComments.map((comment, index) => (                
+                      <Comments
+                        comment={comment}
+                        key={comment._id}
+                        setAnchor={setAnchorAddDelEditComment}
+                        anchor={anchorAddDelEditComment}
+                        modalAbout={modalAbout}
+                        setModalAbout={setModalAbout}
+                        setCommentInfo={setCommentInfo}
+                      />
                   ))}
                   {/* <Comments comment={postComments[0]}/> */}
                   {/* {postComments.map((comment) => {
@@ -347,6 +352,11 @@ export default function PostWindow({
                             }) } */}
                 </div>
               </div>
+                <SecondPopup popup={modalAbout} setPopup={setModalAbout}>
+                   <span><AboutAnotherUser
+                          commentInfo={commentInfo} setPopup={setModalAbout} 
+                    /></span>
+                </SecondPopup>
               <div className={s.footerWrap}>
                 <div></div>
                 <div className={s.newComment}>
@@ -377,6 +387,7 @@ export default function PostWindow({
                       добавить
                     </Button>
                   </form>
+            
                 </div>
               </div>
             </div>

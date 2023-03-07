@@ -1,0 +1,55 @@
+.container {
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    background-color: rgb(211, 255, 255);
+    width: 300px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px -2px black;
+}
+
+.wrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.wrapper input {
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    color: gray;
+    outline: none;
+    border: .3px solid gray;
+}
+
+.email {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.password {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    position: absolute;
+    padding: 0;
+    color: red;
+    font-size: 12px;
+    bottom: -17px;
+    left: 10px;
+}

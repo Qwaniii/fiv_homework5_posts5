@@ -3,7 +3,7 @@
 .modal {
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
     left: 0;
@@ -27,7 +27,7 @@
     margin: 120px auto;
     max-width: calc(100vw - 100px);
     width: 600px;
-    padding: 20px;
+    padding: 5px;
     border-radius: 10px;
     background-color: white;
     /* animation: transform-close 1s linear; */

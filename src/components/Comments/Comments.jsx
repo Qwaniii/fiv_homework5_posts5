@@ -4,10 +4,9 @@ import s from "./comments.module.css"
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { UserContext } from '../../Context/UserContext';
 import api from '../../utils/Api';
-import SecondPopup from '../PopupSecond/SecondPopup';
 
 
-export default function Comments({ comment, anchor, setAnchor, modalAbout, setModalAbout }) {
+export default function Comments({ comment, anchor, setAnchor, modalAbout, setModalAbout, setCommentInfo }) {
 
     const { currentUser } = useContext(UserContext)
 
@@ -29,11 +28,11 @@ export default function Comments({ comment, anchor, setAnchor, modalAbout, setMo
         <div className={s.container}>
             <div className={s.inner}>
                 <div className={s.author}>
-                    <div className={s.avatar}>
-                        <img src={comment?.author?.avatar} ></img>
+                    <div className={s.avatar} onClick={() => {setModalAbout(true); setCommentInfo(comment);}}>
+                        <img src={comment?.author?.avatar} alt={comment?.author?.name}></img>
                     </div>
                     <div className={s.info}>
-                        <div className={s.name} onClick={() => setModalAbout(true)}>
+                        <div className={s.name} onClick={() => {setModalAbout(true); setCommentInfo(comment);}}>
                             {comment?.author?.name}
                         </div>
                         <div className={s.date}>
@@ -50,9 +49,6 @@ export default function Comments({ comment, anchor, setAnchor, modalAbout, setMo
                 <Typography variant="body2" color="text.primary" className={s.text}>
                     {comment.text}
                 </Typography >
-                <SecondPopup popup={modalAbout} setPopup={setModalAbout}>
-                   <span><img src={comment.author.avatar} style={{width:500}}></img></span>
-                </SecondPopup>
             </div>
         </div>
     </div>

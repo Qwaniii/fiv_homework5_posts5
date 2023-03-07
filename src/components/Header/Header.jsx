@@ -5,8 +5,9 @@ import Popup from '../Popup/Popup';
 import cn from "classnames"
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../Context/UserContext';
+import LoginPage from '../../Page/LoginPage';
 
-export default function Header({ popupEdit, setPopupEdit, scrollTop }) {
+export default function Header({ setPopupEdit, scrollTop, setModalLogin }) {
     const scrollNum = 178
 
     const { currentUser } = useContext(UserContext)
@@ -21,6 +22,9 @@ export default function Header({ popupEdit, setPopupEdit, scrollTop }) {
                             <ImportContactsOutlinedIcon fontSize='large'/> POSTS
                         </div>
                     </Link>
+                    <div>
+                        <button onClick={() => setModalLogin(true)}>Войти</button>
+                    </div>
                     <div className={s.enter} onClick={() => setPopupEdit(true)}>
                         {!currentUser && <a className={s.link}>Войти</a>}
                         <a title="Редактировать"> {currentUser && 
