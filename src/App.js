@@ -27,6 +27,7 @@ function App() {
     const [modalUserActive, setModalUserActive] = useState(false);
     const [modalInfoAboutUser, setModalInfoAboutUser] = useState(false);
     const [modalLogin, setModalLogin] = useState(false);
+    const [modalPostUser, setModalPostUser] = useState(false);
     const [postWindow, setPostWindow] = useState({});
     const [scrollTop, setScrollTop] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -110,7 +111,7 @@ function App() {
     }
 
 
-    (modalActive || modalUserActive || modalInfoAboutUser) ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll"
+    (modalActive || modalUserActive || modalInfoAboutUser || modalPostUser) ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll"
 
     return (
         <div className="App" >
@@ -159,6 +160,8 @@ function App() {
                                 anchorEditUser={anchorEditUser}
                                 modalAbout={modalInfoAboutUser}
                                 setModalAbout={setModalInfoAboutUser}
+                                modalPostUser={modalPostUser}
+                                setModalPostUser={setModalPostUser}
                             />
                         }
                     ></Route>

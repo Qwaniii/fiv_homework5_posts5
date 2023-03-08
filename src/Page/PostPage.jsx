@@ -13,7 +13,9 @@ export default function PostPage({
     setAnchorAddDelEditComment,
     modalAbout,
     setModalAbout,
-    anchorEditUser
+    anchorEditUser,
+    modalPostUser,
+    setModalPostUser
 }) {
     const id = useParams();
 
@@ -31,6 +33,8 @@ export default function PostPage({
                 anchorEditUser={anchorEditUser}
                 modalAbout={modalAbout}
                 setModalAbout={setModalAbout}
+                modalPostUser={modalPostUser}
+                setModalPostUser={setModalPostUser}
             />
         </div>
     );

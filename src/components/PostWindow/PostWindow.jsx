@@ -30,7 +30,9 @@ export default function PostWindow({
   setAnchorAddDelEditComment,
   modalAbout,
   setModalAbout,
-  anchorEditUser
+  anchorEditUser,
+  modalPostUser,
+  setModalPostUser
 }) {
   const { currentUser } = useContext(UserContext);
 
@@ -123,6 +125,7 @@ export default function PostWindow({
     }
   }
 
+
   const date = new Date(postWindow.created_at);
   const update = new Date(postWindow.updated_at);
 
@@ -141,14 +144,14 @@ export default function PostWindow({
                     <span className={s.headerRight}>
                       <Avatar aria-label="recipe">
                         <img
+                          onClick={() => setModalPostUser(true)}
                           src={postWindow?.author?.avatar}
                           className={s.avatar}
                           alt={postWindow?.author?.name}
                         ></img>
                       </Avatar>
-                      <div className={s.authorInfo}>
-                        <p>{postWindow?.author?.name}</p>
-                        {/* <p onClick={() => setModalAbout(true)}>{postWindow?.author?.name}</p> */}
+                      <div>
+                        <p onClick={() => setModalPostUser(true)}  className={s.authorInfo}>{postWindow?.author?.name}</p>
                         <p>
                           {date.toLocaleDateString("ru-RU", {
                             month: "long",
@@ -157,6 +160,11 @@ export default function PostWindow({
                           {date.getFullYear()}
                         </p>
                       </div>
+                      <SecondPopup popup={modalPostUser} setPopup={setModalPostUser}>
+                        <span><AboutAnotherUser
+                          commentInfo={postWindow} setPopup={setModalPostUser} 
+                        /></span>
+                       </SecondPopup>
                       {isAuthor &&
                         (editPost ? (
                           <div className={s.btn}>

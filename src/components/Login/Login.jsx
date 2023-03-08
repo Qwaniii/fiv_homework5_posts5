@@ -62,8 +62,10 @@ console.log({errors})
                 }})}></input>
             {errors?.password && <span className={s.error}>*{errors?.password?.message}</span>}
           </div>
-          <input type="submit"></input>
+          <input type="submit" value="Зарегистрироваться"></input>
+          <input type="submit" value="Войти"></input>
         </form>
+        <button>Забыли пароль?</button>
       </div>
     </div>
   )
