@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React from 'react'
 import s from "./sort.module.css"
 import cn from "classnames"
 import tabs from "./tabs"

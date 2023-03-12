@@ -1,6 +1,4 @@
-.postwindow {
 
-}
 
 .container {
     margin: 0 auto;
@@ -214,7 +212,7 @@
 
 .footerWrap {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     box-sizing: border-box;
     margin-bottom: 20px;
 }

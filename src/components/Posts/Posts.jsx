@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import LoginPage from "../../Page/LoginPage";
+import React from "react";
 import Post from "../Post/Post";
 import SearchAddPost from "../SearchAddPost/SearchAddPost";
 import Sort from "../Sort/Sort";

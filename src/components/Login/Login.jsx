@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
-import api, { config } from '../../utils/Api';
 import s from "./login.module.css"
 import { useForm } from "react-hook-form";
+import api from '../../utils/Api';
 
 export default function Login() {
 
+  // eslint-disable-next-line no-unused-vars
   const [obj, setObj] = useState({})
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
 
 console.log({errors})
 
+  // eslint-disable-next-line no-unused-vars
   function handleLoginCookies(e, obj) {
     e.preventDefault();
     console.log("api =",api._token)

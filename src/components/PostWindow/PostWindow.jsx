@@ -4,7 +4,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tags from "../Tags/Tags";
 import api from "../../utils/Api";
-import { PostAddRounded } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { Button, IconButton, Typography } from "@mui/material";
@@ -72,6 +71,7 @@ export default function PostWindow({
       })
       .catch((err) => setErrorState(true));
     setIsLoading(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, anchorAddDelEditComment, anchorEditUser]);
 
   function handleEditPost(id, data) {

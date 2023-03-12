@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import s from './header.module.css'
 import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
-import Popup from '../Popup/Popup';
 import cn from "classnames"
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../Context/UserContext';
-import LoginPage from '../../Page/LoginPage';
 
 export default function Header({ setPopupEdit, scrollTop, setModalLogin }) {
     const scrollNum = 178
@@ -26,14 +24,14 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin }) {
                         <button onClick={() => setModalLogin(true)}>Войти</button>
                     </div>
                     <div className={s.enter} onClick={() => setPopupEdit(true)}>
-                        {!currentUser && <a className={s.link}>Войти</a>}
-                        <a title="Редактировать"> {currentUser && 
-                        <div className={cn(s.info, {[s.scroll]: scrollTop > 178})}> <img src={currentUser.avatar}></img>
+                        {/* {!currentUser && <a className={s.link}>Войти</a>} */}
+                        {currentUser && 
+                        <div title="Редактировать" className={cn(s.info, {[s.scroll]: scrollTop > 178})}> <img src={currentUser.avatar} alt={currentUser.name}></img>
                             <span>{currentUser.name}</span>
                             {scrollTop <= scrollNum && <span>{currentUser.about}</span>}
                             {scrollTop <= scrollNum && <span>{currentUser.email}</span>}
                         </div>
-                        }</a>
+}
                     </div>
                 </div>
             </div>

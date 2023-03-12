@@ -5,7 +5,7 @@ import s from "./edituser.module.css";
 
 export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }) {
   
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const [avatarUser, setAvatarUser] = useState({avatar: currentUser.avatar});
   const [userObj, setUserObj] = useState({name: currentUser.name, about: currentUser.about})
 
