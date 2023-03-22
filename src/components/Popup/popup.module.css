@@ -14,7 +14,6 @@
     opacity: 0;
     pointer-events: none;
     transition: .3s;
-
     outline: none;
 }
 
@@ -24,10 +23,12 @@
 }
 
 .content {
+    /* display: flex;
+    justify-content: center; */
     box-sizing: border-box;
     margin: 120px auto;
     max-width: calc(100vw - 100px);
-    width: 600px;
+    width: max-content;
     padding: 20px;
     border-radius: 10px;
     background-color: white;

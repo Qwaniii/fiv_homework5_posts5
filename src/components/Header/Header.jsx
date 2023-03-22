@@ -20,9 +20,9 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin }) {
                             <ImportContactsOutlinedIcon fontSize='large'/> POSTS
                         </div>
                     </Link>
-                    <div>
-                        <button onClick={() => setModalLogin(true)}>Войти</button>
-                    </div>
+                    <Link to="/fo_homework4_post4/login" onClick={() => setModalLogin(true)}>
+                        <button >Войти</button>
+                    </Link>
                     <div className={s.enter} onClick={() => setPopupEdit(true)}>
                         {/* {!currentUser && <a className={s.link}>Войти</a>} */}
                         {currentUser && 
@@ -31,7 +31,7 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin }) {
                             {scrollTop <= scrollNum && <span>{currentUser.about}</span>}
                             {scrollTop <= scrollNum && <span>{currentUser.email}</span>}
                         </div>
-}
+                        }                   
                     </div>
                 </div>
             </div>

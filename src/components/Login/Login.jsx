@@ -1,36 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import s from "./login.module.css"
 import { useForm } from "react-hook-form";
 import api from '../../utils/Api';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login({ setModalLogin, setIsAuth }) {
 
   // eslint-disable-next-line no-unused-vars
-  const [obj, setObj] = useState({})
+  const [obj, setObj] = useState(null)
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-
-console.log({errors})
+  const navigate = useNavigate()
 
   // eslint-disable-next-line no-unused-vars
-  function handleLoginCookies(e, obj) {
-    e.preventDefault();
-    console.log("api =",api._token)
+  function handleLogin(obj) {
     // document.cookie = `Login=${login};`;
     // document.cookie = `Password=${password};`;
+
     api.signIn(obj)
       .then((data) => {
         console.log(data)
         sessionStorage.setItem('token', data.token)
-        document.cookie = `token=${data.token};`;
-        // console.log("api =",api._token, "config = ", config.token)
-        console.log(api._token)
+        setIsAuth(true)
+        navigate("/fo_homework4_post4")
       })
       .catch(err => console.log(err))
-      setObj({})
   }
 
-
+  useEffect(() => {
+    setModalLogin(true)
+  }, [setModalLogin])
 
 
   return (
@@ -39,7 +37,7 @@ console.log({errors})
         <h3>
           Авторизация
         </h3>
-        <form action='login' onSubmit={handleSubmit(onSubmit)}>
+        <form action='login' onSubmit={handleSubmit(handleLogin)}>
           <div className={s.email}>
             <input type="text" placeholder="Email" {...register("email", {
               required: {

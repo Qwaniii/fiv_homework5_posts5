@@ -11,4 +11,9 @@ a {
   cursor: pointer;
 }
 
+.container {
+  margin: 0 auto;
+  padding: 130px 0;
+  max-width: 1000px;
+}
 

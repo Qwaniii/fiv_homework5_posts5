@@ -8,6 +8,7 @@ import SecondPopup from "./components/PopupSecond/SecondPopup";
 import { UserContext } from "./Context/UserContext";
 import useDebounce from "./hooks/useDebounse";
 import Newpost from "./NewPost/Newpost";
+import GuestPage from "./Page/GuestPage";
 import LoginPage from "./Page/LoginPage";
 import MainPage from "./Page/MainPage";
 import NotFoundPage from "./Page/NotFoundPage";
@@ -31,6 +32,9 @@ function App() {
     const [anchorEditUser, setAnchorEditUser] = useState(false);
     const [anchorNewPost, setAnchorNewPost] = useState(false);
     const [anchorAddDelEditComment, setAnchorAddDelEditComment] = useState(false);
+    const [isAuth, setIsAuth] = useState(false)
+
+    const token = sessionStorage.getItem("token")
 
     
 
@@ -51,7 +55,7 @@ function App() {
             console.log("render cards & user")
             setIsLoading(true);
         });
-    }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment]);
+    }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment, isAuth]);
 
     useEffect(() => {
         api.search(debounceValue).then((data) => {
@@ -88,6 +92,10 @@ function App() {
               });
     }
 
+    useEffect(() => {
+        if (token) setIsAuth(true)
+    }, [token])
+
     function handlePostDelete(post) {
         // const isAuthor = post.author._id === currentUser._id ? true : false;
         // isAuthor
@@ -118,6 +126,8 @@ function App() {
                     scrollTop={scrollTop}
                     setModalLogin={setModalLogin}
                 />
+                {isAuth 
+                ? 
                 <Routes>
                     <Route
                         // index
@@ -165,15 +175,30 @@ function App() {
                         element={<NotFoundPage/>}>
                     </Route>
                 </Routes>
+                : 
+                <>
+                <GuestPage/>
+                <Routes>
+                    <Route 
+                        path="fo_homework4_post4/login"
+                        element={
+                            <SecondPopup popup={modalLogin} setPopup={setModalLogin}>
+                                <LoginPage
+                                    setModalLogin={setModalLogin}
+                                    setIsAuth={setIsAuth}/>
+                            </SecondPopup>
+                        }>
+                    </Route>
+                </Routes>
+                </>
+                }
                 <Popup popup={modalActive} setPopup={setModalActive}>
                         {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost}/>}
                 </Popup>
                 <Popup popup={modalUserActive} setPopup={setModalUserActive}>
                         {modalUserActive && <Edituser setPopup={setModalUserActive} anchorEditUser={anchorEditUser} setAnchorEditUser={setAnchorEditUser}/>}
                 </Popup>
-                <SecondPopup popup={modalLogin} setPopup={setModalLogin}>
-                    <LoginPage/>
-                </SecondPopup>
+
             </UserContext.Provider>
         </div>
     );

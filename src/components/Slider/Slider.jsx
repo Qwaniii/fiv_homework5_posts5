@@ -1,35 +1,50 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import s from "./slider.module.css"
-import cn from "classnames"
+import data from "../../DB/data"
 
-const Slider = () => {
+const Slider = ({ stopAnimation }) => {
 
-    const obj = [{
-        image: "https://postmania.ru//files/products/0382-a.800x600.jpg"
-    },
-    {
-        image: "https://prokocmoc.ru/wp-content/uploads/2019/09/Sirius-zvezda.jpg"
-    },
-    {
-        image: "https://oir.mobi/uploads/posts/2021-04/1619183869_43-oir_mobi-p-khitraya-lisa-zhivotnie-krasivo-foto-49.jpg"
-    }]
+    const random = Math.round(Math.random() * 2)
 
-    const [position, setPosition] = useState(0);
-    const [anchor, setAnchor] = useState(true)
-    const [anchorSec, setAnchorSec] = useState(false)
+    const [position, setPosition] = useState(random);
+
+
 
     const nextFunc = () => {
-        setAnchor(!anchor)
-        if ((position + 2) % 2 === 0) {
-            setAnchorSec(!anchorSec)
-        }
         setPosition(position < 2  ? position + 1 : 0)
     }
+
+    const prevFunc = () => {
+        setPosition(position !== 0 ? position - 1 : 2)
+    }
+
+    useEffect(() => {
+        if(!stopAnimation) {
+        const interval = setInterval(() => {
+            nextFunc()
+        }, 3000);
+        return () => clearInterval(interval);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [position, stopAnimation])
+
  
     return (
         <div>
-            <img className={cn(s.image, {[s.active]: anchor}, {[s.nonactive]: (anchorSec && anchor)})} src={obj[position].image}></img>
-            <button onClick={() => nextFunc()}>Next</button>
+            <div className={s.wrapper}>
+                {data.map((slide, index) => (
+                       (index === position) &&
+                       <div key={slide.title + index} className={s.container}>
+                            <img className={s.image} src={slide.image} alt={slide.title}></img>
+                            <h3>{slide.title}</h3>
+                            <p>{slide.text}</p>
+                        </div>
+                ))}
+                {stopAnimation &&
+                <>
+                <div onClick={() => nextFunc()} className={s.right}>&gt;</div>
+                <div onClick={() => prevFunc()} className={s.left}>&lt;</div></>}
+            </div>
         </div>
     )
 }
