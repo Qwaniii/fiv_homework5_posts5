@@ -159,6 +159,16 @@ class Api {
       body: JSON.stringify(data),
     }).then(onResponce);
   }
+
+  signUp(data) {
+    return fetch(`${this._dataUrl}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    }).then(onResponce)
+  }
 }
 
 const api = new Api(config);

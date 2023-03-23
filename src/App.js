@@ -3,13 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Edituser from "./components/EditUser/Edituser";
 import Header from "./components/Header/Header";
+import Login from "./components/Login/Login";
+import Registration from "./components/Login/Registration";
 import Popup from "./components/Popup/Popup";
 import SecondPopup from "./components/PopupSecond/SecondPopup";
 import { UserContext } from "./Context/UserContext";
 import useDebounce from "./hooks/useDebounse";
 import Newpost from "./NewPost/Newpost";
 import GuestPage from "./Page/GuestPage";
-import LoginPage from "./Page/LoginPage";
 import MainPage from "./Page/MainPage";
 import NotFoundPage from "./Page/NotFoundPage";
 import PostPage from "./Page/PostPage";
@@ -25,6 +26,7 @@ function App() {
     const [modalUserActive, setModalUserActive] = useState(false);
     const [modalInfoAboutUser, setModalInfoAboutUser] = useState(false);
     const [modalLogin, setModalLogin] = useState(false);
+    const [modalRegistr, setModalRegistr] = useState(false);
     const [modalPostUser, setModalPostUser] = useState(false);
     const [scrollTop, setScrollTop] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -48,20 +50,24 @@ function App() {
     };
 
     useEffect(() => {
-        api.getAppInfo().then(([postsData, currentUserData]) => {
+        if(isAuth) {        
+            api.getAppInfo().then(([postsData, currentUserData]) => {
             setPosts(postsData);
             setCurrentUser(currentUserData);
             // setNumberComments(postsData.map((item) => item.comments.length))
             console.log("render cards & user")
             setIsLoading(true);
         });
+        }
     }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment, isAuth]);
 
     useEffect(() => {
+       if(isAuth) { 
         api.search(debounceValue).then((data) => {
             setPosts(data);
         });
-    }, [debounceValue]);
+        }
+    }, [debounceValue, isAuth]);
 
     useEffect(() => {
         const handleScroll = event => {
@@ -115,7 +121,12 @@ function App() {
     }
 
 
-    (modalActive || modalUserActive || modalInfoAboutUser || modalPostUser) ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll"
+    modalActive || 
+    modalUserActive || 
+    modalInfoAboutUser || 
+    modalPostUser || 
+    modalLogin || 
+    modalRegistr ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll"
 
     return (
         <div className="App" >
@@ -125,6 +136,9 @@ function App() {
                     setPopupEdit={setModalUserActive}
                     scrollTop={scrollTop}
                     setModalLogin={setModalLogin}
+                    setModalRefistr={setModalRegistr}
+                    isAuth={isAuth}
+                    setIsAuth={setIsAuth}
                 />
                 {isAuth 
                 ? 
@@ -177,19 +191,40 @@ function App() {
                 </Routes>
                 : 
                 <>
-                <GuestPage/>
+                {/* <GuestPage/> */}
                 <Routes>
+                    <Route
+                        // index
+                        path="fo_homework4_post4/"
+                        element={
+                            <GuestPage/>
+                        }>
+                    </Route>
                     <Route 
                         path="fo_homework4_post4/login"
                         element={
-                            <SecondPopup popup={modalLogin} setPopup={setModalLogin}>
-                                <LoginPage
-                                    setModalLogin={setModalLogin}
-                                    setIsAuth={setIsAuth}/>
-                            </SecondPopup>
+                            <GuestPage/>
+                        }>
+                    </Route>
+                    <Route 
+                        path="fo_homework4_post4/registration"
+                        element={
+                            <GuestPage/>
                         }>
                     </Route>
                 </Routes>
+                <SecondPopup popup={modalLogin} setPopup={setModalLogin}>
+                    <Login
+                        modalLogin={modalLogin}
+                        setModalLogin={setModalLogin}
+                        setIsAuth={setIsAuth}/>
+                </SecondPopup>
+                <SecondPopup popup={modalRegistr} setPopup={setModalRegistr}>
+                    <Registration
+                        modalRegistr={modalRegistr}
+                        setModalRegistr={setModalRegistr}
+                    />
+                </SecondPopup>
                 </>
                 }
                 <Popup popup={modalActive} setPopup={setModalActive}>

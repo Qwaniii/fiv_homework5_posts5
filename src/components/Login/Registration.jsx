@@ -5,10 +5,9 @@ import api from '../../utils/Api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
+export default function Registration({ modalRegistr, setModalRegistr }) {
 
-  // eslint-disable-next-line no-unused-vars
-  const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: "onSubmit",
     defaultValues: {
       email: "", 
@@ -19,12 +18,11 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
   const location = useLocation()
 
   function handleLogin(obj) {
-    api.signIn(obj)
+    api.signUp({...obj, group: "group-10"})
       .then((data) => {
         console.log(data)
-        sessionStorage.setItem('token', data.token)
-        setIsAuth(true)
-        setModalLogin(false)
+
+        setModalRegistr(false)
         navigate("/fo_homework4_post4")
         reset()
       })
@@ -33,27 +31,27 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
 
   useEffect(() => {
     reset()
-  }, [modalLogin, reset])
+  }, [modalRegistr, reset])
 
   useEffect(() => {
-    if(location.pathname.includes("login")) setModalLogin(true)
-  }, [setModalLogin, location])
+    if(location.pathname.includes("registration")) setModalRegistr(true)
+  }, [setModalRegistr, location])
 
-  const toRegistr = () => {
-    setModalLogin(false)
-    navigate("/fo_homework4_post4/registration")
+  const toLogin = () => {
+    setModalRegistr(false)
+    navigate("/fo_homework4_post4/login")
   }
 
 
   return (
     <div className={s.container}>
-      <div className={s.wrapper}>
+      <div className={s.wrapperRegistr}>
         <h3>
-          Авторизация
+          Регистрация
         </h3>
         <form action='login' onSubmit={handleSubmit(handleLogin)}>
           <div className={s.item}>
-            <input id="email" type="text" className={s.input} placeholder=" " defaultValue = {watch("email")} {...register("email", {
+            <input id="email" type="text" className={s.input} placeholder=" " {...register("email", {
               required: "Необходимо ввести e-mail", 
               pattern: {
                 value: /^\S+@\S+\.\S+$/,
@@ -64,7 +62,7 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
             {errors?.email && <span className={s.error}>*{errors?.email?.message}</span>}
           </div>
           <div className={s.item}>
-            <input id="password" type="text" className={s.input} placeholder=" " defaultValue = {watch("password")}  {...register("password", {
+            <input id="password" type="text" className={s.input} placeholder=" " {...register("password", {
               required: "Необходимо ввести пароль", 
                 minLength: {
                   value: 5, 
@@ -74,13 +72,12 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
             <label htmlFor="password" className={s.label}>Пароль</label>
             {errors?.password && <span className={s.error}>*{errors?.password?.message}</span>}
           </div>
-          <input type="submit" className={s.enter} value="Войти"></input>
+          <input type="submit" className={s.enter} value="Регистрация"></input>
         </form>
-        <div className={s.footer}>
-          <div className={s.registr} onClick={() => toRegistr()}>Зарегистрироваться</div>
-          <div className={s.forgot}>Напомнить пароль</div>
+        <div className={s.footerRegistr}>
+          <div className={s.registr} onClick={() => toLogin()}>Войти</div>
         </div>
-        <div className={s.close} onClick={() => setModalLogin(false)}><CloseIcon/></div>
+        <div className={s.close} onClick={() => setModalRegistr(false)}><CloseIcon/></div>
       </div>
     </div>
   )

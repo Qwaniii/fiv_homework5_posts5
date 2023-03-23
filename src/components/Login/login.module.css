@@ -4,6 +4,7 @@
     background-color: rgb(211, 255, 255);
     width: 250px;
     padding: 40px;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,33 +13,66 @@
     border-radius: 10px;
     box-shadow: 0 5px 20px -2px black;
     z-index: 1000;
+    position: relative;
 }
 
-.wrapper form {
+.wrapperRegistr {
+    background-color: rgb(204, 204, 204);
+    width: 250px;
+    padding: 40px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px -2px black;
+    border: .3px solid rgb(211, 255, 255);
+    z-index: 1000;
+    position: relative;
+}
+
+.wrapper form,
+.wrapperRegistr form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.wrapper input {
-    padding: 5px 10px;
+.input {
+    height: 28px;
+    padding: 5px 15px 0px 15px;
     border-radius: 7px;
     font-size: 14px;
-    color: gray;
+    color: black;
     outline: none;
-    border: .3px solid gray;
+    border: .3px solid rgba(128, 128, 128, 0.8);
 }
 
-.email {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+.input:focus {
+    border: .7px solid black;
 }
 
-.password {
+.item {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.label {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    font-size: 14px;
+    transition: all .3s;
+}
+
+.input:not(:placeholder-shown)~.label,
+.input:focus~.label {
+    top: 2px;
+    font-size: 10px;
+    color: rgba(128, 128, 128, 0.7);
 }
 
 .error {
@@ -49,3 +83,94 @@
     bottom: -17px;
     left: 10px;
 }
+
+.enter {
+    padding: 5px 15px;
+    align-self: center;
+    border-radius: 7px;
+    outline: none;
+    border: .3px solid rgba(128, 128, 128, 0.8);
+    cursor: pointer;
+    transition: all .3s;
+    font-size: 14px;
+}
+
+.enter:hover {
+    background-color: rgb(224, 224, 224);
+    border: .3px solid rgb(196, 196, 196);
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgba(128, 128, 128, 0.6);
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.close:hover {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    position: relative;
+    color: gray;
+    cursor: pointer;
+
+}
+
+
+.footer:before {
+    content: "или...";
+    color: rgb(172, 172, 172);
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: -20px;
+    border-bottom: .3px solid rgba(128, 128, 128, 0.4);
+    cursor:default;
+}
+
+.footerRegistr {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    position: relative;
+    color: gray;
+    cursor: pointer;
+
+}
+
+
+.footerRegistr:before {
+    content: "Зарегистрированы? Тогда";
+    color: rgb(145, 145, 145);
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: -20px;
+    border-bottom: .3px solid rgba(128, 128, 128, 0.4);
+    cursor:default;
+}
+
+.registr {
+    transition: all .3s;
+}
+
+.registr:hover,
+.forgot:hover {
+    color: black;
+}
+
+.forgot {
+    color: rgb(175, 175, 175);
+    text-decoration:underline;
+    transition: all .3s;
+}
+

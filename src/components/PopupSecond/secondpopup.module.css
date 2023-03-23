@@ -1,6 +1,9 @@
 
 
 .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -26,7 +29,6 @@
 
 .content {
     box-sizing: border-box;
-    margin: 120px auto;
     max-width: calc(100vw - 100px);
     width: max-content;
     border-radius: 10px;

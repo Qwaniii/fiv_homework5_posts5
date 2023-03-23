@@ -27,7 +27,7 @@
     justify-content: center; */
     box-sizing: border-box;
     margin: 120px auto;
-    max-width: calc(100vw - 100px);
+    max-width: 700px;
     width: max-content;
     padding: 20px;
     border-radius: 10px;
