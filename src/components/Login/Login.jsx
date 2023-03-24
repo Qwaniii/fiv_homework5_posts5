@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import s from "./login.module.css"
 import { useForm } from "react-hook-form";
 import api from '../../utils/Api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import Notification from '../Notification/Notification';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
+export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin, setUserLogin, setIsSuccess }) {
 
   // eslint-disable-next-line no-unused-vars
   const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
@@ -17,6 +20,15 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
   });
   const navigate = useNavigate()
   const location = useLocation()
+  const [errorFetch, setErrorFetch] = useState("")
+  const [hiddenPass, setHiddenPas] = useState(false)
+
+  useEffect(() => {
+    if(userLogin) {
+      handleLogin(userLogin)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userLogin])
 
   function handleLogin(obj) {
     api.signIn(obj)
@@ -25,18 +37,37 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
         sessionStorage.setItem('token', data.token)
         setIsAuth(true)
         setModalLogin(false)
+        setUserLogin(prevState => ({...prevState, name: data.data.name}))
+        setIsSuccess(true)
+        setTimeout(() => {
+          setIsSuccess(false)
+          setUserLogin(null)
+        }, 2500)
         navigate("/fo_homework4_post4")
         reset()
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(`Error ${err.status}`)
+        err.json()
+          .then(data => {
+            console.log(data)
+            setErrorFetch(data.message)
+            setTimeout(() => {
+              setErrorFetch("")
+            }, 4000)
+          })
+      })
   }
 
   useEffect(() => {
     reset()
+    setErrorFetch("")
+    setHiddenPas(false)
   }, [modalLogin, reset])
 
   useEffect(() => {
-    if(location.pathname.includes("login")) setModalLogin(true)
+    if(location.pathname.includes("login") && !userLogin) setModalLogin(true)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setModalLogin, location])
 
   const toRegistr = () => {
@@ -46,6 +77,7 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
 
 
   return (
+    <>
     <div className={s.container}>
       <div className={s.wrapper}>
         <h3>
@@ -64,7 +96,7 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
             {errors?.email && <span className={s.error}>*{errors?.email?.message}</span>}
           </div>
           <div className={s.item}>
-            <input id="password" type="text" className={s.input} placeholder=" " defaultValue = {watch("password")}  {...register("password", {
+            <input id="password" type={hiddenPass ? "text" : "password"} className={s.input} placeholder=" " defaultValue = {watch("password")}  {...register("password", {
               required: "Необходимо ввести пароль", 
                 minLength: {
                   value: 5, 
@@ -73,6 +105,7 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
             })}></input>
             <label htmlFor="password" className={s.label}>Пароль</label>
             {errors?.password && <span className={s.error}>*{errors?.password?.message}</span>}
+            <div className={s.eyes} onClick={() => setHiddenPas(!hiddenPass)}>{hiddenPass ? <VisibilityOutlinedIcon/> : <VisibilityOffOutlinedIcon/>}</div>
           </div>
           <input type="submit" className={s.enter} value="Войти"></input>
         </form>
@@ -82,6 +115,12 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth }) {
         </div>
         <div className={s.close} onClick={() => setModalLogin(false)}><CloseIcon/></div>
       </div>
+      {errorFetch && <div className={s.errorFetch}>
+        <Notification title="Ошибка" text={errorFetch} color={true}>
+          <div>Попробуйте еще раз</div>
+        </Notification>
+      </div>}
     </div>
+    </>
   )
 }

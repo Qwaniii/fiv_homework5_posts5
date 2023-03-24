@@ -1,5 +1,5 @@
 const onResponce = (res) => {
-  return res.ok ? res.json() : Promise.reject(`Error ${res.status}`);
+  return res.ok ? res.json() : Promise.reject(res);
 };
 
 const getToken = () => {

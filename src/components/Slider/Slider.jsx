@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import s from "./slider.module.css"
 import data from "../../DB/data"
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 
 const Slider = ({ stopAnimation }) => {
 
@@ -42,8 +44,8 @@ const Slider = ({ stopAnimation }) => {
                 ))}
                 {stopAnimation &&
                 <>
-                <div onClick={() => nextFunc()} className={s.right}>&gt;</div>
-                <div onClick={() => prevFunc()} className={s.left}>&lt;</div></>}
+                <div onClick={() => nextFunc()} className={s.right}><ArrowForwardIosOutlinedIcon fontSize="large"/></div>
+                <div onClick={() => prevFunc()} className={s.left}><ArrowBackIosOutlinedIcon fontSize="large"/></div></>}
             </div>
         </div>
     )

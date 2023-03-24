@@ -1,0 +1,43 @@
+.standart {
+  padding: 15px 30px;
+  text-align: center;
+  background-color: rgba(144, 238, 144, 0.4);
+  border-radius: 10px;
+  position: relative;
+}
+
+.color {
+  background-color: rgba(255, 182, 193, 0.8);
+}
+
+.title {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.title:after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  border-bottom: .3px solid rgba(0, 0, 0, 0.5);
+}
+
+.text {
+  margin-bottom: 10px;
+  width: 250px;
+}
+
+.close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: rgba(128, 128, 128, 0.5);
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.close:hover {
+  color: black;
+}

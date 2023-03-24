@@ -23,6 +23,8 @@ export default function PostWindow({
   id,
   posts,
   setPosts,
+  anchorLike,
+  setAnchorLike,
   isLoading,
   setIsLoading,
   anchorAddDelEditComment,
@@ -93,6 +95,7 @@ export default function PostWindow({
         curPost._id === newPost._id ? newPost : curPost
       );
       setPosts(newPosts);
+      setAnchorLike(!anchorLike)
     });
   }
 

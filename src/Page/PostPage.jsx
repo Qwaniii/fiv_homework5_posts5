@@ -7,6 +7,8 @@ export default function PostPage({
     onPostLike,
     posts,
     setPosts,
+    anchorLike,
+    setAnchorLike,
     isLoading,
     setIsLoading,
     anchorAddDelEditComment,
@@ -26,6 +28,8 @@ export default function PostPage({
                 onPostLike={onPostLike}
                 posts={posts}
                 setPosts={setPosts}
+                anchorLike={anchorLike}
+                setAnchorLike={setAnchorLike}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 anchorAddDelEditComment={anchorAddDelEditComment}

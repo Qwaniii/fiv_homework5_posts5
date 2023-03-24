@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../utils/Api";
+import api from "../../utils/Api";
 import s from "./newpost.module.css";
 
 export default function Newpost({
@@ -13,9 +13,8 @@ export default function Newpost({
   const [newPostData, setNewPostData] = useState({
     title: "",
     text: "",
-    image:
-    backgroundImage,
-    tags: [],
+    image: "",
+    tags: null,
   });
 
   // function clearForm() {
@@ -24,6 +23,9 @@ export default function Newpost({
 
   function handleCreatePost(e, data) {
     e.preventDefault();
+    for (let key in data) {
+      if (!data[key]) delete data[key]
+    }
     console.log(data);
     api
       .setNewPost(data)
@@ -39,9 +41,6 @@ export default function Newpost({
     setPopup(false);
     // clearForm();
   }
-
-
-  console.log(newPostData)
   
   return (
     <>
@@ -72,7 +71,7 @@ export default function Newpost({
             required
           ></textarea>
           {/* <div className={s.imgWrapper}> */}
-            <img className={s.image} src={newPostData.image} alt={newPostData.title}></img>
+            <img className={s.image} src={newPostData.image || backgroundImage} alt={newPostData.title}></img>
           {/* </div> */}
           <input
             type="text"
@@ -83,7 +82,7 @@ export default function Newpost({
           <input
             type="text"
             placeholder="Введите тэги, через запятую"
-            value={newPostData.tags.join()}
+            defaultValue={newPostData?.tags?.join()}
             onChange={(e) =>
               setNewPostData((prevState) => ({...prevState, tags: e.target.value.replace(/\s/g, "").split(",")}))
             }

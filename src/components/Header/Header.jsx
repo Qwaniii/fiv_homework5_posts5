@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import s from './header.module.css'
 import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
 import cn from "classnames"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../Context/UserContext';
 import AboutUser from '../AboutUser/AboutUser';
 
@@ -11,6 +11,8 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
 
     const { currentUser } = useContext(UserContext)
     const [aboutUser, setAboutUser] = useState(false)
+
+    const navigate = useNavigate()
 
     const editMenu = () => {
         setPopupEdit(true)
@@ -21,6 +23,16 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
         sessionStorage.removeItem("token")
         setAboutUser(false)
         setIsAuth(false)
+    }
+
+    const myPostsMenu = () => {
+        navigate("/fo_homework4_post4/my-posts")
+        setAboutUser(false)
+    }
+
+    const favoriteMenu = () => {
+        navigate("/fo_homework4_post4/favorite")
+        setAboutUser(false)
     }
 
   return (
@@ -53,11 +65,14 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
                         {aboutUser && 
                         <>
                             <div className={cn(s.aboutUser, {[s.scroll]: scrollTop > scrollNum})}>
-                                <AboutUser name={currentUser.name}>
+                                <AboutUser name={currentUser.name} 
+                                            about={scrollTop > scrollNum ? currentUser.about : ""} 
+                                            email={scrollTop > scrollNum ? currentUser.email : ""} 
+                                            exit={exitMenu}>
                                     <ul>
                                         <li className={s.link} onClick={() => editMenu()}>Редактировать</li>
-                                        <li></li>
-                                        <li className={s.link} onClick={() => exitMenu()}>Выйти</li>
+                                        <li className={s.link} onClick={() => myPostsMenu()}>Мои посты</li>
+                                        <li className={s.link} onClick={() => favoriteMenu()}>Мне нравится</li>
                                     </ul>
                                 </AboutUser>
                             </div>

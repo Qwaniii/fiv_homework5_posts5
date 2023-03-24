@@ -1,4 +1,6 @@
- 
+ .container {
+    position: relative;
+ }
 
 .wrapper {
     background-color: rgb(211, 255, 255);
@@ -174,3 +176,15 @@
     transition: all .3s;
 }
 
+.errorFetch {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1000
+}
+
+.eyes {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
