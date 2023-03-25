@@ -19,6 +19,8 @@ export default function MyPostPage({
   selectedTab,
   setSelectedTab,
   setPopupEdit,
+  setConfirmDelete,
+  setModalDelete
 }) {
 
   useEffect(() => {
@@ -47,6 +49,8 @@ export default function MyPostPage({
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
         setPopupEdit={setPopupEdit}
+        setConfirmDelete={setConfirmDelete}
+        setModalDelete={setModalDelete}
         />
     </div>
   )

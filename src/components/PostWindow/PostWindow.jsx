@@ -18,6 +18,7 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 import SecondPopup from "../PopupSecond/SecondPopup";
 import AboutAnotherUser from "../AboutAnotherUser/AboutAnotherUser";
+import Notification from "../Notification/Notification";
 
 export default function PostWindow({
   id,
@@ -33,7 +34,9 @@ export default function PostWindow({
   setModalAbout,
   anchorEditUser,
   modalPostUser,
-  setModalPostUser
+  setModalPostUser,
+  setModalDelete,
+  setConfirmDelete
 }) {
   const { currentUser } = useContext(UserContext);
 
@@ -44,6 +47,8 @@ export default function PostWindow({
   const [editPost, setEditPost] = useState(false);
   const [readyEditPost, setReadyEditPost] = useState({});
   const [commentInfo, setCommentInfo] = useState({});
+  const [successMessage, setSuccessMessage] = useState("")
+  const [notificMessage, setNotificMessage] = useState("")
   const navigate = useNavigate();
 
   const backgroundImage =
@@ -82,6 +87,10 @@ export default function PostWindow({
       .then((data) => {
         setPostWindow(data);
         console.log(data);
+        setSuccessMessage("Изменения сохранены")
+        setTimeout(() => {
+          setSuccessMessage("")
+        }, 3000)
       })
       .catch((err) => console.log(err));
     setEditPost(false);
@@ -107,14 +116,15 @@ export default function PostWindow({
         console.log(data);
         setAnchorAddDelEditComment(!anchorAddDelEditComment);
         setTextComment({ text: "" });
+        setSuccessMessage("Комментарий добавлен")
+        setTimeout(() => {
+          setSuccessMessage("")
+        }, 4000)
       })
       .catch((err) => console.log(err));
   }
 
   function handleDelPost(id) {
-    const deletePost = window.confirm("Удалить пост?");
-
-    if (deletePost) {
       api
         .deletePost(id)
         .then((delitingPost) => {
@@ -122,10 +132,24 @@ export default function PostWindow({
             (curPost) => curPost._id !== delitingPost._id
           );
           setPosts(newPosts);
+          setAnchorLike(!anchorLike)
+          setModalDelete(false)
+          setConfirmDelete(() => () => null)
         })
         .catch((err) => console.log(err));
       navigate("/fo_homework4_post4");
     }
+
+  const deletePost = () => {
+    setModalDelete(true)
+    setConfirmDelete(() => () => handleDelPost(id))
+  }
+
+  const emptyText = () => {
+    setNotificMessage("Введите комментарий")
+    setTimeout(() => {
+      setNotificMessage("")
+    }, 4000)
   }
 
 
@@ -194,7 +218,7 @@ export default function PostWindow({
                             </span>
                             <span
                               className={s.delete}
-                              onClick={() => handleDelPost(id)}
+                              onClick={deletePost}
                             >
                               <DelBtn />
                             </span>
@@ -333,7 +357,7 @@ export default function PostWindow({
                           postWindow.tags &&
                           postWindow?.tags?.map(
                             (tag, index) =>
-                              tag.length < 15 && <Tags tag={tag} key={index} />
+                              tag.length && <Tags tag={tag} key={index} />
                           )
                         )}
                       </div>
@@ -353,6 +377,8 @@ export default function PostWindow({
                         modalAbout={modalAbout}
                         setModalAbout={setModalAbout}
                         setCommentInfo={setCommentInfo}
+                        setModalDelete={setModalDelete}
+                        setConfirmDelete={setConfirmDelete}
                       />
                   ))}
                   {/* <Comments comment={postComments[0]}/> */}
@@ -392,7 +418,7 @@ export default function PostWindow({
                       onClick={
                         textComment.text.length > 0
                           ? (e) => handleAddComment(e, textComment)
-                          : () => alert("Напишите комментарий")
+                          : () => emptyText()
                       }
                     >
                       добавить
@@ -402,12 +428,14 @@ export default function PostWindow({
                 </div>
               </div>
             </div>
+            {successMessage && <div className={s.notification}><Notification title="Отлично" text={successMessage}/></div>}
+            {notificMessage && <div className={s.notification}><Notification title="Ошибка" text={notificMessage} color={true}/></div>}
           </div>
         )
       ) : (
         <Spinner />
       )}
-      {errorState && <NotFoundPage />}
+      {errorState && <NotFoundPage/>}
     </>
   );
 }

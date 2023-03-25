@@ -6,20 +6,30 @@ import { UserContext } from '../../Context/UserContext';
 import api from '../../utils/Api';
 
 
-export default function Comments({ comment, anchor, setAnchor, modalAbout, setModalAbout, setCommentInfo }) {
+export default function Comments({ comment, anchor, setAnchor, modalAbout, setModalAbout, setCommentInfo, setModalDelete, setConfirmDelete }) {
 
     const { currentUser } = useContext(UserContext)
 
     const isAuthor = comment.author._id === currentUser._id ? true : false;
     const created = new Date(comment.created_at);
 
-    function handleDeleteComment(e, postId, commentId) {
-        e.preventDefault();
+    function handleDeleteComment(postId, commentId) {
         api.deleteComment(postId, commentId)
             .then((data) => console.log(data))
-            .catch((err) => console.log(err))
+            .catch((err) => {
+                console.log(err.status)
+                err.json()
+                    .then(res => console.log(res.message))
+            })
             .finally(() => setAnchor(!anchor))
+        setModalDelete(false)
+        setConfirmDelete(() => () => null)
     }
+
+    const deleteComment = () => {
+        setModalDelete(true)
+        setConfirmDelete(() => () => handleDeleteComment(comment.post, comment._id))
+      }
 
 
 
@@ -44,7 +54,7 @@ export default function Comments({ comment, anchor, setAnchor, modalAbout, setMo
                             <span className={s.time}>{created.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
                         </div>
                     </div>
-                    {isAuthor && <div className={s.delete}><DeleteOutlinedIcon onClick={(e) => handleDeleteComment(e, comment.post, comment._id)}/></div>}
+                    {isAuthor && <div className={s.delete}><DeleteOutlinedIcon onClick={deleteComment/* (e) => handleDeleteComment(e, comment.post, comment._id) */}/></div>}
                 </div>
                 <Typography variant="body2" color="text.primary" className={s.text}>
                     {comment.text}

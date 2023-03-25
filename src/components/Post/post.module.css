@@ -2,7 +2,9 @@
     width: 32%;
     min-width: 250px;
     position: relative;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
+    display: flex;
+    flex-direction: column;
 }
 
 .avatar {
@@ -12,13 +14,14 @@
     height: 100%;
 }
 
-.icon {
-    pointer-events: none;
-    
+.text {
+    padding-bottom: 0;
 }
 
 .image {
-    background-size: contain;
+    /* background-size:auto; */
+    /* object-fit: contain; */
+
 }
 
 .favorite {
@@ -27,9 +30,29 @@
 
 .cardActions {
     width: 95%;
+    margin-top: auto;
+    box-sizing: border-box;
+    height: 64px;
+    /* position: absolute; */
+    justify-content: flex-start;
+    /* bottom: 0; */
+    position: relative;
+}
+
+.cardActions:before {
+    content: "";
+    width: 95%;
     position: absolute;
-    justify-content: start;
-    bottom: 0;
+    top: 0;
+    border-top: .3px solid rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+    pointer-events: none;
+}
+
+.bottomTags {
+    margin-left: auto;
 }
 
 .numbLike {
@@ -45,14 +68,17 @@
 }
 
 .deleteBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     right: 10px;
     top: 12px;
     color: rgba(128, 128, 128, 0.5);
     background-color: none;
     cursor: pointer;
-    border-radius: 30px;
-    padding: 10px;
+    border-radius: 50%;
+    padding: 9px 11px;
     transition: all .3s;
 }
 

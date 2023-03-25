@@ -1,8 +1,11 @@
 .container {
   position: relative;
-  border: 8px solid rgba(166, 215, 255, 0.7);
+  border: 8px solid rgba(0, 0, 0, .1);
+  box-shadow: 0 5px 10px 0px black;
   border-radius: 10px;
   background-color: rgba(211, 211, 211, 0.5);
+  box-sizing: border-box;
+  /* width: 600px; */
 }
 
 .container > h3 {
@@ -12,10 +15,12 @@
 }
 
 .formUser {
+  /* width: 100%; */
   box-sizing: border-box;
   margin: 20px 0;
   display: flex;
-  gap: 50px;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .container::before {
@@ -33,7 +38,8 @@
 }
 
 .avaUser {
-  width: 40%;
+  /* width: 40%; */
+  box-sizing: border-box;
 }
 
 .imgwrapper {
@@ -63,7 +69,8 @@
 }
 
 .infoUser {
-  width: 60%;
+  /* max-width: max-content; */
+  box-sizing: border-box;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
@@ -71,31 +78,33 @@
 }
 
 .main {
-  width: 90%;
-  padding-bottom: 5px;
+  /* width: 90%; */
+  /* padding-bottom: 5px; */
   display: flex;
   align-items: center;
-  gap: 15px;
+  /* gap: 15px; */
 }
 
 .name {
-  width: 40%;
+  width: 120px;
   font-weight: 600;
 }
 
 .value {
-  width: 40%;
+  width: 200px;
   padding: 8px 12px;
   font-style: italic;
   background-color: white;
   border-radius: 3px;
   position: relative;
+  word-wrap: normal;
+  text-align: center;
 }
 
 .value::after {
   content: "";
   border-bottom: 1px solid black;
-  width: 90%;
+  width: 95%;
   height: 1px;
   position: absolute;
   bottom: 5px;

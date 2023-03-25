@@ -18,14 +18,16 @@ export default function AboutAnotherUser({ commentInfo, setPopup }) {
                                 <span className={s.name}>Имя:</span>
                                 <span className={s.value}>{commentInfo?.author?.name}</span>
                             </div>
+                            {commentInfo?.author?.about &&
                             <div className={s.main}>
                                 <span className={s.name}>Информация:</span>
                                 <span className={s.value}>{commentInfo?.author?.about}</span>
-                            </div>
+                            </div>}
+                            {commentInfo?.author?.group &&
                             <div className={s.main}>
                                 <span className={s.name}>Группа:</span>
                                 <span className={s.value}> {commentInfo?.author?.group}</span>
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </div>

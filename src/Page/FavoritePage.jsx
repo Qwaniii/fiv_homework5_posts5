@@ -19,6 +19,8 @@ export default function FavoritePage({
   selectedTab,
   setSelectedTab,
   setPopupEdit,
+  setConfirmDelete,
+  setModalDelete
 }) {
   useEffect(() => {
     setAnchorEl(false)
@@ -46,6 +48,8 @@ export default function FavoritePage({
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
         setPopupEdit={setPopupEdit}
+        setConfirmDelete={setConfirmDelete}
+        setModalDelete={setModalDelete}
         />
     </div>
   )

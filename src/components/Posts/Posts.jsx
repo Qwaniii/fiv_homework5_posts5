@@ -20,7 +20,9 @@ export default function Posts({
   setIsLoading,
   setSelectedTab,
   selectedTab,
-  setPopupEdit
+  setPopupEdit,
+  setConfirmDelete,
+  setModalDelete
 }) {
 
   
@@ -68,6 +70,8 @@ export default function Posts({
                     handleClose={handleClose}
                     handleClick={handleClick}
                     setIsLoading={setIsLoading}
+                    setConfirmDelete={setConfirmDelete}
+                    setModalDelete={setModalDelete}
                   />))
                 :
                 <Spinner/>}

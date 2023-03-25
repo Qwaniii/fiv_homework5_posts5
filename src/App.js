@@ -44,12 +44,11 @@ function App() {
     const [isSuccess, setIsSuccess] = useState(false)
     const [userLogin, setUserLogin] = useState(null)
     const [anchorLike, setAnchorLike] = useState(false)
-    const [confirmDelete, setConfirmDelete] = useState(false)
-    const [anchDel, setAnchDel] = useState(false)
+    const [confirmDelete, setConfirmDelete] = useState(() => () => null)
+    const [modalDelete, setModalDelete] = useState(false)
 
 
     const token = sessionStorage.getItem("token")
-
     
 
     const debounceValue = useDebounce(searchQuery, 500);
@@ -82,10 +81,6 @@ function App() {
         });
         }
     }, [debounceValue, isAuth]);
-
-    useEffect(() => {
-        setAnchDel(false)
-    }, [])
 
     useEffect(() => {
         const handleScroll = event => {
@@ -127,10 +122,8 @@ function App() {
         // const isAuthor = post.author._id === currentUser._id ? true : false;
         // isAuthor
         //     ? 
-        const deletePost =  window.confirm("Удалить пост?")
         // setAnchDel(false)
         // setConfirmDelete(true)
-        if(deletePost) {
         api.deletePost(post._id).then((delitingPost) => {
                 const newPosts = posts.filter(
                     (curPost) => curPost._id !== delitingPost._id
@@ -138,7 +131,8 @@ function App() {
                 setPosts(newPosts);
                 setAnchorNewPost(!anchorNewPost)
             })
-        }
+        setModalDelete(false)
+        setConfirmDelete(() => () => null)
             // : alert("Вы не можете удалить чужой пост");
         // handleClose();
     }
@@ -149,7 +143,6 @@ function App() {
             behavior: "smooth" 
         })
     }
-
 
     modalActive || 
     modalUserActive || 
@@ -195,6 +188,8 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
+                                setConfirmDelete={setConfirmDelete}
+                                setModalDelete={setModalDelete}
                         
                             />
                         }
@@ -217,6 +212,10 @@ function App() {
                                 setModalAbout={setModalInfoAboutUser}
                                 modalPostUser={modalPostUser}
                                 setModalPostUser={setModalPostUser}
+                                setModalDelete={setModalDelete}
+                                setConfirmDelete={setConfirmDelete}
+
+                                
                             />
                         }
                     ></Route>
@@ -241,6 +240,8 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
+                                setConfirmDelete={setConfirmDelete}
+                                setModalDelete={setModalDelete}
                        
                             />
                         }
@@ -266,6 +267,8 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
+                                setConfirmDelete={setConfirmDelete}
+                                setModalDelete={setModalDelete}
              
                             />
                         }
@@ -326,13 +329,12 @@ function App() {
                 <SecondPopup popup={isSuccess} setPopup={setIsSuccess}>
                     <Notification title="Добро пожаловать" text={userLogin?.name || "Гость"} close={setIsSuccess}/>
                 </SecondPopup>
-                {/* <SecondPopup popup={confirmDelete} setPopup={setConfirmDelete}>
-                    <Notification title="Удаление" text="Вы уверены, что хотите удалить пост?" close={setConfirmDelete} color={true}>
-                        <button onClick={() => setAnchDel(true)}>Удалить</button>
-                        <button>Отмена</button>
+                <SecondPopup popup={modalDelete} setPopup={setModalDelete}>
+                    <Notification title="Удаление" text="Вы уверены, что хотите удалить пост?" close={setModalDelete} color={true}>
+                        <button className="btn" onClick={confirmDelete}>Удалить</button>
+                        <button className="btn" onClick={() => setModalDelete(false)}>Отмена</button>
                     </Notification>
-                </SecondPopup> */}
-                
+                </SecondPopup>
                 {scrollTop > 178 && <div className="scroll" onClick={() => toUp()}><NorthOutlinedIcon/></div>}
             </UserContext.Provider>
         </div>

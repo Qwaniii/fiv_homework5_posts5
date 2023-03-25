@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -36,6 +36,8 @@ export default function Post({
   handleClick,
   handleClose,
   setIsLoading,
+  setConfirmDelete,
+  setModalDelete
 }) {
   const { currentUser } = useContext(UserContext);
 
@@ -48,9 +50,15 @@ export default function Post({
     onPostLike(post);
   }
 
-  function deletePost() {
-    postDelete(post);
+  // function deletePost() {
+  //   postDelete(post);
+  // }
+
+  const deletePost = () => {
+    setModalDelete(true)
+    setConfirmDelete(() => () => postDelete(post))
   }
+
   //   const [expanded, setExpanded] = React.useState(false);
 
   //   const handleExpandClick = () => {
@@ -84,6 +92,7 @@ export default function Post({
           isAuthor && (
             // <IconButton aria-label="settings">
             <div className={s.deleteBtn}>
+              {/* <DelBtn deletePost={deletePost} /> */}
               <DelBtn deletePost={deletePost} />
             </div>
           )
@@ -121,8 +130,8 @@ export default function Post({
             {post.title}
           </Typography>
           <Typography variant="body2" color="text.primary">
-            {post.text.slice(0, 200)}
-            {post.text.length > 200 ? "..." : ""}
+            {post.text.slice(0, 220)}
+            {post.text.length > 220 ? "..." : ""}
             {/* {post.text} */}
           </Typography>
         </CardContent>
@@ -148,20 +157,22 @@ export default function Post({
             ""
           )}
         </IconButton>
-        <IconButton aria-label="share" className={s.icon}>
-          {/* <ShareIcon /> */}
-          {post.tags.length < 4 &&
-            post.tags.map(
-              (tag, index) => tag.length < 10 && <Tags tag={tag} key={index} />
-            )}
-          {post.tags.length >= 4 &&
-            post.tags
-              .map(
-                (tag, index) =>
-                  tag.length < 10 && <Tags tag={tag} key={index} />
-              )
-              .slice(0, 3)}
-        </IconButton>
+        <div className={s.bottomTags}>
+          <IconButton aria-label="share" className={s.icon}>
+            {/* <ShareIcon /> */}
+            {post.tags.length < 4 &&
+              post.tags.map(
+                (tag, index) => tag.length < 10 && <Tags tag={tag} key={index} />
+              )}
+            {post.tags.length >= 4 &&
+              post.tags
+                .map(
+                  (tag, index) =>
+                    tag.length < 10 && <Tags tag={tag} key={index} />
+                )
+                .slice(0, 3)}
+          </IconButton>
+        </div>
       </CardActions>
     </Card>
   );

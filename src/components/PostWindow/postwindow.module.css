@@ -89,8 +89,11 @@
 }
 
 .edit {
+    display:flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 5px;
-    padding: 7px;
+    padding: 7px 9px;
     border-radius: 50%;
     transition: all .3s;
 }
@@ -114,8 +117,11 @@
 }
 
 .delete {
+    display:flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
-    padding: 7px;
+    padding: 7px 9px;
     transition: all .3s;
 }
 
@@ -129,6 +135,8 @@
 .right {
     position: relative;
     width: 40%;
+    display: flex;
+    flex-direction: column;
     border-right: .5px solid grey; 
     border-bottom: .5px solid grey; 
     text-align: justify;
@@ -136,18 +144,7 @@
     box-sizing: border-box;
 }
 
-.right::after {    
-    content: "";
-    width:85%;
-    height: 1px;
-    border-top: .5px solid lightgray;
-    position: absolute;
-    bottom: 45px;
-    left: 0;
-    right: 0;
-    transform: translateX(10%);
 
-}
 
 .updatePost {
     text-align: right;
@@ -182,12 +179,30 @@
 }
 
 .bottom {
-    margin-top: 40px;
+    padding-top: 15px;
+    margin-top: auto;
+    position: relative;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     gap: 15px;
+}
+
+.bottom::after {    
+    content: "";
+    width:100%;
+    height: 1px;
+    border-top: .5px solid lightgray;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+
 }
 
 
 .like {
-    position: absolute;
+    /* position: absolute; */
     bottom: 5px;
     left: 20px;
 }
@@ -204,8 +219,11 @@
 }
 
 .tag {
+    /* width: 50%; */
     display: flex;
-    position: absolute;
+    flex-wrap: wrap;
+    gap: 3px;
+    /* position: absolute; */
     bottom: 5px;
     right: 20px;
 }
@@ -301,5 +319,11 @@
 .right label {
     color: gray;
     font-size: 14px;
+}
+
+.notification {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;    
 }
 

@@ -17,7 +17,9 @@ export default function PostPage({
     setModalAbout,
     anchorEditUser,
     modalPostUser,
-    setModalPostUser
+    setModalPostUser,
+    setModalDelete,
+    setConfirmDelete
 }) {
     const id = useParams();
 
@@ -39,6 +41,9 @@ export default function PostPage({
                 setModalAbout={setModalAbout}
                 modalPostUser={modalPostUser}
                 setModalPostUser={setModalPostUser}
+                setModalDelete={setModalDelete}
+                setConfirmDelete={setConfirmDelete}
+
             />
         </div>
     );
