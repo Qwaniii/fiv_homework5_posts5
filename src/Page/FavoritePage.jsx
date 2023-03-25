@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Posts from '../components/Posts/Posts'
 
 export default function FavoritePage({
@@ -9,6 +9,7 @@ export default function FavoritePage({
   setActive,
   postDelete,
   anchorEl,
+  setAnchorEl,
   handleClick,
   handleClose,
   setSearchQuery,
@@ -19,6 +20,11 @@ export default function FavoritePage({
   setSelectedTab,
   setPopupEdit,
 }) {
+  useEffect(() => {
+    setAnchorEl(false)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleLikeAllPosts = (post) => {
     onPostLike(post, posts, setPosts)
   }

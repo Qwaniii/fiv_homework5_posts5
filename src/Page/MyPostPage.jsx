@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Posts from '../components/Posts/Posts'
 
 export default function MyPostPage({
@@ -9,6 +9,7 @@ export default function MyPostPage({
   setActive,
   postDelete,
   anchorEl,
+  setAnchorEl,
   handleClick,
   handleClose,
   setSearchQuery,
@@ -19,6 +20,12 @@ export default function MyPostPage({
   setSelectedTab,
   setPopupEdit,
 }) {
+
+  useEffect(() => {
+    setAnchorEl(false)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleLikeAllPosts = (post) => {
     onPostLike(post, posts, setPosts)
   }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../../utils/Api";
+import Notification from "../Notification/Notification";
 import s from "./newpost.module.css";
 
 export default function Newpost({
@@ -7,6 +8,7 @@ export default function Newpost({
   setPosts,
   anchorNewPost,
   setAnchorNewPost,
+  setSelectedTab
 }) {
   
   const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
@@ -16,6 +18,7 @@ export default function Newpost({
     image: "",
     tags: null,
   });
+  const [isError, setIsError]= useState("")
 
   // function clearForm() {
   //   setNewPostData = {}
@@ -32,14 +35,20 @@ export default function Newpost({
       .then((res) => {
         console.log(res);
         setAnchorNewPost(!anchorNewPost)
+        setPopup(false);
+        setSelectedTab("new")
       })
       .catch((err) =>{
-        alert(
-          `Не удалось создать пост, проверьте введенные данные. Ошибка - ${err}`
-        )}
-      );
-    setPopup(false);
-    // clearForm();
+        console.log(err.status)
+        err.json()
+          .then(data => {
+            console.log(data)
+            setIsError(data.message)
+            setTimeout(() => {
+              setIsError("")
+            }, 5000)
+          })
+      });
   }
   
   return (
@@ -93,6 +102,9 @@ export default function Newpost({
           </div>
           <span className={s.close} onClick={() => setPopup(false)}>&times;</span>
         </form>
+        {isError && <div className={s.notification}>
+            <Notification title="Ошибка" text={isError} color={true}/>
+        </div>}
       </div>
     </>
   );

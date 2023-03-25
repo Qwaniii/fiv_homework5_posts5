@@ -21,6 +21,7 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
 
     const exitMenu = () => {
         sessionStorage.removeItem("token")
+        navigate("/fo_homework4_post4")
         setAboutUser(false)
         setIsAuth(false)
     }

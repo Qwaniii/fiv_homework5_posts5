@@ -117,3 +117,9 @@
     color: black;
     transition: color .3s;
   }
+
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+  }

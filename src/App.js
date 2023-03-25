@@ -26,7 +26,7 @@ function App() {
     const [favorite, setFavorite] = useState([]);
     const [currentUser, setCurrentUser] = useState({});
     const [searchActive, setSearchActive] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [modalActive, setModalActive] = useState(false);
     const [modalUserActive, setModalUserActive] = useState(false);
@@ -44,6 +44,8 @@ function App() {
     const [isSuccess, setIsSuccess] = useState(false)
     const [userLogin, setUserLogin] = useState(null)
     const [anchorLike, setAnchorLike] = useState(false)
+    const [confirmDelete, setConfirmDelete] = useState(false)
+    const [anchDel, setAnchDel] = useState(false)
 
 
     const token = sessionStorage.getItem("token")
@@ -80,6 +82,10 @@ function App() {
         });
         }
     }, [debounceValue, isAuth]);
+
+    useEffect(() => {
+        setAnchDel(false)
+    }, [])
 
     useEffect(() => {
         const handleScroll = event => {
@@ -121,14 +127,16 @@ function App() {
         // const isAuthor = post.author._id === currentUser._id ? true : false;
         // isAuthor
         //     ? 
-        const deletePost = window.confirm("Удалить пост?")
-        
+        const deletePost =  window.confirm("Удалить пост?")
+        // setAnchDel(false)
+        // setConfirmDelete(true)
         if(deletePost) {
         api.deletePost(post._id).then((delitingPost) => {
                 const newPosts = posts.filter(
                     (curPost) => curPost._id !== delitingPost._id
                 );
                 setPosts(newPosts);
+                setAnchorNewPost(!anchorNewPost)
             })
         }
             // : alert("Вы не можете удалить чужой пост");
@@ -141,6 +149,7 @@ function App() {
             behavior: "smooth" 
         })
     }
+
 
     modalActive || 
     modalUserActive || 
@@ -176,6 +185,7 @@ function App() {
                                 setActive={setSearchActive}
                                 postDelete={handlePostDelete}
                                 anchorEl={anchorEl}
+                                setAnchorEl={setAnchorEl}
                                 handleClick={handleClick}
                                 handleClose={handleClose}
                                 setSearchQuery={setSearchQuery}
@@ -185,6 +195,7 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
+                        
                             />
                         }
                     ></Route>
@@ -220,6 +231,7 @@ function App() {
                                 setActive={setSearchActive}
                                 postDelete={handlePostDelete}
                                 anchorEl={anchorEl}
+                                setAnchorEl={setAnchorEl}
                                 handleClick={handleClick}
                                 handleClose={handleClose}
                                 setSearchQuery={setSearchQuery}
@@ -229,6 +241,7 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
+                       
                             />
                         }
                     ></Route>
@@ -243,6 +256,7 @@ function App() {
                                 setActive={setSearchActive}
                                 postDelete={handlePostDelete}
                                 anchorEl={anchorEl}
+                                setAnchorEl={setAnchorEl}
                                 handleClick={handleClick}
                                 handleClose={handleClose}
                                 setSearchQuery={setSearchQuery}
@@ -252,6 +266,7 @@ function App() {
                                 setSelectedTab={setSelectedTab}
                                 selectedTab={selectedTab}
                                 setPopupEdit={setModalActive}
+             
                             />
                         }
                     ></Route>
@@ -303,7 +318,7 @@ function App() {
                 </>
                 }
                 <Popup popup={modalActive} setPopup={setModalActive}>
-                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost}/>}
+                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost} setSelectedTab={setSelectedTab}/>}
                 </Popup>
                 <Popup popup={modalUserActive} setPopup={setModalUserActive}>
                         {modalUserActive && <Edituser setPopup={setModalUserActive} anchorEditUser={anchorEditUser} setAnchorEditUser={setAnchorEditUser}/>}
@@ -311,6 +326,13 @@ function App() {
                 <SecondPopup popup={isSuccess} setPopup={setIsSuccess}>
                     <Notification title="Добро пожаловать" text={userLogin?.name || "Гость"} close={setIsSuccess}/>
                 </SecondPopup>
+                {/* <SecondPopup popup={confirmDelete} setPopup={setConfirmDelete}>
+                    <Notification title="Удаление" text="Вы уверены, что хотите удалить пост?" close={setConfirmDelete} color={true}>
+                        <button onClick={() => setAnchDel(true)}>Удалить</button>
+                        <button>Отмена</button>
+                    </Notification>
+                </SecondPopup> */}
+                
                 {scrollTop > 178 && <div className="scroll" onClick={() => toUp()}><NorthOutlinedIcon/></div>}
             </UserContext.Provider>
         </div>

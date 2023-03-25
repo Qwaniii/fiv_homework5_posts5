@@ -20,8 +20,7 @@ export default function Posts({
   setIsLoading,
   setSelectedTab,
   selectedTab,
-  setPopupEdit,
-
+  setPopupEdit
 }) {
 
   
@@ -40,6 +39,7 @@ export default function Posts({
     <main>
       <div className={s.posts}>
         <div className={s.container}>
+          {anchorEl ?
           <SearchAddPost
             active={active}
             setActive={setActive}
@@ -47,6 +47,9 @@ export default function Posts({
             searchQuery={searchQuery}
             setPopupEdit={setPopupEdit}
           />
+          :
+          null
+          }
 
           <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
 
