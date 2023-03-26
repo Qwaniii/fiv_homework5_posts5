@@ -1,0 +1,50 @@
+.page {
+  border: .3px solid gray;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all .3s;
+  color: gray;
+}
+
+.page:hover {
+  background-color: rgba(211, 211, 211, 0.6);
+}
+
+.page:active {
+  transform: scale(.9);
+}
+
+.currentPage {
+  background-color: rgba(128, 128, 128, 0.5);
+  font-weight: bold;
+  color: black;
+  animation: fadeIn .5s linear;
+}
+
+
+@keyframes fadeIn {
+  from {
+    background-color: transparent;
+    font-weight: lighter;
+  }
+
+  to {
+    transform: rgba(128, 128, 128, 0.5);
+    font-weight: bold;
+
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    transform: translate(0%);
+  }
+
+  to {
+    transform: translate(50%);
+  }
+}

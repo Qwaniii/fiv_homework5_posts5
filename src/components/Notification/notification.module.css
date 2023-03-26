@@ -1,9 +1,10 @@
 .standart {
   padding: 15px 30px;
   text-align: center;
-  background-color: rgba(144, 238, 144, 0.4);
+  background-color: rgba(144, 238, 144, 0.6);
   border-radius: 10px;
   position: relative;
+  animation: fadeIn .5s ease-out;
 }
 
 .color {
@@ -40,4 +41,14 @@
 
 .close:hover {
   color: black;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

@@ -19,6 +19,8 @@ import PostPage from "./Page/PostPage";
 import FavoritePage from "./Page/FavoritePage";
 import api from "./utils/Api";
 import NorthOutlinedIcon from '@mui/icons-material/NorthOutlined';
+import { useDispatch, useSelector } from "react-redux";
+import { maxPageAction } from "./storage/reducers/paginateReducers";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -49,6 +51,8 @@ function App() {
 
 
     const token = sessionStorage.getItem("token")
+    const dispatch = useDispatch()
+    const viewPosts = useSelector(state => state.paginate.viewPosts)
     
 
     const debounceValue = useDebounce(searchQuery, 500);
@@ -60,6 +64,7 @@ function App() {
         setAnchorEl(null);
     };
 
+
     useEffect(() => {
         if(isAuth) {        
             api.getAppInfo().then(([postsData, currentUserData]) => {
@@ -69,10 +74,10 @@ function App() {
             setFavorite(postsData.filter(post => (post.likes).some(like => like === currentUserData._id)))
             // setNumberComments(postsData.map((item) => item.comments.length))
             setIsLoading(true);
+            dispatch(maxPageAction(Math.ceil(postsData.length / viewPosts)))
         });
         }
-    }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment, isAuth, anchorLike]);
-
+    }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment, isAuth, anchorLike, viewPosts, dispatch]);
 
     useEffect(() => {
        if(isAuth) { 

@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { nextPageAction, viewPostsAction } from "../../storage/reducers/paginateReducers";
 import Post from "../Post/Post";
 import SearchAddPost from "../SearchAddPost/SearchAddPost";
 import Sort from "../Sort/Sort";
 import Spinner from "../Spinner/Spinner";
+import Paginate from "../Paginate/Paginate"
 import s from "./posts.module.css";
+import Notification from "../Notification/Notification";
 
 export default function Posts({
   posts,
@@ -25,7 +29,22 @@ export default function Posts({
   setModalDelete
 }) {
 
-  
+  const [postsForPaginate, setPostsForPaginate] = useState([])
+  const [activeSearch, setActiveSearch] = useState(false)
+  const maxPage = useSelector(state => state.paginate.maxPage)
+  const viewPosts = useSelector(state => state.paginate.viewPosts)
+  const page = useSelector(state => state.paginate.page)
+  const dispatch = useDispatch()
+
+  const amountPosts = (amount) => {
+    dispatch(viewPostsAction(amount))
+    dispatch(nextPageAction(1))
+  }
+
+  const amountPage = [12, 24, 30]
+
+
+  const allPage = new Array(maxPage).fill(null).map((page, index) => page = index + 1)
 
   let  list = [];
 
@@ -36,6 +55,21 @@ export default function Posts({
   } else if (selectedTab === "popular") {
     list = posts.sort((a, b) => b?.likes?.length - a.likes?.length)
   }
+
+  const startPaginate = (viewPosts * page) - viewPosts
+  useEffect(() => {
+    setPostsForPaginate(list.slice(startPaginate, startPaginate + viewPosts))
+  }, [viewPosts, list, selectedTab, page, startPaginate])  
+
+  useEffect(() => {
+    if(searchQuery) {
+      setActiveSearch(true)
+      let timeout = setTimeout(() => {
+        setActiveSearch(false)
+      }, 5000)
+        return () => clearTimeout(timeout)
+    }
+  }, [searchQuery])
 
   return (
     <main>
@@ -52,14 +86,16 @@ export default function Posts({
           :
           null
           }
-
           <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
 
           {/* <LoginPage/> */}
+          {searchQuery && activeSearch && <div className={s.notification}>
+            <Notification title="Найдено" text={`${posts.length} постов`}/>
+          </div>}
           
           <div className={s.inner}>
             {isLoading ? 
-                list
+                postsForPaginate
                 .map((item, index) => (
                   <Post
                     key={item._id}
@@ -76,6 +112,20 @@ export default function Posts({
                 :
                 <Spinner/>}
           </div>
+          {maxPage && !searchQuery && <div>
+            <div className={s.paginate}>
+              {allPage.map((num, index) => (
+                  <Paginate key={index + num}  page={num} />
+              )) }
+            </div>
+            <div className={s.amount}>
+              <select onChange={(e) => amountPosts(Number(e.target.value))}>
+                {amountPage.map((page, index) => (
+                  <option key={page + index} >{page}</option>
+                ))}
+              </select>
+            </div>
+          </div>}
         </div>
       </div>
     </main>

@@ -7,6 +7,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import s from "./search.module.css";
 import cn from "classnames";
+import { useDispatch } from "react-redux";
+import { nextPageAction } from "../../storage/reducers/paginateReducers";
 
 // const bull = (
 //   <Box
@@ -24,6 +26,18 @@ export default function SearchAddPost({
   searchQuery,
   setPopupEdit
 }) {
+
+  const dispatch = useDispatch()
+
+  const nextPage = (data) => {
+    dispatch(nextPageAction(data))
+  }
+
+  const handleSearchQuery = (e) => {
+    setSearchQuery(e.target.value)
+    nextPage(1)
+  }
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent className={s.search}>
@@ -39,7 +53,7 @@ export default function SearchAddPost({
             type="text"
             placeholder="Поиск"
             value={active ? searchQuery : ""}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => handleSearchQuery(e)}
           ></input>
           {active && (
             <CloseOutlinedIcon

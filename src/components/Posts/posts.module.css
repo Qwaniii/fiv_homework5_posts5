@@ -12,6 +12,26 @@
     /* justify-content: space-between; */
 }
 
+.notification {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 100;
+}
+
+.paginate {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.amount {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+
 @media (max-width: 1050px) {
     .container {
         padding: 130px 30px;
