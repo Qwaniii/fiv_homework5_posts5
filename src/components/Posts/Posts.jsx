@@ -8,6 +8,7 @@ import Spinner from "../Spinner/Spinner";
 import Paginate from "../Paginate/Paginate"
 import s from "./posts.module.css";
 import Notification from "../Notification/Notification";
+import App from "../../App";
 
 export default function Posts({
   posts,
@@ -112,13 +113,74 @@ export default function Posts({
                 :
                 <Spinner/>}
           </div>
-          {maxPage && !searchQuery && <div>
+          {maxPage && !searchQuery && 
+          <div>
             <div className={s.paginate}>
-              {allPage.map((num, index) => (
+            {maxPage < 6 && 
+              allPage.map((num, index) => (
                   <Paginate key={index + num}  page={num} />
-              )) }
+              )) 
+            }
+
+
+            {maxPage > 5 && page > 3 && 
+                <>
+                    <Paginate
+                      page={1}
+                    />
+                    <span className={s.dot}>...</span>
+               </>
+            }  
+
+            { maxPage > 5 && page < 3 &&
+              allPage
+                  .slice(0, 3)
+                  .map((num, index) => (
+                    <Paginate
+                      key={index + num}  page={num} 
+                    />
+                  ))
+            }
+            {maxPage > 5 && page === 3 &&
+              allPage
+                  .slice(0, page + 1)
+                  .map((num, index) => (
+                    <Paginate
+                    key={index + num}  page={num} 
+                    />
+                  ))
+            }
+            {maxPage > 5 && page > 3 && page < allPage.length - 2 &&
+              allPage
+                  .slice(page - 2, page + 1)
+                  .map((num, index) => (
+                    <Paginate
+                      key={index + num}  page={num} 
+                    />
+                  ))
+            }
+            {maxPage > 5 && page > 3 && page > allPage.length - 3 &&
+              allPage
+                  .slice(page - 2, allPage.length + 2)
+                  .map((num, index) => (
+                    <Paginate
+                    key={index + num}  page={num} 
+                    />
+                  ))
+            } 
+            {maxPage > 5 && page < allPage.length - 2 && (
+                <>
+                  <span className={s.dot}>...</span>
+                  <Paginate
+                    page={allPage.length}
+                  />
+                </>
+              )
+            }
+            
             </div>
             <div className={s.amount}>
+              <div>Количество постов на странице: </div>
               <select onChange={(e) => amountPosts(Number(e.target.value))}>
                 {amountPage.map((page, index) => (
                   <option key={page + index} >{page}</option>
