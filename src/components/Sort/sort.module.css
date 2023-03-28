@@ -12,20 +12,27 @@
   color: rgb(177, 177, 177, 0.6);
   cursor: pointer;
   font-size: 15px;
-  transition: color .3s;
+  transition: all .3s;
 }
 
 .sort:hover {
   color: rgb(177, 177, 177, 0.9);
-  transition: color .3s;
+  transition: all .3s;
+}
+
+.sort:active {
+  font-size: 14px;
+  color: rgba(128, 128, 128, 0.8);
 }
 
 .selected {
   color: gray;
   font-size: 16px;
+  transition: all .3s;
 }
 
 .selected:hover {
   color: rgba(0, 0, 0, 0.7);
-  transition: color .3s;
+  transition: all .3s;
 }
+

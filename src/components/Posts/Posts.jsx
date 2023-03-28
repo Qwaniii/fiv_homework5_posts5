@@ -8,7 +8,7 @@ import Spinner from "../Spinner/Spinner";
 import Paginate from "../Paginate/Paginate"
 import s from "./posts.module.css";
 import Notification from "../Notification/Notification";
-import App from "../../App";
+import { useLocation } from "react-router-dom";
 
 export default function Posts({
   posts,
@@ -36,6 +36,8 @@ export default function Posts({
   const viewPosts = useSelector(state => state.paginate.viewPosts)
   const page = useSelector(state => state.paginate.page)
   const dispatch = useDispatch()
+  const location = useLocation()
+  const urlOutPaginate = ['/my-posts', '/favorite']
 
   const amountPosts = (amount) => {
     dispatch(viewPostsAction(amount))
@@ -47,6 +49,7 @@ export default function Posts({
 
   const allPage = new Array(maxPage).fill(null).map((page, index) => page = index + 1)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   let  list = [];
 
   if (selectedTab === "stock") {
@@ -113,7 +116,7 @@ export default function Posts({
                 :
                 <Spinner/>}
           </div>
-          {maxPage && !searchQuery && 
+          {maxPage > 1 && !searchQuery  && !urlOutPaginate.some(path => location.pathname.includes(path)) &&
           <div>
             <div className={s.paginate}>
             {maxPage < 6 && 

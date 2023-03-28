@@ -7,6 +7,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Notification from '../Notification/Notification';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { useDispatch, useSelector } from 'react-redux';
+import { notificPassAction } from '../../storage/reducers/modalReducer';
 
 export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin, setUserLogin, setIsSuccess }) {
 
@@ -22,6 +24,8 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
   const location = useLocation()
   const [errorFetch, setErrorFetch] = useState("")
   const [hiddenPass, setHiddenPas] = useState(false)
+  const dispatch = useDispatch();
+  const modalPass = useSelector(state => state.modal.modalNotificationPass)
 
   useEffect(() => {
     if(userLogin) {
@@ -29,6 +33,12 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLogin])
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(notificPassAction(false))
+    }, 4000)
+  }, [dispatch, modalPass])
 
   function handleLogin(obj) {
     api.signIn(obj)
@@ -75,6 +85,11 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
     navigate("/fo_homework4_post4/registration")
   }
 
+  const toReset = () => {
+    setModalLogin(false)
+    navigate("/fo_homework4_post4/reset-password")
+  }
+
 
   return (
     <>
@@ -111,13 +126,18 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
         </form>
         <div className={s.footer}>
           <div className={s.registr} onClick={() => toRegistr()}>Зарегистрироваться</div>
-          <div className={s.forgot}>Напомнить пароль</div>
+          <div className={s.forgot} onClick={() => toReset()}>Напомнить пароль</div>
         </div>
         <div className={s.close} onClick={() => setModalLogin(false)}><CloseIcon/></div>
       </div>
       {errorFetch && <div className={s.errorFetch}>
         <Notification title="Ошибка" text={errorFetch} color={true}>
           <div>Попробуйте еще раз</div>
+        </Notification>
+      </div>}
+      {modalPass && <div className={s.errorFetch}>
+        <Notification title="Отлично" text="Пароль успешно изменен" >
+          Теперь авторизируйтесь
         </Notification>
       </div>}
     </div>

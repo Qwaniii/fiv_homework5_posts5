@@ -21,6 +21,7 @@ import api from "./utils/Api";
 import NorthOutlinedIcon from '@mui/icons-material/NorthOutlined';
 import { useDispatch, useSelector } from "react-redux";
 import { maxPageAction } from "./storage/reducers/paginateReducers";
+import ForgotPassword from "./components/Login/ForgotPassword";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -48,12 +49,11 @@ function App() {
     const [anchorLike, setAnchorLike] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(() => () => null)
     const [modalDelete, setModalDelete] = useState(false)
-
+    const [modalResetPass, setModalResetPass] = useState(false)
 
     const token = sessionStorage.getItem("token")
     const dispatch = useDispatch()
     const viewPosts = useSelector(state => state.paginate.viewPosts)
-    
 
     const debounceValue = useDebounce(searchQuery, 500);
 
@@ -305,6 +305,12 @@ function App() {
                             <GuestPage/>
                         }>
                     </Route>
+                    <Route 
+                        path="fo_homework4_post4/reset-password"
+                        element={
+                            <GuestPage/>
+                        }>
+                    </Route>
                 </Routes>
                 <SecondPopup popup={modalLogin} setPopup={setModalLogin}>
                     <Login
@@ -323,8 +329,16 @@ function App() {
                         setUserLogin={setUserLogin}
                     />
                 </SecondPopup>
+                <SecondPopup popup={modalResetPass} setPopup={setModalResetPass}>
+                    <ForgotPassword
+                        modalResetPass={modalResetPass}
+                        setModalResetPass={setModalResetPass}
+                    />
+                </SecondPopup>
+                
                 </>
                 }
+                
                 <Popup popup={modalActive} setPopup={setModalActive}>
                         {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost} setSelectedTab={setSelectedTab}/>}
                 </Popup>
