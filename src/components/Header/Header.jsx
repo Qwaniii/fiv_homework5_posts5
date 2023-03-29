@@ -36,6 +36,11 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
         setAboutUser(false)
     }
 
+    const myCommentsMenu = () => {
+        navigate("/fo_homework4_post4/my-comments")
+        setAboutUser(false)
+    }
+
   return (
     <div>
         <div className={cn(s.header, { [s.scroll]: scrollTop > scrollNum })}>
@@ -74,6 +79,7 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
                                         <li className={s.link} onClick={() => editMenu()}>Редактировать</li>
                                         <li className={s.link} onClick={() => myPostsMenu()}>Мои посты</li>
                                         <li className={s.link} onClick={() => favoriteMenu()}>Мне нравится</li>
+                                        <li className={s.link} onClick={() => myCommentsMenu()}>Мои комментарии</li>
                                     </ul>
                                 </AboutUser>
                             </div>

@@ -3,6 +3,7 @@ import s from "./slider.module.css"
 import data from "../../DB/data"
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import { Link } from "react-router-dom";
 
 const Slider = ({ stopAnimation }) => {
 
@@ -36,11 +37,13 @@ const Slider = ({ stopAnimation }) => {
             <div className={s.wrapper}>
                 {data.map((slide, index) => (
                        (index === position) &&
-                       <div key={slide.title + index} className={s.container}>
-                            <img className={s.image} src={slide.image} alt={slide.title}></img>
-                            <h3>{slide.title}</h3>
-                            <p>{slide.text}</p>
-                        </div>
+                       <Link to='/fo_homework4_post4/login' key={slide.title + index} style={{color: "inherit"}}>
+                            <div  className={s.container}>
+                                <img className={s.image} src={slide.image} alt={slide.title}></img>
+                                <h3>{slide.title}</h3>
+                                <p>{slide.text}</p>
+                            </div>
+                        </Link>
                 ))}
                 {stopAnimation &&
                 <>

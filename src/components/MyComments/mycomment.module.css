@@ -1,0 +1,47 @@
+.wrapper {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post {
+    margin-top: 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+
+}
+
+.imgWrapper {
+    width: 300px;
+}
+
+.title {
+    margin: 10px 0;
+    width: 300px;
+    text-align: center;
+}
+
+.img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.comment {
+    margin-top: auto;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 5px 15px -2px black;
+    width: 300px;
+    box-sizing: border-box;
+}
+
+.text {
+    margin-top: 5px;
+    margin-left: 40px;
+    font-style: italic;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(211, 211, 211, 0.7);
+    width: max-content;
+    min-width: 200px;
+}

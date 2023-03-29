@@ -89,6 +89,12 @@ class Api {
     }).then(onResponce);
   }
 
+  getAllComments() {
+    return fetch(`${this._dataUrl}/posts/comments`, {
+      ...this._freshToken(),
+    }).then(onResponce);
+  }
+
   getPostComments(postId) {
     return fetch(`${this._dataUrl}/posts/comments/${postId}`, {
       ...this._freshToken(),

@@ -37,3 +37,20 @@
   /* transform: translateY(-50%); */
   border-left: .3px solid rgba(0, 0, 0, 0.3);
 }
+
+.guest__link {
+  font-weight: bold;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7);
+  transition: .3s;
+}
+
+.guest__link:hover {
+  color: black;
+}
+
+.comments__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}

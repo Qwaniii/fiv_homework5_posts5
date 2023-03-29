@@ -22,6 +22,7 @@ import NorthOutlinedIcon from '@mui/icons-material/NorthOutlined';
 import { useDispatch, useSelector } from "react-redux";
 import { maxPageAction } from "./storage/reducers/paginateReducers";
 import ForgotPassword from "./components/Login/ForgotPassword";
+import MyCommentPage from "./Page/MyCommentPage";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -50,6 +51,8 @@ function App() {
     const [confirmDelete, setConfirmDelete] = useState(() => () => null)
     const [modalDelete, setModalDelete] = useState(false)
     const [modalResetPass, setModalResetPass] = useState(false)
+    const [postFromCommets, setPostFromComments] = useState([])
+
 
     const token = sessionStorage.getItem("token")
     const dispatch = useDispatch()
@@ -73,12 +76,15 @@ function App() {
             setMyPosts(postsData.filter((post) => post.author._id === currentUserData._id))
             setFavorite(postsData.filter(post => (post.likes).some(like => like === currentUserData._id)))
             // setNumberComments(postsData.map((item) => item.comments.length))
+            setPostFromComments(postsData.filter(post => (post.comments).some(comment => comment.author === currentUser._id)))
             setIsLoading(true);
             dispatch(maxPageAction(Math.ceil(postsData.length / viewPosts)))
         });
         }
     }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment, isAuth, anchorLike, viewPosts, dispatch]);
 
+
+    
     useEffect(() => {
        if(isAuth) { 
         api.search(debounceValue).then((data) => {
@@ -278,6 +284,15 @@ function App() {
                             />
                         }
                     ></Route>
+                    <Route
+                        path="fo_homework4_post4/my-comments"
+                        element={
+                            <MyCommentPage
+                                postFromCommets={postFromCommets}
+                            />
+                        }
+                    ></Route>
+
                     <Route path="*"
                         element={<NotFoundPage/>}>
                     </Route>

@@ -184,9 +184,9 @@ export default function Posts({
             </div>
             <div className={s.amount}>
               <div>Количество постов на странице: </div>
-              <select onChange={(e) => amountPosts(Number(e.target.value))}>
-                {amountPage.map((page, index) => (
-                  <option key={page + index} >{page}</option>
+              <select value={viewPosts} onChange={(e) => amountPosts(Number(e.target.value))}>
+                {amountPage.map((postPage, index) => (
+                  <option key={page + index}>{postPage}</option>
                 ))}
               </select>
             </div>
