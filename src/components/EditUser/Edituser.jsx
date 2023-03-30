@@ -3,7 +3,7 @@ import { UserContext } from "../../Context/UserContext";
 import api from "../../utils/Api";
 import s from "./edituser.module.css";
 
-export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }) {
+export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, setVisibleUser }) {
   
   const { currentUser } = useContext(UserContext);
   const [avatarUser, setAvatarUser] = useState({avatar: currentUser.avatar});
@@ -20,13 +20,15 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
         api
           .editUserAvatar(avatar)
           .then((resp) => {
-          console.log("avatar", resp)
-          setAnchorEditUser(!anchorEditUser)})
+            console.log("avatar", resp)
+            setAnchorEditUser(!anchorEditUser)
+            setVisibleUser(true)
+            setPopup(false)
+
+          })
           .catch((err) => alert("Ошибка, неправильный формат аватара", err));
       })
       .catch((err) => alert("Ошибка редактирования учетной записи",err));
-
-    setPopup(false)
   }
   
   console.log(userObj)

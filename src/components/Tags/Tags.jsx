@@ -7,9 +7,9 @@ export default function Tags({ tag }) {
   return (
     <Stack spacing={1} alignItems="center">
       <Stack direction="row" spacing={1} className={s.tags}>
-        {tag && tag.length < 4 && <Chip label={tag} color="secondary" variant="outlined" />}
-        {tag && tag.length >= 4 && tag.length < 7 && <Chip label={tag} color="primary" variant="outlined" />}
-        {tag && tag.length >= 7 && <Chip label={tag} color="success" variant="outlined" />}
+        {tag && tag.length < 4 && <Chip label={tag} title={tag} color="secondary" variant="outlined" />}
+        {tag && tag.length >= 4 && tag.length < 7 && <Chip label={tag} title={tag} color="primary" variant="outlined" />}
+        {tag && tag.length >= 7 && <Chip label={tag} title={tag} color="success" variant="outlined"/>}
       </Stack>
     </Stack>
   );

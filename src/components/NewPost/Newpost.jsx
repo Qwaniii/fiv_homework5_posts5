@@ -8,7 +8,8 @@ export default function Newpost({
   setPosts,
   anchorNewPost,
   setAnchorNewPost,
-  setSelectedTab
+  setSelectedTab,
+  setVisiblePost
 }) {
   
   const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
@@ -37,6 +38,7 @@ export default function Newpost({
         setAnchorNewPost(!anchorNewPost)
         setPopup(false);
         setSelectedTab("new")
+        setVisiblePost(true)
       })
       .catch((err) =>{
         console.log(err.status)
@@ -49,6 +51,7 @@ export default function Newpost({
             }, 5000)
           })
       });
+
   }
   
   return (

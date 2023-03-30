@@ -4,7 +4,8 @@
     margin: 0 auto;
     padding: 160px 0;
     max-width: 1000px;
-    
+    min-height: calc(100vh - 420px);
+
 }
 
 .wrapper {
@@ -58,10 +59,20 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+    transition: all .3s;
+}
+
+.avatar:hover {
+    filter: brightness(1.2);
 }
 
 .authorInfo {
     cursor: pointer;
+    transition: all .3s;
+}
+
+.authorInfo:hover {
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .main {
@@ -250,6 +261,7 @@
     text-align: center;
 }
 
+
 .form {
     display: flex;
     flex-direction: column;
@@ -266,7 +278,6 @@
     padding: 10px;
     width: 100%;
     height: 40px;
-    overflow:hidden;
     outline: none;
     background: rgba(211, 211, 211, 0.2);
     transition: all .3s;

@@ -23,10 +23,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { maxPageAction } from "./storage/reducers/paginateReducers";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import MyCommentPage from "./Page/MyCommentPage";
+import UpperNotific from "./components/UpperNotific/UpperNotific";
+import Footer from "./components/Footer/Footer";
 
 function App() {
     const [posts, setPosts] = useState([]);
     const [myPosts, setMyPosts] = useState([]);
+    const [myComments, setMyComments] = useState([]);
     const [favorite, setFavorite] = useState([]);
     const [currentUser, setCurrentUser] = useState({});
     const [searchActive, setSearchActive] = useState(false);
@@ -52,6 +55,8 @@ function App() {
     const [modalDelete, setModalDelete] = useState(false)
     const [modalResetPass, setModalResetPass] = useState(false)
     const [postFromCommets, setPostFromComments] = useState([])
+    const [visibleUser, setVisibleUser] = useState(false)
+    const [visiblePost, setVisiblePost] = useState(false)
 
 
     const token = sessionStorage.getItem("token")
@@ -69,7 +74,7 @@ function App() {
 
 
     useEffect(() => {
-        if(isAuth) {        
+        if(isAuth && !searchQuery) {        
             api.getAppInfo().then(([postsData, currentUserData]) => {
             setPosts(postsData);
             setCurrentUser(currentUserData);
@@ -81,17 +86,28 @@ function App() {
             dispatch(maxPageAction(Math.ceil(postsData.length / viewPosts)))
         });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment, isAuth, anchorLike, viewPosts, dispatch]);
 
 
     
     useEffect(() => {
        if(isAuth) { 
-        api.search(debounceValue).then((data) => {
-            setPosts(data);
+        api.search(debounceValue)
+            .then((data) => {
+                dispatch(maxPageAction(Math.ceil(data.length / viewPosts)))
+                setPosts(data);
         });
         }
-    }, [debounceValue, isAuth]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounceValue, isAuth, viewPosts]);
+
+    useEffect(() => {
+        api.getAllComments()
+            .then(data => {
+                setMyComments(data.filter(post => post.author._id === currentUser._id))
+            })
+    }, [currentUser._id, anchorAddDelEditComment])
 
     useEffect(() => {
         const handleScroll = event => {
@@ -164,7 +180,7 @@ function App() {
 
     return (
         <div className="App" >
-            <UserContext.Provider value={{currentUser, setCurrentUser }} >
+            <UserContext.Provider value={{currentUser, setCurrentUser }}>
                 <Header
                     popupEdit={modalUserActive}
                     setPopupEdit={setModalUserActive}
@@ -289,6 +305,12 @@ function App() {
                         element={
                             <MyCommentPage
                                 postFromCommets={postFromCommets}
+                                myComments={myComments}
+                                setMyComments={setMyComments}
+                                anchorAddDelEditComment={anchorAddDelEditComment}
+                                setAnchorAddDelEditComment={setAnchorAddDelEditComment}
+                                setModalDelete={setModalDelete}
+                                setConfirmDelete={setConfirmDelete}
                             />
                         }
                     ></Route>
@@ -355,10 +377,14 @@ function App() {
                 }
                 
                 <Popup popup={modalActive} setPopup={setModalActive}>
-                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost} setSelectedTab={setSelectedTab}/>}
+                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost} setSelectedTab={setSelectedTab} setVisiblePost={setVisiblePost}/>}
                 </Popup>
                 <Popup popup={modalUserActive} setPopup={setModalUserActive}>
-                        {modalUserActive && <Edituser setPopup={setModalUserActive} anchorEditUser={anchorEditUser} setAnchorEditUser={setAnchorEditUser}/>}
+                        {modalUserActive && <Edituser 
+                                                setPopup={setModalUserActive} 
+                                                anchorEditUser={anchorEditUser}     
+                                                setAnchorEditUser={setAnchorEditUser}
+                                                setVisibleUser={setVisibleUser}/>}
                 </Popup>
                 <SecondPopup popup={isSuccess} setPopup={setIsSuccess}>
                     <Notification title="Добро пожаловать" text={userLogin?.name || "Гость"} close={setIsSuccess}/>
@@ -369,8 +395,11 @@ function App() {
                         <button className="btn" onClick={() => setModalDelete(false)}>Отмена</button>
                     </Notification>
                 </SecondPopup>
+                <UpperNotific message="Изменения сохранены" visible={visibleUser} setVisible={setVisibleUser}/>
+                <UpperNotific message="Пост добавлен" visible={visiblePost} setVisible={setVisiblePost}/>
                 {scrollTop > 178 && <div className="scroll" onClick={() => toUp()}><NorthOutlinedIcon/></div>}
             </UserContext.Provider>
+            <Footer />
         </div>
     );
 }

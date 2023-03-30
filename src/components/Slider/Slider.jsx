@@ -14,11 +14,11 @@ const Slider = ({ stopAnimation }) => {
 
 
     const nextFunc = () => {
-        setPosition(position < 2  ? position + 1 : 0)
+        setPosition(position < data.length - 1  ? position + 1 : 0)
     }
 
     const prevFunc = () => {
-        setPosition(position !== 0 ? position - 1 : 2)
+        setPosition(position !== 0 ? position - 1 : data.length - 1)
     }
 
     useEffect(() => {

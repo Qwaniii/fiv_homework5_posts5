@@ -7,8 +7,8 @@ import Sort from "../Sort/Sort";
 import Spinner from "../Spinner/Spinner";
 import Paginate from "../Paginate/Paginate"
 import s from "./posts.module.css";
-import Notification from "../Notification/Notification";
 import { useLocation } from "react-router-dom";
+import UpperNotific from "../UpperNotific/UpperNotific";
 
 export default function Posts({
   posts,
@@ -68,10 +68,6 @@ export default function Posts({
   useEffect(() => {
     if(searchQuery) {
       setActiveSearch(true)
-      let timeout = setTimeout(() => {
-        setActiveSearch(false)
-      }, 5000)
-        return () => clearTimeout(timeout)
     }
   }, [searchQuery])
 
@@ -93,8 +89,8 @@ export default function Posts({
           <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
 
           {/* <LoginPage/> */}
-          {searchQuery && activeSearch && <div className={s.notification}>
-            <Notification title="Найдено" text={`${posts.length} постов`}/>
+          {searchQuery && <div className={s.notification}>
+            <UpperNotific message={`Найдено ${posts.length} постов`} visible={activeSearch} setVisible={setActiveSearch}/>
           </div>}
           
           <div className={s.inner}>
@@ -116,7 +112,7 @@ export default function Posts({
                 :
                 <Spinner/>}
           </div>
-          {maxPage > 1 && !searchQuery  && !urlOutPaginate.some(path => location.pathname.includes(path)) &&
+          {maxPage > 1  && !urlOutPaginate.some(path => location.pathname.includes(path)) &&
           <div>
             <div className={s.paginate}>
             {maxPage < 6 && 
