@@ -53,7 +53,10 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
           setIsSuccess(false)
           setUserLogin(null)
         }, 2500)
-        navigate("/fo_homework4_post4")
+        console.log(location)
+        if (location.pathname.includes('/login') && !location.state) {
+             navigate("/fo_homework4_post4")
+            } else navigate(location.state.pathname)
         reset()
       })
       .catch(err => {

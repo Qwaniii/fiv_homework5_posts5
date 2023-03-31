@@ -97,7 +97,7 @@
   background-color: white;
   border-radius: 3px;
   position: relative;
-  word-wrap: normal;
+  word-wrap: break-word;
   text-align: center;
 }
 

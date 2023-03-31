@@ -65,7 +65,7 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
                     <div className={s.containerUser} >
                         <div title="Личный кабинет" onClick={() => setAboutUser(true)} className={cn(s.info, {[s.scroll]: scrollTop > 178})}> <img src={currentUser.avatar} alt={currentUser.name}></img>
                             <span>{currentUser.name}</span>
-                            {scrollTop <= scrollNum && <span>{currentUser.about}</span>}
+                            {scrollTop <= scrollNum && <span className={s.about}>{currentUser.about}</span>}
                             {scrollTop <= scrollNum && <span>{currentUser.email}</span>}
                         </div>
                         {aboutUser && 

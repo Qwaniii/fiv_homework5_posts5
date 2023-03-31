@@ -123,6 +123,12 @@ a {
     position: relative;
 }
 
+.about {
+    max-width: 250px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
 .wrapperUser {
     position: fixed;
     top:0;

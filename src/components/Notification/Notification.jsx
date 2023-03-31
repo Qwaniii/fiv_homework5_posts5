@@ -14,7 +14,7 @@ export default function Notification({ title, text, children, color, close }) {
     <div className={cn(s.standart, {[s.color]: color})}>
       <h3 className={s.title}>{title}</h3>
       <p className={s.text}>{text}</p>
-      <p>{children}</p>
+      <div>{children}</div>
       {close && <div className={s.close} onClick={() => handleClose()}><CloseIcon/></div>}
     </div>
   )

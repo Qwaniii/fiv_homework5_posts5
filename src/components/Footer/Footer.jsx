@@ -19,7 +19,7 @@ export default function Footer() {
       <Link to="/fo_homework4_post4" onClick={() => toUp()}>
           <div className={s.logo}>
               <ImportContactsOutlinedIcon fontSize='large'/>
-              <p>made by Oleg &copy; {date.getFullYear()}</p>
+              <div>made by Oleg &copy; {date.getFullYear()}</div>
           </div>
       </Link>
     </div>

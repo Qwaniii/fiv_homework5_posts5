@@ -70,16 +70,20 @@ export default function PostWindow({
           tags: data.tags,
         });
         setIsLoading(true);
-        api
+        
+      })
+      .catch((err) => setErrorState(true));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, anchorEditUser]);
+
+  useEffect(() => {
+    api
           .getPostComments(id)
           .then((data) => {
             setPostComments(data);
           })
           .catch((err) => console.log(err));
-      })
-      .catch((err) => setErrorState(true));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, anchorAddDelEditComment, anchorEditUser]);
+  }, [anchorAddDelEditComment, id])
 
   function handleEditPost(id, data) {
     api

@@ -25,6 +25,7 @@ import ForgotPassword from "./components/Login/ForgotPassword";
 import MyCommentPage from "./Page/MyCommentPage";
 import UpperNotific from "./components/UpperNotific/UpperNotific";
 import Footer from "./components/Footer/Footer";
+import ProtectedRoutePage from "./Page/ProtectedRoutePage";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -103,11 +104,13 @@ function App() {
     }, [debounceValue, isAuth, viewPosts]);
 
     useEffect(() => {
+        if(isAuth) { 
         api.getAllComments()
             .then(data => {
                 setMyComments(data.filter(post => post.author._id === currentUser._id))
             })
-    }, [currentUser._id, anchorAddDelEditComment])
+        }
+    }, [currentUser._id, anchorAddDelEditComment, isAuth])
 
     useEffect(() => {
         const handleScroll = event => {
@@ -138,7 +141,6 @@ function App() {
               });
         setAnchorLike(!anchorLike)
     }
-
 
 
     useEffect(() => {
@@ -348,6 +350,21 @@ function App() {
                             <GuestPage/>
                         }>
                     </Route>
+                    <Route path="*"
+                        element={<NotFoundPage/>}>
+                    </Route>
+
+                    <Route element={<ProtectedRoutePage/>}>
+                        <Route path="fo_homework4_post4/post/:postId"
+                                element={<GuestPage/>}/>
+                        <Route path="fo_homework4_post4/my-posts"
+                                element={<GuestPage/>}/>
+                        <Route path="fo_homework4_post4/favorite"
+                                element={<GuestPage/>}/>
+                        <Route path="fo_homework4_post4/my-comments"
+                                element={<GuestPage/>}/>
+                    </Route>
+
                 </Routes>
                 <SecondPopup popup={modalLogin} setPopup={setModalLogin}>
                     <Login
