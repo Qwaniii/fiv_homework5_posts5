@@ -147,7 +147,7 @@ a {
 }
 
 .aboutUser.scroll {
-    top: 35px;
+    top: 36px;
 }
 
 .link {
@@ -195,4 +195,12 @@ a {
         display: none;
     }
 
+    .aboutUser {
+        top: 33px;
+        right: 40px;
+    }
+
+    .aboutUser.scroll {
+        top: 33px;
+    }
 }

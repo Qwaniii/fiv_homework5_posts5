@@ -238,3 +238,18 @@
     font-size: 14px;
     text-align: justify;
 }
+
+
+@media (max-width: 450px) {
+    .wrapper, .wrapperRegistr, .wrapperPass {
+        padding: 25px 5px;
+        width: none;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 3px;
+        align-items: center;
+    }
+
+}

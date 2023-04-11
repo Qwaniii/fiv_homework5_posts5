@@ -36,3 +36,15 @@
   transition: all .3s;
 }
 
+@media (max-width: 500px) {
+  .title {
+    float: left;
+  }
+
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+

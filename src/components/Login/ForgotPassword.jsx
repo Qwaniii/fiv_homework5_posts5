@@ -32,10 +32,11 @@ export default function ForgotPassword({ modalResetPass, setModalResetPass }) {
     setMessageFromApi({message: "", status: false})
     dispatch(notificPassAction(false))
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [modalResetPass])
 
-  function handleForgot(email) {
-    console.log(email)
+  function handleForgot(data) {
+    console.log(data)
+    const email = {email: data.email}
     api.forgotPassword(email)
       .then((data) => {
         console.log(data.message)
@@ -85,6 +86,10 @@ export default function ForgotPassword({ modalResetPass, setModalResetPass }) {
   const toLogin = () => {
     setModalResetPass(false)
     navigate("/fo_homework4_post4/login")
+  }
+
+  const cancel = () => {
+    setMessageFromApi({message: "", status: false})
   }
 
 
@@ -139,6 +144,7 @@ export default function ForgotPassword({ modalResetPass, setModalResetPass }) {
             <div className={s.eyes} onClick={() => setHiddenPas(!hiddenPass)}>{hiddenPass ? <VisibilityOutlinedIcon/> : <VisibilityOffOutlinedIcon/>}</div>
           </div>
           <input type="submit" className={s.enter} value="Отправить"></input>
+          <input type="button" onClick={() => cancel()} className={s.enter} value="Отмена"></input>
         </form>
         <div className={s.footer}>
           <div className={s.registr} onClick={() => toLogin()}>Войти</div>

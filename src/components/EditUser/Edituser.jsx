@@ -8,6 +8,7 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, 
   const { currentUser } = useContext(UserContext);
   const [avatarUser, setAvatarUser] = useState({avatar: currentUser.avatar});
   const [userObj, setUserObj] = useState({name: currentUser.name, about: currentUser.about})
+  const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
 
 
 
@@ -40,7 +41,7 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, 
       <form className={s.formUser} onSubmit={(e) => {
         handleEditUserInfo(e, userObj, avatarUser)}
         }>
-        <div className={s.imgwrapper}><img className={s.image} src={avatarUser.avatar} alt={userObj.name}></img></div>
+        <div className={s.imgwrapper}><img className={s.image} src={avatarUser.avatar || backgroundImage} alt={userObj.name}></img></div>
         <span className={s.main}>
           <label htmlFor="img">Аватар:</label>
           <input

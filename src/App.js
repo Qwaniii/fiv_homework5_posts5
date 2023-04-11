@@ -392,17 +392,18 @@ function App() {
                 
                 </>
                 }
-                
-                <Popup popup={modalActive} setPopup={setModalActive}>
-                        {modalActive && <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost} setSelectedTab={setSelectedTab} setVisiblePost={setVisiblePost}/>}
-                </Popup>
-                <Popup popup={modalUserActive} setPopup={setModalUserActive}>
-                        {modalUserActive && <Edituser 
-                                                setPopup={setModalUserActive} 
-                                                anchorEditUser={anchorEditUser}     
-                                                setAnchorEditUser={setAnchorEditUser}
-                                                setVisibleUser={setVisibleUser}/>}
-                </Popup>
+                {modalActive && 
+                    <Popup popup={modalActive} setPopup={setModalActive}>
+                            <Newpost setPopup={setModalActive} setPosts={setPosts} anchorNewPost={anchorNewPost} setAnchorNewPost={setAnchorNewPost} setSelectedTab={setSelectedTab} setVisiblePost={setVisiblePost}/>
+                    </Popup>}
+                {modalUserActive && 
+                    <Popup popup={modalUserActive} setPopup={setModalUserActive}>
+                            <Edituser 
+                                setPopup={setModalUserActive} 
+                                anchorEditUser={anchorEditUser}     
+                                setAnchorEditUser={setAnchorEditUser}
+                                setVisibleUser={setVisibleUser}/>
+                    </Popup>}
                 <SecondPopup popup={isSuccess} setPopup={setIsSuccess}>
                     <Notification title="Добро пожаловать" text={userLogin?.name || "Гость"} close={setIsSuccess}/>
                 </SecondPopup>

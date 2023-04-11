@@ -47,7 +47,7 @@
 
 @media (max-width: 1050px) {
     .container {
-        padding: 130px 30px;
+        padding: 130px 20px;
     }
 
     .inner {
@@ -58,7 +58,7 @@
 
 @media (max-width: 750px) {
     .container {
-        padding: 10px 80px;
+        padding: 30px;
     }
 
     .inner {

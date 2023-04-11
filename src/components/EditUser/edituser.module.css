@@ -32,8 +32,8 @@
 }
 
 .imgwrapper {
- width: 500px;
- height: 500px;
+ max-width: 500px;
+ max-height: 500px;
  align-self: center;
   
 }
@@ -131,4 +131,15 @@
 .close:hover {
   color: black;
   transition: color .3s;
+}
+
+@media (max-width: 600px) {
+  .imgwrapper {
+    width: auto;
+    height: auto;
+  }
+
+  .main label {
+    width: auto;
+  }
 }

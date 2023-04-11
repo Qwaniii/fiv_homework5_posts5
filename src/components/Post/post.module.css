@@ -1,6 +1,6 @@
 .post {
     width: 32%;
-    min-width: 250px;
+    min-width: 275px;
     position: relative;
     /* padding-bottom: 50px; */
     display: flex;
@@ -9,8 +9,7 @@
     transform: scale(1);
     transition: border .1s;
     transition: transform .3s;
-    border: .3px solid transparent
-
+    border: .3px solid transparent;
 }
 
 .post:hover {
