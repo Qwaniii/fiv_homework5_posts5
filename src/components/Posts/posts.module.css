@@ -3,7 +3,30 @@
     padding: 130px 0 50px;
     max-width: 1000px;
     min-height: calc(100vh - 370px);
+    position: relative;
 }
+
+.icon {
+    position: absolute;
+    left: 0;
+    box-sizing: border-box;
+    color: rgba(128, 128, 128, 0.3);
+    transition: all .3s;
+    padding: 2px;
+    border-radius: 50%;
+    align-self: center;
+    cursor: pointer;
+  }
+  
+  .icon:hover {
+    color: rgba(128, 128, 128, 0.8);
+    transition: all .3s;
+    background-color: rgba(128, 128, 128, 0.1);
+  }
+  
+  .icon:active {
+    color: red;
+  }
 
 .inner {
     display: flex;

@@ -78,11 +78,11 @@ export default function PostWindow({
 
   useEffect(() => {
     api
-          .getPostComments(id)
-          .then((data) => {
-            setPostComments(data);
-          })
-          .catch((err) => console.log(err));
+      .getPostComments(id)
+      .then((data) => {
+        setPostComments(data);
+      })
+      .catch((err) => console.log(err));
   }, [anchorAddDelEditComment, id])
 
   function handleEditPost(id, data) {
@@ -156,8 +156,6 @@ export default function PostWindow({
       setNotificMessage("")
     }, 4000)
   }
-
-  console.log(postWindow)
 
   const date = new Date(postWindow.created_at);
   const update = new Date(postWindow.updated_at);

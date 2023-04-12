@@ -26,6 +26,10 @@ export default function Comments({ comment, anchor, setAnchor, modalAbout, setMo
         setConfirmDelete(() => () => null)
     }
 
+
+
+    //функция для открытия модального окна на подтверждение удаления комментарий
+    //и передача функции из этого компонента для кнопки "удалить"
     const deleteComment = () => {
         setModalDelete(true)
         setConfirmDelete(() => () => handleDeleteComment(comment.post, comment._id))

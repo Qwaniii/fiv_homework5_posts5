@@ -32,9 +32,6 @@ export default function Post({
   post,
   onPostLike,
   postDelete,
-  anchorEl,
-  handleClick,
-  handleClose,
   setIsLoading,
   setConfirmDelete,
   setModalDelete

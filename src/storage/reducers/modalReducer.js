@@ -1,6 +1,5 @@
 const initialState = {
   modalNotificationPass: false,
-
 }
 
 export const RESETPASS = "RESETPASS"

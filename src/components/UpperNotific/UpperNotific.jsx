@@ -7,7 +7,9 @@ export default function UpperNotific({message, color, visible, setVisible}) {
       if (visible) {
       const timer = setTimeout(() => {
         setVisible(false)
-        return clearTimeout(timer)
+        return () => {
+          clearTimeout(timer)
+        } 
       }, 5000)
     }
   }, [setVisible, visible]) 

@@ -23,17 +23,16 @@ export default function ForgotPassword({ modalResetPass, setModalResetPass }) {
   const [messageFromApi, setMessageFromApi] = useState({message: "", status: false})
   const [hiddenPass, setHiddenPas] = useState(false)
   const dispatch = useDispatch()
-
-
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
     setMessageFromApi({message: "", status: false})
-    dispatch(notificPassAction(false))
+    reset()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalResetPass])
 
+  //отправка кода на email
   function handleForgot(data) {
     console.log(data)
     const email = {email: data.email}
@@ -58,6 +57,7 @@ export default function ForgotPassword({ modalResetPass, setModalResetPass }) {
       })
   }
 
+  //после ввода кода и нового пароль
   const handleReset = (data) => {
     const pass = {password: data.password}
     api.resetPassword(pass, data.token)
@@ -65,6 +65,7 @@ export default function ForgotPassword({ modalResetPass, setModalResetPass }) {
         console.log(data)
         setModalResetPass(false)
         navigate("/fo_homework4_post4/login")
+        //сообщение об успешном изменение пароля
         dispatch(notificPassAction(true))
         reset()
       })

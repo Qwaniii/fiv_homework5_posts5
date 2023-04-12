@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Edituser from "./components/EditUser/Edituser";
@@ -34,54 +34,51 @@ function App() {
     const [favorite, setFavorite] = useState([]);
     const [currentUser, setCurrentUser] = useState({});
     const [searchActive, setSearchActive] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
+    const [scrollTop, setScrollTop] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedTab, setSelectedTab] = useState("stock");
+    const [isAuth, setIsAuth] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
+    const [userLogin, setUserLogin] = useState(null)
+    const [confirmDelete, setConfirmDelete] = useState(() => () => null)
+    const [postFromCommets, setPostFromComments] = useState([])
+    const [visibleUser, setVisibleUser] = useState(false)
+    const [visiblePost, setVisiblePost] = useState(false)
+    // стэйты - модальные окна
     const [modalActive, setModalActive] = useState(false);
     const [modalUserActive, setModalUserActive] = useState(false);
     const [modalInfoAboutUser, setModalInfoAboutUser] = useState(false);
     const [modalLogin, setModalLogin] = useState(false);
     const [modalRegistr, setModalRegistr] = useState(false);
     const [modalPostUser, setModalPostUser] = useState(false);
-    const [scrollTop, setScrollTop] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
-    const [selectedTab, setSelectedTab] = useState("stock");
+    const [modalResetPass, setModalResetPass] = useState(false)
+    const [modalDelete, setModalDelete] = useState(false)
+    //anchors
+    const [anchorEl, setAnchorEl] = useState(true);
     const [anchorEditUser, setAnchorEditUser] = useState(false);
     const [anchorNewPost, setAnchorNewPost] = useState(false);
     const [anchorAddDelEditComment, setAnchorAddDelEditComment] = useState(false);
-    const [isAuth, setIsAuth] = useState(false)
-    const [isSuccess, setIsSuccess] = useState(false)
-    const [userLogin, setUserLogin] = useState(null)
     const [anchorLike, setAnchorLike] = useState(false)
-    const [confirmDelete, setConfirmDelete] = useState(() => () => null)
-    const [modalDelete, setModalDelete] = useState(false)
-    const [modalResetPass, setModalResetPass] = useState(false)
-    const [postFromCommets, setPostFromComments] = useState([])
-    const [visibleUser, setVisibleUser] = useState(false)
-    const [visiblePost, setVisiblePost] = useState(false)
 
-
+    //получаем токен из стораджа
     const token = sessionStorage.getItem("token")
     const dispatch = useDispatch()
     const viewPosts = useSelector(state => state.paginate.viewPosts)
 
-    const debounceValue = useDebounce(searchQuery, 500);
+    const debounceValue = useDebounce(searchQuery, 500)
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-
+    //получаем посты и данные пользователя с сервера
     useEffect(() => {
         if(isAuth && !searchQuery) {        
             api.getAppInfo().then(([postsData, currentUserData]) => {
             setPosts(postsData);
             setCurrentUser(currentUserData);
+            //фильтруем "мои посты" и "любимые посты"
             setMyPosts(postsData.filter((post) => post.author._id === currentUserData._id))
             setFavorite(postsData.filter(post => (post.likes).some(like => like === currentUserData._id)))
             // setNumberComments(postsData.map((item) => item.comments.length))
+            // фильтруем посты с моими комментариями
             setPostFromComments(postsData.filter(post => (post.comments).some(comment => comment.author === currentUser._id)))
             setIsLoading(true);
             dispatch(maxPageAction(Math.ceil(postsData.length / viewPosts)))
@@ -91,11 +88,12 @@ function App() {
     }, [anchorEditUser, anchorNewPost, anchorAddDelEditComment, isAuth, anchorLike, viewPosts, dispatch]);
 
 
-    
+    //поиск
     useEffect(() => {
        if(isAuth) { 
         api.search(debounceValue)
             .then((data) => {
+                //пагинация в зависимоти от итогов поиска
                 dispatch(maxPageAction(Math.ceil(data.length / viewPosts)))
                 setPosts(data);
         });
@@ -103,6 +101,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounceValue, isAuth, viewPosts]);
 
+    //получаем все комментарии с сервера и забираем свои
     useEffect(() => {
         if(isAuth) { 
         api.getAllComments()
@@ -112,6 +111,7 @@ function App() {
         }
     }, [currentUser._id, anchorAddDelEditComment, isAuth])
 
+    //добавляем событие скрола
     useEffect(() => {
         const handleScroll = event => {
           setScrollTop(window.scrollY);
@@ -124,7 +124,9 @@ function App() {
         };
       }, []);
 
+    //функция установки и снятия лайка
     function handlePostLike(post, array, setArray) {
+        //check my likes on posts
         const isLiked = post.likes.some((el) => el === currentUser._id);
         isLiked
             ? api.deleteLikePost(post._id).then((newPost) => {
@@ -139,14 +141,17 @@ function App() {
                   );
                   setArray(newPosts);
               });
+        //anchor для синхронизации лайков главной страницы и страницы поста 
         setAnchorLike(!anchorLike)
     }
 
-
+    //меняем статус при получении токена
     useEffect(() => {
         if (token) setIsAuth(true)
     }, [token])
 
+
+    //удаление поста
     function handlePostDelete(post) {
         // const isAuthor = post.author._id === currentUser._id ? true : false;
         // isAuthor
@@ -166,13 +171,15 @@ function App() {
         // handleClose();
     }
 
-    const toUp = () => {
+    //скролл наверх
+    const toUp = useCallback(() => {
         window.scrollTo({
             top: 0,
             behavior: "smooth" 
         })
-    }
+    }, [])
 
+    //блокировка скролла при открытие модального окна
     modalActive || 
     modalUserActive || 
     modalInfoAboutUser || 
@@ -191,6 +198,7 @@ function App() {
                     setModalRefistr={setModalRegistr}
                     isAuth={isAuth}
                     setIsAuth={setIsAuth}
+                    setSelectedTab={setSelectedTab}
                 />
                 {isAuth 
                 ? 
@@ -208,8 +216,6 @@ function App() {
                                 postDelete={handlePostDelete}
                                 anchorEl={anchorEl}
                                 setAnchorEl={setAnchorEl}
-                                handleClick={handleClick}
-                                handleClose={handleClose}
                                 setSearchQuery={setSearchQuery}
                                 searchQuery={searchQuery}
                                 isLoading={isLoading}
@@ -260,8 +266,6 @@ function App() {
                                 postDelete={handlePostDelete}
                                 anchorEl={anchorEl}
                                 setAnchorEl={setAnchorEl}
-                                handleClick={handleClick}
-                                handleClose={handleClose}
                                 setSearchQuery={setSearchQuery}
                                 searchQuery={searchQuery}
                                 isLoading={isLoading}
@@ -287,8 +291,6 @@ function App() {
                                 postDelete={handlePostDelete}
                                 anchorEl={anchorEl}
                                 setAnchorEl={setAnchorEl}
-                                handleClick={handleClick}
-                                handleClose={handleClose}
                                 setSearchQuery={setSearchQuery}
                                 searchQuery={searchQuery}
                                 isLoading={isLoading}

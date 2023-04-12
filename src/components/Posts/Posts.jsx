@@ -7,8 +7,10 @@ import Sort from "../Sort/Sort";
 import Spinner from "../Spinner/Spinner";
 import Paginate from "../Paginate/Paginate"
 import s from "./posts.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UpperNotific from "../UpperNotific/UpperNotific";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 
 export default function Posts({
   posts,
@@ -37,6 +39,7 @@ export default function Posts({
   const page = useSelector(state => state.paginate.page)
   const dispatch = useDispatch()
   const location = useLocation()
+  const navigate = useNavigate()
   const urlOutPaginate = ['/my-posts', '/favorite']
 
   const amountPosts = (amount) => {
@@ -52,6 +55,7 @@ export default function Posts({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   let  list = [];
 
+  //сортировка постов
   if (selectedTab === "stock") {
     list = posts.sort((a,b) => new Date(a.created_at) - new Date(b.created_at))
   } else if (selectedTab === "new") {
@@ -61,6 +65,7 @@ export default function Posts({
   }
 
   const startPaginate = (viewPosts * page) - viewPosts
+  
   useEffect(() => {
     setPostsForPaginate(list.slice(startPaginate, startPaginate + viewPosts))
   }, [viewPosts, list, selectedTab, page, startPaginate])  
@@ -84,7 +89,9 @@ export default function Posts({
             setPopupEdit={setPopupEdit}
           />
           :
-          null
+          <div onClick={() => navigate(-1)}>
+            <ArrowBackIcon fontSize="large" className={s.icon} />
+          </div>
           }
           <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
 

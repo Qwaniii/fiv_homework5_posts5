@@ -55,7 +55,7 @@ export default function MyPostPage({
         />
         :
         <div className="container">
-          <div className='title'>Моих постов нет...<br/>Добавьте пост</div>
+          <div className='title'>Ваших постов нет...<br/>Добавьте пост</div>
         </div>
       }
     </div>

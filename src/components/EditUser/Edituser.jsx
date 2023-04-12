@@ -31,9 +31,6 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, 
       })
       .catch((err) => alert("Ошибка редактирования учетной записи",err));
   }
-  
-  console.log(userObj)
-  console.log(avatarUser)
 
   return (
     <div className={s.container}>

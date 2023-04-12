@@ -27,6 +27,7 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
   const dispatch = useDispatch();
   const modalPass = useSelector(state => state.modal.modalNotificationPass)
 
+  //автоматический вход после регистрации
   useEffect(() => {
     if(userLogin) {
       handleLogin(userLogin)
@@ -34,10 +35,17 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLogin])
 
+  //
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(notificPassAction(false))
-    }, 4000)
+    if (modalPass === true) {
+      const timer = setTimeout(() => {
+        //удаление сообщение об успешной смене пароля
+        dispatch(notificPassAction(false))
+      }, 4000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
   }, [dispatch, modalPass])
 
   function handleLogin(obj) {
@@ -53,7 +61,6 @@ export default function Login({ modalLogin, setModalLogin, setIsAuth, userLogin,
           setIsSuccess(false)
           setUserLogin(null)
         }, 2500)
-        console.log(location)
         if (location.pathname.includes('/login') && !location.state) {
              navigate("/fo_homework4_post4")
             } else navigate(location.state.pathname)
