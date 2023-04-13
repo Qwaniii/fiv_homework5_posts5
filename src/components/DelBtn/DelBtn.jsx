@@ -1,22 +1,17 @@
 import * as React from 'react';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
-const options = [
-  'Редактировать',
-  'Удалить',
-];
+// const options = [
+//   'Редактировать',
+//   'Удалить',
+// ];
 
-const ITEM_HEIGHT = 48;
+// const ITEM_HEIGHT = 48;
 
-export default function DelBtn({ postDelete, user, post, anchorEl , handleClick, handleClose }) {
+export default function DelBtn({ deletePost, user, post, anchorEl , handleClick, handleClose }) {
 
-  function deletePost() {
-    postDelete(post);
-  }
-  const open = Boolean(anchorEl);
+
+  // const open = Boolean(anchorEl);
   // const [anchorEl, setAnchorEl] = React.useState(null);
   // const open = Boolean(anchorEl);
   // const handleClick = (event) => {
@@ -28,7 +23,8 @@ export default function DelBtn({ postDelete, user, post, anchorEl , handleClick,
 
   return (
     <div>
-      <IconButton
+      <DeleteOutlinedIcon  fontSize="medium" onClick={deletePost}/>
+      {/* <IconButton
         aria-label="more"
         id="long-button"
         aria-controls={open ? 'long-menu' : undefined}
@@ -37,8 +33,8 @@ export default function DelBtn({ postDelete, user, post, anchorEl , handleClick,
         onClick={handleClick}
       >
         <MoreVertIcon />
-      </IconButton>
-      <Menu
+      </IconButton> */}
+      {/* <Menu
         id="long-menu"
         MenuListProps={{
           'aria-labelledby': 'long-button',
@@ -55,11 +51,11 @@ export default function DelBtn({ postDelete, user, post, anchorEl , handleClick,
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option} onClick={(option==="Удалить") ? deletePost : handleClose}>
+          <MenuItem key={option} onClick={deletePost}>
             {option}
           </MenuItem>
         ))}
-      </Menu>
+      </Menu> */}
     </div>
   );
 }

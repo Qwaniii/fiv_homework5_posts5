@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Post from "../Post/Post";
 import SearchAddPost from "../SearchAddPost/SearchAddPost";
 import Sort from "../Sort/Sort";
@@ -20,7 +20,9 @@ export default function Posts({
   setIsLoading,
   setSelectedTab,
   selectedTab,
-  setPopupEdit
+  setPopupEdit,
+  setConfirmDelete,
+  setModalDelete
 }) {
 
   
@@ -39,6 +41,7 @@ export default function Posts({
     <main>
       <div className={s.posts}>
         <div className={s.container}>
+          {anchorEl ?
           <SearchAddPost
             active={active}
             setActive={setActive}
@@ -46,8 +49,13 @@ export default function Posts({
             searchQuery={searchQuery}
             setPopupEdit={setPopupEdit}
           />
+          :
+          null
+          }
 
           <Sort selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
+
+          {/* <LoginPage/> */}
           
           <div className={s.inner}>
             {isLoading ? 
@@ -62,6 +70,8 @@ export default function Posts({
                     handleClose={handleClose}
                     handleClick={handleClick}
                     setIsLoading={setIsLoading}
+                    setConfirmDelete={setConfirmDelete}
+                    setModalDelete={setModalDelete}
                   />))
                 :
                 <Spinner/>}

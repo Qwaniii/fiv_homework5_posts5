@@ -1,0 +1,128 @@
+.container {
+  position: relative;
+  border: 8px solid rgba(0, 0, 0, .1);
+  box-shadow: 0 5px 10px 0px black;
+  border-radius: 10px;
+  background-color: rgba(211, 211, 211, 0.5);
+  box-sizing: border-box;
+  /* width: 600px; */
+}
+
+.container > h3 {
+  text-align: center;
+  color: rgb(62, 62, 62);
+  padding-top: 10px;
+}
+
+.formUser {
+  /* width: 100%; */
+  box-sizing: border-box;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.container::before {
+  content: "";
+  border-bottom: 0.3px solid lightgray;
+  height: 1px;
+  width: 80%;
+  position: absolute;
+  top: 45px;
+  transform: translateX(10%);
+}
+
+.wrapper {
+  padding: 20px;
+}
+
+.avaUser {
+  /* width: 40%; */
+  box-sizing: border-box;
+}
+
+.imgwrapper {
+  padding-left: 15px;
+  width: 200px;
+  height: 200px;
+  padding: 20px 12px;
+  border: 2px solid rgb(151, 151, 151);
+  border-radius: 5px;
+  align-self: center;
+  background-color: white;
+}
+
+.image {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 5px 5px 10px -1px black;
+  transition: all 0.3s ease;
+}
+
+.image:hover {
+  transform: rotate(-10deg) scale(1.07);
+  transition: all 0.3s ease;
+}
+
+.infoUser {
+  /* max-width: max-content; */
+  box-sizing: border-box;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.main {
+  /* width: 90%; */
+  /* padding-bottom: 5px; */
+  display: flex;
+  align-items: center;
+  /* gap: 15px; */
+}
+
+.name {
+  width: 120px;
+  font-weight: 600;
+}
+
+.value {
+  width: 200px;
+  padding: 8px 12px;
+  font-style: italic;
+  background-color: white;
+  border-radius: 3px;
+  position: relative;
+  word-wrap: normal;
+  text-align: center;
+}
+
+.value::after {
+  content: "";
+  border-bottom: 1px solid black;
+  width: 95%;
+  height: 1px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+.close {
+  padding: 8px;
+  position: absolute;
+  top: -10px;
+  right: 0px;
+  font-size: 30px;
+  cursor: pointer;
+  color: lightgray;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: black;
+  transition: color 0.3s;
+}

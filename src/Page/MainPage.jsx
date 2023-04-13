@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Posts from '../components/Posts/Posts'
-import Spinner from '../components/Spinner/Spinner'
 
 export default function MainPage({
     posts,
+    setPosts,
     onPostLike,
     active,
     setActive,
     postDelete,
     anchorEl,
+    setAnchorEl,
     handleClick,
     handleClose,
     setSearchQuery,
@@ -17,13 +18,24 @@ export default function MainPage({
     setIsLoading,
     selectedTab,
     setSelectedTab,
-    setPopupEdit
+    setPopupEdit,
+    setConfirmDelete,
+    setModalDelete
 }) {
+  
+  useEffect(() => {
+    setAnchorEl(true)
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
+  const handleLikeAllPosts = (post) => {
+    onPostLike(post, posts, setPosts)
+  }
   return (
     <div>
         <Posts
         posts={posts}
-        onPostLike={onPostLike}
+        onPostLike={handleLikeAllPosts}
         active={active}
         setActive={setActive}
         postDelete={postDelete}
@@ -37,6 +49,8 @@ export default function MainPage({
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
         setPopupEdit={setPopupEdit}
+        setConfirmDelete={setConfirmDelete}
+        setModalDelete={setModalDelete}
         />
     </div>
   )

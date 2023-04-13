@@ -7,3 +7,65 @@ body {
   font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
+a {
+  cursor: pointer;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 130px 0;
+  max-width: 1000px;
+}
+
+.btn {
+  padding: 3px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border: .3px solid rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  background-color: white;
+  transition: all .3s;
+}
+
+.btn:hover {
+  border: .5px solid black;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.scroll {
+  position: fixed;
+  right: 100px;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0.1);
+  color: rgb(186, 186, 186);
+  cursor: pointer;
+  transition: all .3s;
+  animation: fadeIn .5s ease-in;
+}
+
+.scroll:hover {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.scroll:active {
+  transform: scale(.9);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+  
+}
+
