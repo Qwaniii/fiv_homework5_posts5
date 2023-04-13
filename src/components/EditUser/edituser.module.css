@@ -32,8 +32,8 @@
 }
 
 .imgwrapper {
- max-width: 500px;
- max-height: 500px;
+ width: 500px;
+ height: 500px;
  align-self: center;
   
 }
@@ -135,8 +135,8 @@
 
 @media (max-width: 600px) {
   .imgwrapper {
-    width: auto;
-    height: auto;
+    width: 150px;
+    height: 150px;
   }
 
   .main label {
