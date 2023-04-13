@@ -3,12 +3,22 @@ import React from 'react'
 import s from "./sort.module.css"
 import cn from "classnames"
 import tabs from "./tabs"
+import { useDispatch } from 'react-redux';
+import { nextPageAction } from '../../storage/reducers/paginateReducers';
 
 export default function Sort({ selectedTab, setSelectedTab }) {
+
+  const dispatch = useDispatch()
+
+  const nextPage = (data) => {
+    dispatch(nextPageAction(data))
+  }
+
 
   function handleClickTab(e, tab) {
     e.preventDefault();
     setSelectedTab(tab.id)
+    nextPage(1)
   }
 
   return (

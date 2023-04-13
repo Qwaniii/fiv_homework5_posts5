@@ -69,17 +69,21 @@ export default function PostWindow({
           image: data.image,
           tags: data.tags,
         });
-        api
-          .getPostComments(id)
-          .then((data) => {
-            setPostComments(data);
-          })
-          .catch((err) => console.log(err));
+        setIsLoading(true);
+        
       })
       .catch((err) => setErrorState(true));
-    setIsLoading(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, anchorAddDelEditComment, anchorEditUser]);
+  }, [id, anchorEditUser]);
+
+  useEffect(() => {
+    api
+      .getPostComments(id)
+      .then((data) => {
+        setPostComments(data);
+      })
+      .catch((err) => console.log(err));
+  }, [anchorAddDelEditComment, id])
 
   function handleEditPost(id, data) {
     api
@@ -88,13 +92,14 @@ export default function PostWindow({
         setPostWindow(data);
         console.log(data);
         setSuccessMessage("Изменения сохранены")
+        setEditPost(false);
+        setAnchorAddDelEditComment(!anchorAddDelEditComment);
         setTimeout(() => {
           setSuccessMessage("")
         }, 3000)
       })
       .catch((err) => console.log(err));
-    setEditPost(false);
-    setAnchorAddDelEditComment(!anchorAddDelEditComment);
+
   }
 
   function handleLikeClick() {
@@ -135,9 +140,9 @@ export default function PostWindow({
           setAnchorLike(!anchorLike)
           setModalDelete(false)
           setConfirmDelete(() => () => null)
+          navigate("/fo_homework4_post4");
         })
         .catch((err) => console.log(err));
-      navigate("/fo_homework4_post4");
     }
 
   const deletePost = () => {
@@ -151,7 +156,6 @@ export default function PostWindow({
       setNotificMessage("")
     }, 4000)
   }
-
 
   const date = new Date(postWindow.created_at);
   const update = new Date(postWindow.updated_at);
@@ -175,10 +179,13 @@ export default function PostWindow({
                           src={postWindow?.author?.avatar}
                           className={s.avatar}
                           alt={postWindow?.author?.name}
+                          title="О пользователе"
                         ></img>
                       </Avatar>
                       <div>
-                        <p onClick={() => setModalPostUser(true)}  className={s.authorInfo}>{postWindow?.author?.name}</p>
+                        <p onClick={() => setModalPostUser(true)} 
+                            title="О пользователе"
+                            className={s.authorInfo}>{postWindow?.author?.name}</p>
                         <p>
                           {date.toLocaleDateString("ru-RU", {
                             month: "long",
@@ -198,12 +205,14 @@ export default function PostWindow({
                             <span
                               className={`${s.edit} ${s.save}`}
                               onClick={() => handleEditPost(id, readyEditPost)}
+                              title="Сохранить"
                             >
                               <SaveOutlinedIcon />
                             </span>
                             <span
                               className={s.delete}
                               onClick={() => setEditPost(false)}
+                              title="Отмена"
                             >
                               <DoDisturbAltOutlinedIcon />
                             </span>
@@ -213,12 +222,14 @@ export default function PostWindow({
                             <span
                               className={s.edit}
                               onClick={() => setEditPost(true)}
+                              title="Редактировать"
                             >
                               <CreateOutlinedIcon />
                             </span>
                             <span
                               className={s.delete}
                               onClick={deletePost}
+                              title="Удалить"
                             >
                               <DelBtn />
                             </span>

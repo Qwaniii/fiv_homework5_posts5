@@ -18,7 +18,7 @@
     position: relative;
 }
 
-.wrapperRegistr {
+.wrapperRegistr, .wrapperPass {
     background-color: rgb(204, 204, 204);
     width: 250px;
     padding: 40px;
@@ -42,6 +42,25 @@
     gap: 20px;
 }
 
+.wrapperPass > form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.wrapperPass form input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 35px;
+    padding: 5px 15px 0px 15px;
+    border-radius: 7px;
+    font-size: 14px;
+    color: black;
+    outline: none;
+    border: .3px solid rgba(128, 128, 128, 0.8);
+}
+
 .input {
     height: 28px;
     padding: 5px 15px 0px 15px;
@@ -52,7 +71,21 @@
     border: .3px solid rgba(128, 128, 128, 0.8);
 }
 
-.input:focus {
+.textarea {
+    width: 100%;
+    box-sizing: border-box;
+    height: 60px;
+    padding: 10px 15px 0px 15px;
+    border-radius: 7px;
+    font-size: 14px;
+    color: black;
+    outline: none;
+    border: .3px solid rgba(128, 128, 128, 0.8);
+    resize: none;
+}
+
+
+.input:focus, .textarea:focus {
     border: .7px solid black;
 }
 
@@ -62,12 +95,18 @@
     flex-direction: column; */
 }
 
+/* .itemPass {
+    position: relative;
+    align-self: center;
+
+} */
+
 .label {
     position: absolute;
     left: 15px;
     top: 10px;
     font-size: 14px;
-    transition: all .3s;
+    transition: all .2s;
 }
 
 .input:not(:placeholder-shown)~.label,
@@ -75,6 +114,11 @@
     top: 2px;
     font-size: 10px;
     color: rgba(128, 128, 128, 0.7);
+}
+
+.textarea:not(:placeholder-shown)~.label,
+.textarea:focus~.label {
+    opacity: 0;
 }
 
 .error {
@@ -187,4 +231,25 @@
     position: absolute;
     right: 5px;
     top: 5px;
+}
+
+.messagePass {
+    color: gray;
+    font-size: 14px;
+    text-align: justify;
+}
+
+
+@media (max-width: 450px) {
+    .wrapper, .wrapperRegistr, .wrapperPass {
+        padding: 25px 5px;
+        width: none;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 3px;
+        align-items: center;
+    }
+
 }

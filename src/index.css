@@ -3,8 +3,10 @@
   padding: 0;
 }
 
+html,
 body {
   font-family: "Roboto","Helvetica","Arial",sans-serif;
+  height: 100%;
 }
 
 a {
@@ -13,8 +15,9 @@ a {
 
 .container {
   margin: 0 auto;
-  padding: 130px 0;
+  padding: 130px 10px;
   max-width: 1000px;
+  min-height: calc(100vh - 370px);
 }
 
 .btn {
@@ -69,3 +72,13 @@ a {
   
 }
 
+@media (max-width: 750px) {
+  .container {
+    padding: 30px 15px;
+  }
+
+  .scroll {
+    right: 50px;
+    bottom: 30px;
+  }
+}

@@ -97,7 +97,7 @@
   background-color: white;
   border-radius: 3px;
   position: relative;
-  word-wrap: normal;
+  word-wrap: break-word;
   text-align: center;
 }
 
@@ -125,4 +125,41 @@
 .close:hover {
   color: black;
   transition: color 0.3s;
+}
+
+@media (max-width: 750px) {
+  .formUser {
+    flex-direction: column;
+  }
+
+  .avaUser {
+    align-self: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .main {
+    flex-direction: column;
+  } 
+  .name {
+    width: auto;
+  }
+
+  .value {
+    width: calc(100% - 20px);
+  }
+
+  .imgwrapper {
+    width: initial;
+    height: initial;
+
+  }
+
+  .container > h3 {
+    padding-top: 25px;
+  }
+
+  .container::before {
+    top: 75px;
+  }
 }

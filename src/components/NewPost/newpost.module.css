@@ -55,7 +55,6 @@
     padding: 5px 10px;
     width: 100%;
     height: 64px;
-    overflow:hidden;
     outline: none;
     transition: all .3s;
     resize:vertical;

@@ -32,6 +32,7 @@ export default function FavoritePage({
   }
   return (
     <div>
+      {posts.length > 0 ? 
       <Posts
         posts={posts}
         onPostLike={handleLikeAllPosts}
@@ -51,6 +52,11 @@ export default function FavoritePage({
         setConfirmDelete={setConfirmDelete}
         setModalDelete={setModalDelete}
         />
+        :
+        <div className="container">
+          <div className='title'>Любимых постов нет...<br/>Поставьте лайк, и пост появится тут</div>
+        </div>
+      }
     </div>
   )
 }

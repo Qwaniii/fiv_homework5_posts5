@@ -89,6 +89,12 @@ class Api {
     }).then(onResponce);
   }
 
+  getAllComments() {
+    return fetch(`${this._dataUrl}/posts/comments`, {
+      ...this._freshToken(),
+    }).then(onResponce);
+  }
+
   getPostComments(postId) {
     return fetch(`${this._dataUrl}/posts/comments/${postId}`, {
       ...this._freshToken(),
@@ -167,6 +173,26 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data)
+    }).then(onResponce)
+  }
+
+  forgotPassword(email) {
+    return fetch(`${this._dataUrl}/forgot-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json",
+      },
+      body: JSON.stringify(email)
+    }).then(onResponce)
+  }
+
+  resetPassword(newPassword, newToken) {
+    return fetch(`${this._dataUrl}/password-reset/${newToken}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newPassword)
     }).then(onResponce)
   }
 }

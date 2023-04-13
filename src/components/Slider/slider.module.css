@@ -1,5 +1,5 @@
 .wrapper {
-    width: max-content;
+    width: auto;
     position: relative;
 }
 
@@ -89,6 +89,21 @@
 
     to {
         opacity: 1;
+    }
+    
+}
+
+@media (max-width: 750px) {
+    .container {
+        max-width: none;
+    }
+}
+
+@media (max-width: 460px) {
+    .container {
+        max-width: none;
+        grid-template-rows:max-content;
+        height: max-content;
     }
     
 }

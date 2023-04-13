@@ -123,6 +123,12 @@ a {
     position: relative;
 }
 
+.about {
+    max-width: 250px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
 .wrapperUser {
     position: fixed;
     top:0;
@@ -141,7 +147,7 @@ a {
 }
 
 .aboutUser.scroll {
-    top: 35px;
+    top: 36px;
 }
 
 .link {
@@ -189,4 +195,12 @@ a {
         display: none;
     }
 
+    .aboutUser {
+        top: 33px;
+        right: 40px;
+    }
+
+    .aboutUser.scroll {
+        top: 33px;
+    }
 }

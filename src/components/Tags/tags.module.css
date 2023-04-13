@@ -1,4 +1,17 @@
 .tags {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap;    
+    max-width: 300px;
+}
+
+@media (max-width: 1050px) {
+    .tags {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 450px) {
+    .tags {
+        max-width: 180px;
+    }
 }

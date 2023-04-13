@@ -132,3 +132,14 @@
   color: black;
   transition: color .3s;
 }
+
+@media (max-width: 600px) {
+  .imgwrapper {
+    width: 150px;
+    height: 150px;
+  }
+
+  .main label {
+    width: auto;
+  }
+}

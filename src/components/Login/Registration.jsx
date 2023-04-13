@@ -28,6 +28,7 @@ export default function Registration({ modalRegistr, setModalRegistr, setUserLog
     api.signUp({...obj, group: "group-10"})
       .then((data) => {
         console.log(data)
+        //добавляем данные в объект для автоматического логина
         setUserLogin(prevState => ({...prevState, password: obj.password, email: data.email}))
         setModalRegistr(false)
         navigate("/fo_homework4_post4/login")

@@ -20,6 +20,7 @@
 .modal.active {
     opacity: 1;
     pointer-events: all;
+    animation: opacity .3s ease;
 }
 
 .content {
@@ -66,22 +67,22 @@
     }
 }
 
-/* @keyframes transform-close {
+@keyframes opacity {
     from {
-        width: inherit;
-        height: inherit;
-    }
-
-    80% {
-        width: 200px;
-        height: 200px;
+        opacity: 0;
     }
 
     to {
-        width: 0px;
-        height: 0px;
+        opacity: 1;
     }
-} */
+}
+
+@media (max-width: 600px) {
+    .content {
+        width: auto;
+        margin: 120px 20px;
+    }
+}
 
 
 /* 

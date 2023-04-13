@@ -33,6 +33,7 @@ export default function MyPostPage({
   }
   return (
     <div>
+      {posts.length > 0 ?
       <Posts
         posts={posts}
         onPostLike={handleLikeAllPosts}
@@ -52,6 +53,11 @@ export default function MyPostPage({
         setConfirmDelete={setConfirmDelete}
         setModalDelete={setModalDelete}
         />
+        :
+        <div className="container">
+          <div className='title'>Ваших постов нет...<br/>Добавьте пост</div>
+        </div>
+      }
     </div>
   )
 }

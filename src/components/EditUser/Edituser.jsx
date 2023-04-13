@@ -3,11 +3,12 @@ import { UserContext } from "../../Context/UserContext";
 import api from "../../utils/Api";
 import s from "./edituser.module.css";
 
-export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }) {
+export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, setVisibleUser }) {
   
   const { currentUser } = useContext(UserContext);
   const [avatarUser, setAvatarUser] = useState({avatar: currentUser.avatar});
   const [userObj, setUserObj] = useState({name: currentUser.name, about: currentUser.about})
+  const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
 
 
 
@@ -20,17 +21,16 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
         api
           .editUserAvatar(avatar)
           .then((resp) => {
-          console.log("avatar", resp)
-          setAnchorEditUser(!anchorEditUser)})
+            console.log("avatar", resp)
+            setAnchorEditUser(!anchorEditUser)
+            setVisibleUser(true)
+            setPopup(false)
+
+          })
           .catch((err) => alert("Ошибка, неправильный формат аватара", err));
       })
       .catch((err) => alert("Ошибка редактирования учетной записи",err));
-
-    setPopup(false)
   }
-  
-  console.log(userObj)
-  console.log(avatarUser)
 
   return (
     <div className={s.container}>
@@ -38,7 +38,7 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser }
       <form className={s.formUser} onSubmit={(e) => {
         handleEditUserInfo(e, userObj, avatarUser)}
         }>
-        <div className={s.imgwrapper}><img className={s.image} src={avatarUser.avatar} alt={userObj.name}></img></div>
+        <div className={s.imgwrapper}><img className={s.image} src={avatarUser.avatar || backgroundImage} alt={userObj.name}></img></div>
         <span className={s.main}>
           <label htmlFor="img">Аватар:</label>
           <input
