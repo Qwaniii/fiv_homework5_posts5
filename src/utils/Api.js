@@ -11,8 +11,8 @@ class Api {
 
     //Получение постов
 
-    getPostsList() {
-        return fetch(`${this._dataUrl}/posts`, {
+    getPostsList(page = 1) {
+        return fetch(`${this._dataUrl}/posts?page=${page}`, {
             headers: {
                 authorization: this._token,
             },
@@ -29,6 +29,34 @@ class Api {
 
     getAppInfo() {
         return Promise.all([this.getPostsList(), this.getUserInfo()]);
+    }
+
+    getPostById(postId) {
+        return fetch(`${this._dataUrl}/posts/${postId}`, {
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            }
+        }).then(onResponce);
+    }
+
+    setNewPost(data) {
+        return fetch(`${this._dataUrl}/posts`, {
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(onResponce);
+    }
+
+    getPostComments(postId) {
+        return fetch(`${this._dataUrl}/posts/comments/${postId}`, {
+            headers: {
+                authorization: this._token,
+                "Content-Type": "application/json"
+            }
+        }).then(onResponce)
     }
 
     getLikePost(postID) {
@@ -50,6 +78,16 @@ class Api {
             }
         }).then(onResponce);
     }
+
+    changeLikePostStatus(postId, like) {
+		return fetch(`${this._dataUrl}/posts/likes/${postId}`, {
+			method: like ? "DELETE" : "PUT",
+			headers: {
+				authorization: this._token,
+				"Content-Type": "application/json",
+			},
+		}).then(onResponce);
+	}
 
     deletePost(postID) {
         return fetch(`${this._dataUrl}/posts/${postID}`, {
