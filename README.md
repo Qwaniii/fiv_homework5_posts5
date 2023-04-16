@@ -6,26 +6,17 @@
 
 Для установки используйте [npm](https://www.npmjs.com/).
 
-```bash
+```bashCancel changes
 npm i
 ```
 
-## Gh-pages
+### Запуск
+
+```bash
+npm start
+```
+
+## Gh-pages (Demo)
 
 [Posts](https://qwaniii.github.io/fo_homework4_post4/)
 
-
-
-
-
-
-
-## at work
-
-```javascript
-at work
-```
-
-## at work
-
-at work
