@@ -16,12 +16,10 @@ export default function Footer() {
 
   return (
     <div className={s.footer}>
-      <Link to="/fo_homework4_post4" onClick={() => toUp()}>
-          <div className={s.logo}>
+          <Link to="/fo_homework4_post4" onClick={() => toUp()} className={s.logo}>
               <ImportContactsOutlinedIcon fontSize='large'/>
               <div>made by Oleg &copy; {date.getFullYear()}</div>
-          </div>
-      </Link>
+          </Link>
     </div>
   )
 }

@@ -58,7 +58,6 @@ export default function PostWindow({
   const isLike = postWindow?.likes?.some((id) => id === currentUser._id);
 
   useEffect(() => {
-    setIsLoading(false);
     api
       .getPostById(id)
       .then((data) => {
@@ -83,7 +82,7 @@ export default function PostWindow({
         setPostComments(data);
       })
       .catch((err) => console.log(err));
-  }, [anchorAddDelEditComment, id])
+  }, [anchorAddDelEditComment, id, currentUser])
 
   function handleEditPost(id, data) {
     api

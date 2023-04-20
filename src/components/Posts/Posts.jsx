@@ -40,6 +40,7 @@ export default function Posts({
   const dispatch = useDispatch()
   const location = useLocation()
   const navigate = useNavigate()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const urlOutPaginate = ['/my-posts', '/favorite']
 
   const amountPosts = (amount) => {
@@ -48,7 +49,6 @@ export default function Posts({
   }
 
   const amountPage = [12, 24, 30]
-
 
   const allPage = new Array(maxPage).fill(null).map((page, index) => page = index + 1)
 
@@ -67,14 +67,29 @@ export default function Posts({
   const startPaginate = (viewPosts * page) - viewPosts
   
   useEffect(() => {
-    setPostsForPaginate(list.slice(startPaginate, startPaginate + viewPosts))
-  }, [viewPosts, list, selectedTab, page, startPaginate])  
+    if (!urlOutPaginate.some(path => location.pathname.includes(path))) {
+      setPostsForPaginate(list.slice(startPaginate, startPaginate + viewPosts))
+    } else {
+      setPostsForPaginate(list)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewPosts, list, selectedTab, page, startPaginate, dispatch, location.pathname])  
 
   useEffect(() => {
     if(searchQuery) {
       setActiveSearch(true)
     }
   }, [searchQuery])
+
+  const word = (length, w) => {
+    if (length % 10 === 1) {
+      return w
+    } else if (length % 10 > 1 && posts.length % 10 < 5) {
+      return w + "а"
+    } else if (length % 10 >= 5 || !posts.length) {
+      return w + "ов"
+    }
+  }
 
   return (
     <main>
@@ -97,7 +112,7 @@ export default function Posts({
 
           {/* <LoginPage/> */}
           {searchQuery && <div className={s.notification}>
-            <UpperNotific message={`Найдено ${posts.length} постов`} visible={activeSearch} setVisible={setActiveSearch}/>
+            <UpperNotific message={`Найдено ${posts.length} ${word(posts.length, "пост")}`} visible={activeSearch} setVisible={setActiveSearch}/>
           </div>}
           
           <div className={s.inner}>

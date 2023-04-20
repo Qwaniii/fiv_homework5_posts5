@@ -44,11 +44,13 @@ export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModa
 
     const myPostsMenu = () => {
         navigate("/fo_homework4_post4/my-posts")
+        dispatch(nextPageAction(1))
         setAboutUser(false)
     }
 
     const favoriteMenu = () => {
         navigate("/fo_homework4_post4/favorite")
+        dispatch(nextPageAction(1))
         setAboutUser(false)
     }
 
