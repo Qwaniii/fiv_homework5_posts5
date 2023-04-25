@@ -21,10 +21,6 @@ export default function Newpost({
   });
   const [isError, setIsError]= useState("")
 
-  // function clearForm() {
-  //   setNewPostData = {}
-  // }
-
   function handleCreatePost(e, data) {
     e.preventDefault();
     for (let key in data) {

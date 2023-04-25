@@ -6,9 +6,7 @@ import Spinner from "../components/Spinner/Spinner";
 
 
 const MyCommentPage = ({
-  postFromCommets,
   myComments,
-  setMyComments,
   anchorAddDelEditComment,
   setAnchorAddDelEditComment,
   setModalDelete,

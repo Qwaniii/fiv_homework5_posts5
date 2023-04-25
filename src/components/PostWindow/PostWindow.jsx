@@ -108,12 +108,11 @@ export default function PostWindow({
         curPost._id === newPost._id ? newPost : curPost
       );
       setPosts(newPosts);
-      setAnchorLike(!anchorLike)
+      // setAnchorLike(!anchorLike)
     });
   }
 
   function handleAddComment(e, text) {
-    // e.preventDefault();
     api
       .addNewComment(id, text)
       .then((data) => {
@@ -367,7 +366,7 @@ export default function PostWindow({
                           postWindow.tags &&
                           postWindow?.tags?.map(
                             (tag, index) =>
-                              tag.length && <Tags tag={tag} key={index} />
+                              tag.length > 0 && <Tags tag={tag} key={index} />
                           )
                         )}
                       </div>
@@ -384,7 +383,6 @@ export default function PostWindow({
                         key={comment._id}
                         setAnchor={setAnchorAddDelEditComment}
                         anchor={anchorAddDelEditComment}
-                        modalAbout={modalAbout}
                         setModalAbout={setModalAbout}
                         setCommentInfo={setCommentInfo}
                         setModalDelete={setModalDelete}

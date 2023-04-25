@@ -10,8 +10,6 @@ export default function MyPostPage({
   postDelete,
   anchorEl,
   setAnchorEl,
-  handleClick,
-  handleClose,
   setSearchQuery,
   searchQuery,
   isLoading,
@@ -41,8 +39,6 @@ export default function MyPostPage({
         setActive={setActive}
         postDelete={postDelete}
         anchorEl={anchorEl}
-        handleClick={handleClick}
-        handleClose={handleClose}
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
         isLoading={isLoading}

@@ -10,8 +10,6 @@ export default function FavoritePage({
   postDelete,
   anchorEl,
   setAnchorEl,
-  handleClick,
-  handleClose,
   setSearchQuery,
   searchQuery,
   isLoading,
@@ -40,8 +38,6 @@ export default function FavoritePage({
         setActive={setActive}
         postDelete={postDelete}
         anchorEl={anchorEl}
-        handleClick={handleClick}
-        handleClose={handleClose}
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
         isLoading={isLoading}

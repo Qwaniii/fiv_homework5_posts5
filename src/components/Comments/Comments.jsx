@@ -6,7 +6,7 @@ import { UserContext } from '../../Context/UserContext';
 import api from '../../utils/Api';
 
 
-export default function Comments({ comment, anchor, setAnchor, modalAbout, setModalAbout, setCommentInfo, setModalDelete, setConfirmDelete }) {
+export default function Comments({ comment, anchor, setAnchor, setModalAbout, setCommentInfo, setModalDelete, setConfirmDelete }) {
 
     const { currentUser } = useContext(UserContext)
 

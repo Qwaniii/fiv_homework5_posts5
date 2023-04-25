@@ -42,7 +42,6 @@ function App() {
     const [isSuccess, setIsSuccess] = useState(false)
     const [userLogin, setUserLogin] = useState(null)
     const [confirmDelete, setConfirmDelete] = useState(() => () => null)
-    const [postFromCommets, setPostFromComments] = useState([])
     const [visibleUser, setVisibleUser] = useState(false)
     const [visiblePost, setVisiblePost] = useState(false)
     // стэйты - модальные окна
@@ -79,7 +78,7 @@ function App() {
             setFavorite(postsData.filter(post => (post.likes).some(like => like === currentUserData._id)))
             // setNumberComments(postsData.map((item) => item.comments.length))
             // фильтруем посты с моими комментариями
-            setPostFromComments(postsData.filter(post => (post.comments).some(comment => comment.author === currentUser._id)))
+            // setPostFromComments(postsData.filter(post => (post.comments).some(comment => comment.author === currentUser._id)))
             setIsLoading(true);
             dispatch(maxPageAction(Math.ceil(postsData.length / viewPosts)))
         });
@@ -142,7 +141,7 @@ function App() {
                   setArray(newPosts);
               });
         //anchor для синхронизации лайков главной страницы и страницы поста 
-        setAnchorLike(!anchorLike)
+        // setAnchorLike(!anchorLike)
     }
 
     //меняем статус при получении токена
@@ -153,11 +152,6 @@ function App() {
 
     //удаление поста
     function handlePostDelete(post) {
-        // const isAuthor = post.author._id === currentUser._id ? true : false;
-        // isAuthor
-        //     ? 
-        // setAnchDel(false)
-        // setConfirmDelete(true)
         api.deletePost(post._id).then((delitingPost) => {
                 const newPosts = posts.filter(
                     (curPost) => curPost._id !== delitingPost._id
@@ -167,8 +161,6 @@ function App() {
             })
         setModalDelete(false)
         setConfirmDelete(() => () => null)
-            // : alert("Вы не можете удалить чужой пост");
-        // handleClose();
     }
 
     //скролл наверх
@@ -194,8 +186,6 @@ function App() {
                     popupEdit={modalUserActive}
                     setPopupEdit={setModalUserActive}
                     scrollTop={scrollTop}
-                    setModalLogin={setModalLogin}
-                    setModalRefistr={setModalRegistr}
                     isAuth={isAuth}
                     setIsAuth={setIsAuth}
                     setSelectedTab={setSelectedTab}
@@ -308,9 +298,7 @@ function App() {
                         path="fo_homework4_post4/my-comments"
                         element={
                             <MyCommentPage
-                                postFromCommets={postFromCommets}
                                 myComments={myComments}
-                                setMyComments={setMyComments}
                                 anchorAddDelEditComment={anchorAddDelEditComment}
                                 setAnchorAddDelEditComment={setAnchorAddDelEditComment}
                                 setModalDelete={setModalDelete}

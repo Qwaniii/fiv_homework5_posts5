@@ -10,14 +10,6 @@ import cn from "classnames";
 import { useDispatch } from "react-redux";
 import { nextPageAction } from "../../storage/reducers/paginateReducers";
 
-// const bull = (
-//   <Box
-//     component="span"
-//     sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-//   >
-//     •
-//   </Box>
-// );
 
 export default function SearchAddPost({
   active,

@@ -52,9 +52,6 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, 
             }}
           ></input>
         </span>
-        {/* <input type="submit" value="Сохранить изменения"></input>
-      </form>
-      <form onSubmit={(e) => handleEditUserInfo(e, {name: nameUser, about: aboutUser}, {avatar: avatarUser})}> */}
         <span className={s.main}><label htmlFor="name">Имя:</label>
         <input
           type="text"
