@@ -19,26 +19,24 @@ import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 import SecondPopup from "../PopupSecond/SecondPopup";
 import AboutAnotherUser from "../AboutAnotherUser/AboutAnotherUser";
 import Notification from "../Notification/Notification";
+import { PostsContext } from "../../Context/PostsContext";
 
 export default function PostWindow({
   id,
-  posts,
-  setPosts,
-  anchorLike,
-  setAnchorLike,
+  onPostLike,
   isLoading,
   setIsLoading,
-  anchorAddDelEditComment,
-  setAnchorAddDelEditComment,
+  anchorComment,
+  setAnchorComment,
   modalAbout,
   setModalAbout,
-  anchorEditUser,
   modalPostUser,
   setModalPostUser,
   setModalDelete,
   setConfirmDelete
 }) {
   const { currentUser } = useContext(UserContext);
+  const { posts, setPosts, myPosts, setMyPosts, favorite, setFavorite } = useContext(PostsContext)
 
   const [postWindow, setPostWindow] = useState({});
   const [postComments, setPostComments] = useState([]);
@@ -73,7 +71,7 @@ export default function PostWindow({
       })
       .catch((err) => setErrorState(true));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, anchorEditUser]);
+  }, [id, currentUser]);
 
   useEffect(() => {
     api
@@ -82,7 +80,11 @@ export default function PostWindow({
         setPostComments(data);
       })
       .catch((err) => console.log(err));
-  }, [anchorAddDelEditComment, id, currentUser])
+  }, [id, currentUser])
+
+  const postArray = (arr, newPost) => {
+    return arr.map(post => post._id === newPost._id ? newPost : post)
+  }
 
   function handleEditPost(id, data) {
     api
@@ -92,7 +94,10 @@ export default function PostWindow({
         console.log(data);
         setSuccessMessage("Изменения сохранены")
         setEditPost(false);
-        setAnchorAddDelEditComment(!anchorAddDelEditComment);
+        setPostWindow(data)
+        setPosts(postArray(posts, data))
+        setMyPosts(postArray(myPosts, data))
+        setFavorite(postArray(favorite, data))
         setTimeout(() => {
           setSuccessMessage("")
         }, 3000)
@@ -108,16 +113,20 @@ export default function PostWindow({
         curPost._id === newPost._id ? newPost : curPost
       );
       setPosts(newPosts);
-      // setAnchorLike(!anchorLike)
+      onPostLike(postWindow)
     });
   }
 
-  function handleAddComment(e, text) {
+  function handleAddComment(text) {
     api
       .addNewComment(id, text)
       .then((data) => {
         console.log(data);
-        setAnchorAddDelEditComment(!anchorAddDelEditComment);
+        setPostComments(data.comments)
+        setPosts(postArray(posts, data))
+        setMyPosts(postArray(myPosts, data))
+        setFavorite(postArray(favorite, data))
+        setAnchorComment(!anchorComment);
         setTextComment({ text: "" });
         setSuccessMessage("Комментарий добавлен")
         setTimeout(() => {
@@ -130,17 +139,18 @@ export default function PostWindow({
   function handleDelPost(id) {
       api
         .deletePost(id)
-        .then((delitingPost) => {
-          const newPosts = posts.filter(
-            (curPost) => curPost._id !== delitingPost._id
-          );
-          setPosts(newPosts);
-          setAnchorLike(!anchorLike)
-          setModalDelete(false)
-          setConfirmDelete(() => () => null)
-          navigate("/fo_homework4_post4");
-        })
-        .catch((err) => console.log(err));
+          .then((delitingPost) => {
+            const newPosts = posts.filter(
+              (curPost) => curPost._id !== delitingPost._id
+            );
+            setPosts(newPosts);
+            setFavorite(favorite.filter(newFavorite => newFavorite._id !== delitingPost._id))
+            setMyPosts(myPosts.filter(myNewPost => myNewPost._id !== delitingPost._id))
+            setModalDelete(false)
+            setConfirmDelete(() => () => null)
+            navigate("/fo_homework4_post4");
+          })
+          .catch((err) => console.log(err));
     }
 
   const deletePost = () => {
@@ -381,8 +391,8 @@ export default function PostWindow({
                       <Comments
                         comment={comment}
                         key={comment._id}
-                        setAnchor={setAnchorAddDelEditComment}
-                        anchor={anchorAddDelEditComment}
+                        postComments={postComments}
+                        setPostComments={setPostComments}
                         setModalAbout={setModalAbout}
                         setCommentInfo={setCommentInfo}
                         setModalDelete={setModalDelete}
@@ -407,7 +417,6 @@ export default function PostWindow({
                 <div className={s.newComment}>
                   <form
                     className={s.form}
-                    onSubmit={(e) => handleAddComment(e, textComment)}
                   >
                     <textarea
                       type="text"
@@ -425,7 +434,7 @@ export default function PostWindow({
                       className={s.commentBtn}
                       onClick={
                         textComment.text.length > 0
-                          ? (e) => handleAddComment(e, textComment)
+                          ? () => handleAddComment(textComment)
                           : () => emptyText()
                       }
                     >

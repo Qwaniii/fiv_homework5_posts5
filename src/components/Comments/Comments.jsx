@@ -4,24 +4,32 @@ import s from "./comments.module.css"
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { UserContext } from '../../Context/UserContext';
 import api from '../../utils/Api';
+import { PostsContext } from '../../Context/PostsContext';
 
 
-export default function Comments({ comment, anchor, setAnchor, setModalAbout, setCommentInfo, setModalDelete, setConfirmDelete }) {
+export default function Comments({ comment, setPostComments, setModalAbout, setCommentInfo, setModalDelete, setConfirmDelete }) {
 
-    const { currentUser } = useContext(UserContext)
+    const { currentUser, setMyComments } = useContext(UserContext)
+    const { setPosts, setMyPosts, setFavorite } = useContext(PostsContext)
 
     const isAuthor = comment.author._id === currentUser._id ? true : false;
     const created = new Date(comment.created_at);
 
     function handleDeleteComment(postId, commentId) {
         api.deleteComment(postId, commentId)
-            .then((data) => console.log(data))
+            .then((data) => {
+                console.log(data)
+                setPostComments(data.comments)
+                setMyComments(prevState => prevState.filter(oldComment => oldComment._id !== commentId))
+                setPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+                setFavorite(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+                setMyPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+            })
             .catch((err) => {
                 console.log(err.status)
                 err.json()
                     .then(res => console.log(res.message))
             })
-            .finally(() => setAnchor(!anchor))
         setModalDelete(false)
         setConfirmDelete(() => () => null)
     }

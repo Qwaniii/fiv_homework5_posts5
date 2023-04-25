@@ -7,11 +7,10 @@ import Spinner from "../components/Spinner/Spinner";
 
 const MyCommentPage = ({
   myComments,
-  anchorAddDelEditComment,
-  setAnchorAddDelEditComment,
   setModalDelete,
   setConfirmDelete
 }) => {
+  
   const navigate = useNavigate()
   return (
     <div className="container">
@@ -31,8 +30,6 @@ const MyCommentPage = ({
                 <MyComment
                   comment={comment}
                   key={index + comment.post}
-                  anchor={anchorAddDelEditComment}
-                  setAnchor={setAnchorAddDelEditComment}
                   setModalDelete={setModalDelete}
                   setConfirmDelete={setConfirmDelete}
                 />

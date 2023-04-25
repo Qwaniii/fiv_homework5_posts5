@@ -40,7 +40,7 @@ export default function Posts({
   const location = useLocation();
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const urlOutPaginate = ["/my-posts", "/favorite"];
+  const urlOutPaginate = ["/my-posts", "/favorite", "/post-user"];
 
   const amountPosts = (amount) => {
     dispatch(viewPostsAction(amount));

@@ -3,9 +3,9 @@ import { UserContext } from "../../Context/UserContext";
 import api from "../../utils/Api";
 import s from "./edituser.module.css";
 
-export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, setVisibleUser }) {
+export default function Edituser({ setPopup, setVisibleUser }) {
   
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [avatarUser, setAvatarUser] = useState({avatar: currentUser.avatar});
   const [userObj, setUserObj] = useState({name: currentUser.name, about: currentUser.about})
   const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
@@ -22,7 +22,7 @@ export default function Edituser({ setPopup, anchorEditUser, setAnchorEditUser, 
           .editUserAvatar(avatar)
           .then((resp) => {
             console.log("avatar", resp)
-            setAnchorEditUser(!anchorEditUser)
+            setCurrentUser(resp)
             setVisibleUser(true)
             setPopup(false)
 

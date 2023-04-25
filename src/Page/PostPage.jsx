@@ -7,15 +7,12 @@ export default function PostPage({
     onPostLike,
     posts,
     setPosts,
-    anchorLike,
-    setAnchorLike,
     isLoading,
     setIsLoading,
-    anchorAddDelEditComment,
-    setAnchorAddDelEditComment,
+    anchorComment,
+    setAnchorComment,
     modalAbout,
     setModalAbout,
-    anchorEditUser,
     modalPostUser,
     setModalPostUser,
     setModalDelete,
@@ -30,13 +27,10 @@ export default function PostPage({
                 onPostLike={onPostLike}
                 posts={posts}
                 setPosts={setPosts}
-                anchorLike={anchorLike}
-                setAnchorLike={setAnchorLike}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
-                anchorAddDelEditComment={anchorAddDelEditComment}
-                setAnchorAddDelEditComment={setAnchorAddDelEditComment}
-                anchorEditUser={anchorEditUser}
+                anchorComment={anchorComment}
+                setAnchorComment={setAnchorComment}
                 modalAbout={modalAbout}
                 setModalAbout={setModalAbout}
                 modalPostUser={modalPostUser}

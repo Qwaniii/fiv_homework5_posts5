@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import api from "../../utils/Api"
 import s from "./mycomment.module.css"
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { UserContext } from "../../Context/UserContext";
+import { PostsContext } from "../../Context/PostsContext";
 
 
 
-const MyComment = ({ comment, setModalDelete, setConfirmDelete, anchor, setAnchor}) => {
+const MyComment = ({ comment, setModalDelete, setConfirmDelete }) => {
 
+    const { currentUser } = useContext(UserContext)
+
+    const { setMyComments } = useContext(UserContext)
+    const { setPosts, setMyPosts, setFavorite } = useContext(PostsContext)
     const [post, setPost] = useState({})
     const [deleteActive, setDeleteActive] = useState(false)
 
@@ -20,13 +26,18 @@ const MyComment = ({ comment, setModalDelete, setConfirmDelete, anchor, setAncho
 
     function handleDeleteComment(postId, commentId) {
         api.deleteComment(postId, commentId)
-            .then((data) => console.log(data))
+            .then((data) => {
+                console.log(data)
+                setMyComments(prevState => prevState.filter(comment => comment._id !== commentId))
+                setPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+                setFavorite(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+                setMyPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+            })
             .catch((err) => {
                 console.log(err.status)
                 err.json()
                     .then(res => console.log(res.message))
             })
-            .finally(() => setAnchor(!anchor))
         setModalDelete(false)
         setConfirmDelete(() => () => null)
     }
@@ -51,7 +62,7 @@ const MyComment = ({ comment, setModalDelete, setConfirmDelete, anchor, setAncho
             <div className={s.comment} onMouseMove={() => setDeleteActive(true)} onMouseLeave={() => setDeleteActive(false)}>
                 <div>Комментарий: </div>
                 <div className={s.text}>"{comment.text}"</div>
-                {deleteActive && <div className={s.delete} title="Удалить комментарий"><DeleteOutlinedIcon onClick={deleteComment/* (e) => handleDeleteComment(e, comment.post, comment._id) */}/></div>}
+                {deleteActive && currentUser._id === comment.author._id && <div className={s.delete} title="Удалить комментарий"><DeleteOutlinedIcon onClick={deleteComment/* (e) => handleDeleteComment(e, comment.post, comment._id) */}/></div>}
             </div>
         </div>
     )

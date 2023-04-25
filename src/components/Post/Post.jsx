@@ -25,12 +25,13 @@ export default function Post({
   setConfirmDelete,
   setModalDelete
 }) {
+
   const { currentUser } = useContext(UserContext);
 
   const isAuthor = post.author._id === currentUser._id ? true : false;
   const isLike = post.likes.some((id) => id === currentUser._id);
   const location = useLocation();
-  const pathArray = ['/my-posts', '/favorite']
+  const pathArray = ['/my-posts', '/favorite', '/post-user']
 
   function handleLikeClick() {
     onPostLike(post);
@@ -48,7 +49,7 @@ export default function Post({
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: grey[100] }} aria-label="recipe">
-            {post.author.avatar === currentUser.avatar ? (
+            {isAuthor ? (
               <img
                 src={currentUser.avatar}
                 className={s.avatar}
@@ -71,7 +72,7 @@ export default function Post({
           )
         }
         title={
-          post.author.name === currentUser.name
+          isAuthor
             ? currentUser.name
             : post.author.name
         }
