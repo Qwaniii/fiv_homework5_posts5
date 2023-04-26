@@ -28,17 +28,21 @@ import Footer from "./components/Footer/Footer";
 import ProtectedRoutePage from "./Page/ProtectedRoutePage";
 import { PostsContext } from "./Context/PostsContext";
 import PostsAnotherUser from "./Page/PostsAnotherUser";
+import UserCommentsPage from "./Page/UserCommentsPage";
+import { TagsSearchPage } from "./Page/TagsSearchPage";
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [myComments, setMyComments] = useState([]);
-  const [userComments, setUserComments] = useState([]);
   const [favorite, setFavorite] = useState([]);
   const [anotherUserPosts, setAnotherUserPosts] = useState([])
+  const [userComments, setUserComments] = useState([])
+  const [allComments, setAllComments] = useState([])
   const [currentUser, setCurrentUser] = useState({});
   const [searchActive, setSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [tagsSearch, setTagsSearch] = useState([])
   const [scrollTop, setScrollTop] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState("stock");
@@ -114,6 +118,7 @@ function App() {
         setMyComments(
           data.filter((post) => post.author._id === currentUser._id)
         );
+        setAllComments(data)
       });
     }
   }, [currentUser._id, anchorComment, isAuth]);
@@ -149,6 +154,10 @@ function App() {
             unLikePost._id === post._id ? newPost : unLikePost
           );
           setMyPosts(myNewPost);
+          const userPost = anotherUserPosts.map((unLikePost) =>
+            unLikePost._id === post._id ? newPost : unLikePost
+          );
+          setAnotherUserPosts(userPost)
         })
       : api.getLikePost(post._id).then((newPost) => {
           const newPosts = posts.map((curPost) =>
@@ -160,6 +169,11 @@ function App() {
             LikePost._id === post._id ? newPost : LikePost
           );
           setMyPosts(myNewPost);
+          const userPost = anotherUserPosts.map((LikePost) =>
+            LikePost._id === post._id ? newPost : LikePost
+          );
+          setAnotherUserPosts(userPost);
+
         });
   }
 
@@ -187,6 +201,10 @@ function App() {
         });
   }
 
+  const handleTagSearch = (tag) => {
+    setTagsSearch(posts.filter(post => post.tags.length > 0 && post.tags.some(tagArr => tagArr === tag)))
+  }
+
   //скролл наверх
   const toUp = useCallback(() => {
     window.scrollTo({
@@ -210,7 +228,7 @@ function App() {
       <PostsContext.Provider
         value={{ posts, setPosts, myPosts, setMyPosts, favorite, setFavorite, anotherUserPosts, setAnotherUserPosts }}
       >
-        <UserContext.Provider value={{ currentUser, setCurrentUser, myComments, setMyComments, userComments, setUserComments }}>
+        <UserContext.Provider value={{ currentUser, setCurrentUser, myComments, setMyComments, userComments, setUserComments, allComments }}>
           <Header
             popupEdit={modalUserActive}
             setPopupEdit={setModalUserActive}
@@ -242,6 +260,7 @@ function App() {
                     setPopupEdit={setModalActive}
                     setConfirmDelete={setConfirmDelete}
                     setModalDelete={setModalDelete}
+                    handleTagSearch={handleTagSearch}
                   />
                 }
               ></Route>
@@ -269,7 +288,6 @@ function App() {
                 path="fo_homework4_post4/post-user/:id"
                 element={
                     <PostsAnotherUser
-                        posts={anotherUserPosts}
                         onPostLike={handlePostLike}
                         active={searchActive}
                         setActive={setSearchActive}
@@ -286,6 +304,30 @@ function App() {
                         setConfirmDelete={setConfirmDelete}
                         setModalDelete={setModalDelete}
                     />
+                }
+                ></Route>
+                <Route
+                path="fo_homework4_post4/search-tag/:tag"
+                element={
+                  <TagsSearchPage
+                    posts={tagsSearch}
+                    onPostLike={handlePostLike}
+                    active={searchActive}
+                    setActive={setSearchActive}
+                    postDelete={handlePostDelete}
+                    anchorEl={anchorEl}
+                    setAnchorEl={setAnchorEl}
+                    setSearchQuery={setSearchQuery}
+                    searchQuery={searchQuery}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    setSelectedTab={setSelectedTab}
+                    selectedTab={selectedTab}
+                    setPopupEdit={setModalActive}
+                    setConfirmDelete={setConfirmDelete}
+                    setModalDelete={setModalDelete}
+                    handleTagSearch={handleTagSearch}
+                  />
                 }
                 ></Route>
               <Route
@@ -347,8 +389,7 @@ function App() {
               <Route
                 path="fo_homework4_post4/user-comments/:id"
                 element={
-                  <MyCommentPage
-                    myComments={userComments}
+                  <UserCommentsPage
                     setModalDelete={setModalDelete}
                     setConfirmDelete={setConfirmDelete}
                   />

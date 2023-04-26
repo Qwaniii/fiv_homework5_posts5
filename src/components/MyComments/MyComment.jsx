@@ -10,16 +10,23 @@ import { PostsContext } from "../../Context/PostsContext";
 
 const MyComment = ({ comment, setModalDelete, setConfirmDelete }) => {
 
-    const { currentUser } = useContext(UserContext)
-
-    const { setMyComments } = useContext(UserContext)
+    const { currentUser, setMyComments, setUserComments } = useContext(UserContext)
     const { setPosts, setMyPosts, setFavorite } = useContext(PostsContext)
     const [post, setPost] = useState({})
     const [deleteActive, setDeleteActive] = useState(false)
+    const backgroundImage = "https://ih1.redbubble.net/image.343726250.4611/flat,1000x1000,075,f.jpg"
+    const postNotFound = "Пост удален"
+
 
     useEffect(() => {
         api.getPostById(comment.post)
-            .then(data => setPost(data))
+            .then(data => {
+                console.log(data)
+                setPost(data)
+            })
+            .catch(err => err.json().then(res => {
+                console.log(res)
+            }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -29,6 +36,7 @@ const MyComment = ({ comment, setModalDelete, setConfirmDelete }) => {
             .then((data) => {
                 console.log(data)
                 setMyComments(prevState => prevState.filter(comment => comment._id !== commentId))
+                setUserComments(prevState => prevState.filter(comment => comment._id !== commentId))
                 setPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
                 setFavorite(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
                 setMyPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
@@ -52,10 +60,10 @@ const MyComment = ({ comment, setModalDelete, setConfirmDelete }) => {
             <Link to={`/fo_homework4_post4/post/${comment.post}`} style={{color: "inherit"}}>
                 <div className={s.post}>
                     <div className={s.imgWrapper}>
-                        <img src={post.image} alt={post.title} className={s.img}></img>
+                        <img src={post.image || backgroundImage} alt={post.title} className={s.img}></img>
                     </div>
                     <div className={s.title}>
-                        {post.title}
+                        {post.title || postNotFound}
                     </div>
                 </div>
             </Link>

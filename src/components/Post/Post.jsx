@@ -23,12 +23,13 @@ export default function Post({
   postDelete,
   setIsLoading,
   setConfirmDelete,
-  setModalDelete
+  setModalDelete,
+  handleTagSearch
 }) {
 
   const { currentUser } = useContext(UserContext);
 
-  const isAuthor = post.author._id === currentUser._id ? true : false;
+  const isAuthor = post?.author?._id === currentUser._id ? true : false;
   const isLike = post.likes.some((id) => id === currentUser._id);
   const location = useLocation();
   const pathArray = ['/my-posts', '/favorite', '/post-user']
@@ -130,20 +131,20 @@ export default function Post({
           )}
         </IconButton>
         <div className={s.bottomTags}>
-          <IconButton aria-label="share" className={s.icon}>
+          {post.tags.length > 0 && <IconButton  disableRipple className={s.icon}>
             {/* <ShareIcon /> */}
             {post.tags.length < 4 &&
               post.tags.map(
-                (tag, index) => tag.length < 10 && <Tags tag={tag} key={index} />
+                (tag, index) => tag.length < 10 && <Tags tag={tag} key={index} handleTagSearch={handleTagSearch}/> 
               )}
             {post.tags.length >= 4 &&
               post.tags
                 .map(
                   (tag, index) =>
-                    tag.length < 10 && <Tags tag={tag} key={index} />
+                    tag.length < 10 && <Tags tag={tag} key={index} handleTagSearch={handleTagSearch}/>
                 )
                 .slice(0, 3)}
-          </IconButton>
+          </IconButton>}
         </div>
       </CardActions>
     </Card>

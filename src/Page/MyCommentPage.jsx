@@ -2,7 +2,6 @@ import React from "react";
 import MyComment from "../components/MyComments/MyComment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../components/Spinner/Spinner";
 
 
 const MyCommentPage = ({
@@ -12,10 +11,9 @@ const MyCommentPage = ({
 }) => {
   
   const navigate = useNavigate()
+  
   return (
     <div className="container">
-      {myComments.length > 0 
-      ? 
       <div>
         {myComments.length > 0 ? (
           <>
@@ -42,12 +40,9 @@ const MyCommentPage = ({
               <ArrowBackIcon fontSize="large" className="icon" />
             </div>
             Тут пусто. <br />
-            Добавьте комментарии...
           </div>
         )}
       </div>
-      :
-      <Spinner/>}
     </div>
   );
 };

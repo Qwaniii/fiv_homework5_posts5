@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
-import Posts from '../components/Posts/Posts'
+import React, { useEffect } from "react"
+import { useParams } from "react-router-dom"
+import Posts from "../components/Posts/Posts"
 
-export default function MainPage({
+export const TagsSearchPage = ({
     posts,
     onPostLike,
     active,
@@ -19,16 +20,20 @@ export default function MainPage({
     setConfirmDelete,
     setModalDelete,
     handleTagSearch
-}) {
+}) => {
 
-  
-  useEffect(() => {
-    setAnchorEl(true)
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
 
-  return (
-    <div>
+    const tag = useParams()
+    useEffect(() => {
+        setAnchorEl(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    console.log(posts);
+
+
+    return (
+        <div>
+
         <Posts
           posts={posts}
           onPostLike={onPostLike}
@@ -47,6 +52,6 @@ export default function MainPage({
           setModalDelete={setModalDelete}
           handleTagSearch={handleTagSearch}
         />
-    </div>
-  )
+        </div>
+    )
 }

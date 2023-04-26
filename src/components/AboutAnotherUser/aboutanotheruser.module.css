@@ -127,6 +127,67 @@
   transition: color 0.3s;
 }
 
+.menuUser {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+}
+
+.postsUser, .commentUser {
+  cursor: pointer;
+  position: relative;
+  padding-right: 10px;
+  transition: all .3s ease;
+}
+
+.postsUser:hover, .commentUser:hover {
+  color: gray;
+}
+
+.postsUser:hover::after {
+  content: "Посты пользователя";
+  width: max-content;
+  position: absolute;
+  color: black;
+  bottom: -25px;
+  right: 50%;
+  transform:translateX(50%);
+  background-color: rgb(190, 190, 190);
+  padding: 5px 7px;
+  border-radius: 5px;
+  transition: all .3s ease;
+  animation: fadeIn .3s ease;
+  cursor: initial;
+}
+
+.commentUser:hover::after {
+  content: "Комментарии пользователя";
+  width: max-content;
+  position: absolute;
+  color: black;
+  bottom: -25px;
+  right: 50%;
+  transform:translateX(50%);
+  background-color: rgb(190, 190, 190);
+  padding: 5px 7px;
+  border-radius: 5px;
+  transition: all .3s ease;
+  animation: fadeIn .3s ease;
+  cursor: initial;
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 750px) {
   .formUser {
     flex-direction: column;

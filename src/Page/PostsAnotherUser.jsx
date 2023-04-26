@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Posts from '../components/Posts/Posts'
-import api from '../utils/Api'
-import { PostsContext } from '../Context/PostsContext'
 import Spinner from '../components/Spinner/Spinner'
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { PostsContext } from '../Context/PostsContext';
+
 
 export default function PostsAnotherUser({
-  posts,
   onPostLike,
   active,
   setActive,
@@ -25,29 +25,24 @@ export default function PostsAnotherUser({
 }) {
 
   const idUser = useParams()
-  const { setAnotherUserPosts } = useContext(PostsContext)
   const navigate = useNavigate()
+  const { posts, anotherUserPosts, setAnotherUserPosts } = useContext(PostsContext)
+
 
   useEffect(() => {
     setAnchorEl(false)
-    api.getPostsList()
-        .then(data => {
-            setAnotherUserPosts(
-                data.filter((post) => post.author._id === idUser.id)
-            )
-        })
-        .catch(err => console.log(err.status))
+    setAnotherUserPosts(posts.filter((post) => post.author._id === idUser.id))
 // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+}, [posts])
 
 
-  if(posts[0]?.author._id) {
+  if(anotherUserPosts[0]?.author._id) {
     return (
     <div>
-      {posts[0]?.author._id === idUser.id 
+      {anotherUserPosts[0]?.author._id === idUser.id 
       ?
       <Posts
-        posts={posts}
+        posts={anotherUserPosts}
         onPostLike={onPostLike}
         active={active}
         setActive={setActive}
@@ -70,11 +65,13 @@ export default function PostsAnotherUser({
 } else {
   return (
     <div className="container">
-      <div className='title'>У данного пользователя нет постов...<br/>
-        <span style={{color: "gray", cursor: "pointer"}} onClick={() => navigate(-1)}>Назад</span>
+      <div className="comments__title">
+      <div onClick={() => navigate(-1)}>
+        <ArrowBackIcon fontSize="large" className="icon" />
       </div>
-
+      Тут пусто. <br />
     </div>
+  </div>
   )
 }
 }

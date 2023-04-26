@@ -30,6 +30,7 @@ export default function Posts({
   setPopupEdit,
   setConfirmDelete,
   setModalDelete,
+  handleTagSearch
 }) {
   const [postsForPaginate, setPostsForPaginate] = useState([]);
   const [activeSearch, setActiveSearch] = useState(false);
@@ -40,7 +41,7 @@ export default function Posts({
   const location = useLocation();
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const urlOutPaginate = ["/my-posts", "/favorite", "/post-user"];
+  const urlOutPaginate = ["/my-posts", "/favorite", "/post-user", "search-tag"];
 
   const amountPosts = (amount) => {
     dispatch(viewPostsAction(amount));
@@ -147,6 +148,7 @@ export default function Posts({
                   setIsLoading={setIsLoading}
                   setConfirmDelete={setConfirmDelete}
                   setModalDelete={setModalDelete}
+                  handleTagSearch={handleTagSearch}
                 />
               ))
             ) : (

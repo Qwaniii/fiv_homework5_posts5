@@ -47,6 +47,7 @@ export default function PostWindow({
   const [commentInfo, setCommentInfo] = useState({});
   const [successMessage, setSuccessMessage] = useState("")
   const [notificMessage, setNotificMessage] = useState("")
+  const [visibleComments, setVisibleComments] = useState(false)
   const navigate = useNavigate();
 
   const backgroundImage =
@@ -387,7 +388,16 @@ export default function PostWindow({
               <div className={s.footerWrap}>
                 <div></div>
                 <div className={s.footer}>
-                  {postComments.map((comment, index) => (                
+                  {postComments.length > 3 && 
+                  <div className={s.moreComments}>
+                    <Button
+                        size="small"
+                        onClick={() => setVisibleComments(!visibleComments)}
+                      >
+                        {!visibleComments ? `показать старые` : `скрыть старые`}
+                      </Button>
+                  </div>}
+                  {!visibleComments ? postComments.length > 3 && postComments.slice(postComments.length - 3).map((comment, index) => (                
                       <Comments
                         comment={comment}
                         key={comment._id}
@@ -398,13 +408,35 @@ export default function PostWindow({
                         setModalDelete={setModalDelete}
                         setConfirmDelete={setConfirmDelete}
                       />
-                  ))}
-                  {/* <Comments comment={postComments[0]}/> */}
-                  {/* {postComments.map((comment) => {
-                                <Comments 
-                                    comment={comment} 
-                                    key={comment._id}/>
-                            }) } */}
+                      ))
+                      :
+                      postComments.length > 3 &&
+                      postComments.map((comment, index) => (                
+                        <Comments
+                          comment={comment}
+                          key={comment._id}
+                          postComments={postComments}
+                          setPostComments={setPostComments}
+                          setModalAbout={setModalAbout}
+                          setCommentInfo={setCommentInfo}
+                          setModalDelete={setModalDelete}
+                          setConfirmDelete={setConfirmDelete}
+                        />
+                    ))}
+                    {postComments.length <= 3 && 
+                      postComments.map((comment, index) => (                
+                        <Comments
+                          comment={comment}
+                          key={comment._id}
+                          postComments={postComments}
+                          setPostComments={setPostComments}
+                          setModalAbout={setModalAbout}
+                          setCommentInfo={setCommentInfo}
+                          setModalDelete={setModalDelete}
+                          setConfirmDelete={setConfirmDelete}
+                        />
+                      ))
+                    }
                 </div>
               </div>
                 <SecondPopup popup={modalAbout} setPopup={setModalAbout}>
