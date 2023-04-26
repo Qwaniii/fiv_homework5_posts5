@@ -36,7 +36,7 @@ export default function PostWindow({
   setConfirmDelete
 }) {
   const { currentUser } = useContext(UserContext);
-  const { posts, setPosts, myPosts, setMyPosts, favorite, setFavorite } = useContext(PostsContext)
+  const { posts, setPosts, myPosts, setMyPosts, favorite, setFavorite, tagsSearch, setTagsSearch } = useContext(PostsContext)
 
   const [postWindow, setPostWindow] = useState({});
   const [postComments, setPostComments] = useState([]);
@@ -99,6 +99,7 @@ export default function PostWindow({
         setPosts(postArray(posts, data))
         setMyPosts(postArray(myPosts, data))
         setFavorite(postArray(favorite, data))
+        setTagsSearch(postArray(tagsSearch, data))
         setTimeout(() => {
           setSuccessMessage("")
         }, 3000)
@@ -127,6 +128,7 @@ export default function PostWindow({
         setPosts(postArray(posts, data))
         setMyPosts(postArray(myPosts, data))
         setFavorite(postArray(favorite, data))
+        setTagsSearch(postArray(tagsSearch, data))
         setAnchorComment(!anchorComment);
         setTextComment({ text: "" });
         setSuccessMessage("Комментарий добавлен")

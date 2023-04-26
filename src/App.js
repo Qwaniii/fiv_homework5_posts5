@@ -158,6 +158,10 @@ function App() {
             unLikePost._id === post._id ? newPost : unLikePost
           );
           setAnotherUserPosts(userPost)
+          const tagPost = tagsSearch.map((unLikePost) =>
+          unLikePost._id === post._id ? newPost : unLikePost
+          );
+          setTagsSearch(tagPost)
         })
       : api.getLikePost(post._id).then((newPost) => {
           const newPosts = posts.map((curPost) =>
@@ -173,7 +177,10 @@ function App() {
             LikePost._id === post._id ? newPost : LikePost
           );
           setAnotherUserPosts(userPost);
-
+          const tagPost = tagsSearch.map((LikePost) =>
+            LikePost._id === post._id ? newPost : LikePost
+          );
+          setTagsSearch(tagPost)
         });
   }
 
@@ -196,11 +203,15 @@ function App() {
             setMyPosts(
                 myPosts.filter((myNewPost) => myNewPost._id !== delitingPost._id)
             );
+            setTagsSearch(
+                tagsSearch.filter((myNewPost) => myNewPost._id !== delitingPost._id)
+              )
             setModalDelete(false);
             setConfirmDelete(() => () => null);
         });
   }
 
+  //tag search
   const handleTagSearch = (tag) => {
     setTagsSearch(posts.filter(post => post.tags.length > 0 && post.tags.some(tagArr => tagArr === tag)))
   }
@@ -226,7 +237,7 @@ function App() {
   return (
     <div className="App">
       <PostsContext.Provider
-        value={{ posts, setPosts, myPosts, setMyPosts, favorite, setFavorite, anotherUserPosts, setAnotherUserPosts }}
+        value={{ posts, setPosts, myPosts, setMyPosts, favorite, setFavorite, anotherUserPosts, setAnotherUserPosts, tagsSearch, setTagsSearch }}
       >
         <UserContext.Provider value={{ currentUser, setCurrentUser, myComments, setMyComments, userComments, setUserComments, allComments }}>
           <Header

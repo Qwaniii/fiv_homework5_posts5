@@ -10,7 +10,7 @@ import { PostsContext } from '../../Context/PostsContext';
 export default function Comments({ comment, setPostComments, setModalAbout, setCommentInfo, setModalDelete, setConfirmDelete }) {
 
     const { currentUser, setMyComments } = useContext(UserContext)
-    const { setPosts, setMyPosts, setFavorite } = useContext(PostsContext)
+    const { setPosts, setMyPosts, setFavorite, setTagsSearch } = useContext(PostsContext)
 
     const isAuthor = comment.author._id === currentUser._id ? true : false;
     const created = new Date(comment.created_at);
@@ -24,6 +24,7 @@ export default function Comments({ comment, setPostComments, setModalAbout, setC
                 setPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
                 setFavorite(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
                 setMyPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+                setTagsSearch(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
             })
             .catch((err) => {
                 console.log(err.status)

@@ -11,7 +11,7 @@ import { PostsContext } from "../../Context/PostsContext";
 const MyComment = ({ comment, setModalDelete, setConfirmDelete }) => {
 
     const { currentUser, setMyComments, setUserComments } = useContext(UserContext)
-    const { setPosts, setMyPosts, setFavorite } = useContext(PostsContext)
+    const { setPosts, setMyPosts, setFavorite, setTagsSearch } = useContext(PostsContext)
     const [post, setPost] = useState({})
     const [deleteActive, setDeleteActive] = useState(false)
     const backgroundImage = "https://ih1.redbubble.net/image.343726250.4611/flat,1000x1000,075,f.jpg"
@@ -40,6 +40,7 @@ const MyComment = ({ comment, setModalDelete, setConfirmDelete }) => {
                 setPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
                 setFavorite(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
                 setMyPosts(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
+                setTagsSearch(prevState => prevState.map(oldPost => postId === oldPost._id ? data : oldPost))
             })
             .catch((err) => {
                 console.log(err.status)

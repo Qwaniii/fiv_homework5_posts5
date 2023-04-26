@@ -1,6 +1,8 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import Posts from "../components/Posts/Posts"
+import api from "../utils/Api"
+import { PostsContext } from "../Context/PostsContext"
 
 export const TagsSearchPage = ({
     posts,
@@ -22,36 +24,46 @@ export const TagsSearchPage = ({
     handleTagSearch
 }) => {
 
-
-    const tag = useParams()
+    const { setTagsSearch } = useContext(PostsContext)
+    const tagName = useParams()
     useEffect(() => {
-        setAnchorEl(true)
+        setAnchorEl(false)
+        handleTagSearch(tagName.tag)
+        if (posts.length === 0) {
+            api.getPostsList().then((data) => {
+                setTagsSearch(data.filter(post => post.tags.length > 0 && post.tags.some(tagArr => tagArr === tagName.tag)))
+            })
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    console.log(posts);
+    }, [tagName.tag])
 
 
     return (
         <div>
 
-        <Posts
-          posts={posts}
-          onPostLike={onPostLike}
-          active={active}
-          setActive={setActive}
-          postDelete={postDelete}
-          anchorEl={anchorEl}
-          setSearchQuery={setSearchQuery}
-          searchQuery={searchQuery}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          setSelectedTab={setSelectedTab}
-          selectedTab={selectedTab}
-          setPopupEdit={setPopupEdit}
-          setConfirmDelete={setConfirmDelete}
-          setModalDelete={setModalDelete}
-          handleTagSearch={handleTagSearch}
-        />
+            {posts.length > 0 ?
+                <Posts
+                    posts={posts}
+                    onPostLike={onPostLike}
+                    active={active}
+                    setActive={setActive}
+                    postDelete={postDelete}
+                    anchorEl={anchorEl}
+                    setSearchQuery={setSearchQuery}
+                    searchQuery={searchQuery}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    setSelectedTab={setSelectedTab}
+                    selectedTab={selectedTab}
+                    setPopupEdit={setPopupEdit}
+                    setConfirmDelete={setConfirmDelete}
+                    setModalDelete={setModalDelete}
+                    handleTagSearch={handleTagSearch}
+                />
+            :
+            <div className="container">
+          <div className='title'>Постов с таким тегом нет...<br/>Попробуйте другой</div>
+            </div>}
         </div>
     )
 }
