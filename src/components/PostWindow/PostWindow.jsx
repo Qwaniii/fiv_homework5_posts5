@@ -20,6 +20,8 @@ import SecondPopup from "../PopupSecond/SecondPopup";
 import AboutAnotherUser from "../AboutAnotherUser/AboutAnotherUser";
 import Notification from "../Notification/Notification";
 import { PostsContext } from "../../Context/PostsContext";
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import UsersLikes from "../UsersLikes/UsersLikes";
 
 export default function PostWindow({
   id,
@@ -33,7 +35,9 @@ export default function PostWindow({
   modalPostUser,
   setModalPostUser,
   setModalDelete,
-  setConfirmDelete
+  setConfirmDelete,
+  modalUsersLikes,
+  setModalUsersLikes
 }) {
   const { currentUser } = useContext(UserContext);
   const { posts, setPosts, myPosts, setMyPosts, favorite, setFavorite, tagsSearch, setTagsSearch } = useContext(PostsContext)
@@ -48,6 +52,8 @@ export default function PostWindow({
   const [successMessage, setSuccessMessage] = useState("")
   const [notificMessage, setNotificMessage] = useState("")
   const [visibleComments, setVisibleComments] = useState(false)
+  const [aboutUserLike, setAboutUserLike] = useState({})
+  const [modalLike, setModalLike] = useState(false)
   const navigate = useNavigate();
 
   const backgroundImage =
@@ -358,6 +364,8 @@ export default function PostWindow({
                             ""
                           )}
                         </IconButton>
+                        {postWindow?.likes?.length > 0 && 
+                        <div className={s.likesUser} onClick={() => setModalUsersLikes(true)}><SupervisorAccountIcon/></div>}
                       </div>
                       <div className={s.tag}>
                         {editPost ? (
@@ -479,6 +487,20 @@ export default function PostWindow({
                 </div>
               </div>
             </div>
+            <SecondPopup popup={modalUsersLikes} setPopup={setModalUsersLikes} >
+              <div className={s.userWrapper}>
+                <div className={s.titleLike}>Этот пост понравился:</div>
+                      {postWindow?.likes?.map((like, index) => (
+                          <UsersLikes key={like + index} like={like} setAboutUserLike={setAboutUserLike} setModalLike={setModalLike}/>
+                          ))}
+              <span className={s.closeLikes} onClick={() => setModalUsersLikes(false)}>&times;</span>
+              </div>
+            </SecondPopup>  
+            <SecondPopup popup={modalLike} setPopup={setModalLike}>
+                   <span><AboutAnotherUser
+                          commentInfo={aboutUserLike} setPopup={setModalLike} changeLink={setModalUsersLikes} link={aboutUserLike}
+                    /></span>
+            </SecondPopup>
             {successMessage && <div className={s.notification}><Notification title="Отлично" text={successMessage}/></div>}
             {notificMessage && <div className={s.notification}><Notification title="Ошибка" text={notificMessage} color={true}/></div>}
           </div>

@@ -4,19 +4,20 @@ import FilterNoneIcon from '@mui/icons-material/FilterNone';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';
 
-export default function AboutAnotherUser({ commentInfo, setPopup }) {
+export default function AboutAnotherUser({ commentInfo, setPopup, changeLink, link }) {
     const backgtoundAvatar = "http://cdn.onlinewebfonts.com/svg/img_506770.png"
     const navigate = useNavigate()
 
     const postsLink = () => {
         setPopup(false)
         navigate(`/fo_homework4_post4/post-user/${commentInfo.author._id}`)
+        if(link) changeLink(false)
     }
 
     const commentsLink = () => {
         setPopup(false)
         navigate(`/fo_homework4_post4/user-comments/${commentInfo.author._id}`)
-
+        if(link) changeLink(false)
     }
 
     return (

@@ -61,6 +61,7 @@ function App() {
   const [modalPostUser, setModalPostUser] = useState(false);
   const [modalResetPass, setModalResetPass] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
+  const [modalUsersLikes, setModalUsersLikes] = useState(false)
   //anchors
   const [anchorEl, setAnchorEl] = useState(true);
   const [anchorComment, setAnchorComment] = useState(false);
@@ -230,7 +231,8 @@ function App() {
   modalInfoAboutUser ||
   modalPostUser ||
   modalLogin ||
-  modalRegistr
+  modalRegistr ||
+  modalUsersLikes
     ? (document.body.style.overflow = "hidden")
     : (document.body.style.overflow = "scroll");
 
@@ -292,6 +294,8 @@ function App() {
                     setModalPostUser={setModalPostUser}
                     setModalDelete={setModalDelete}
                     setConfirmDelete={setConfirmDelete}
+                    modalUsersLikes={modalUsersLikes}
+                    setModalUsersLikes={setModalUsersLikes}
                   />
                 }
               ></Route>

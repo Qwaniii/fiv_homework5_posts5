@@ -218,8 +218,9 @@
 
 .like {
     /* position: absolute; */
-    bottom: 5px;
-    left: 20px;
+    position: relative;
+    /* bottom: 5px;
+    left: 20px; */
 }
 
 .numLike {
@@ -228,6 +229,65 @@
     right: 0px;
     font-size: 14px;
 }
+
+.likesUser {
+    position: absolute;
+    bottom: -5px;
+    left: -10px;
+    opacity: .2;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.likesUser:hover {
+    opacity: .5;
+}
+
+.likesUser:active {
+    color: rgba(255, 0, 0, 0.4);
+}
+
+.userWrapper {
+    max-height: 200px;
+    width: 300px;
+    overflow-y: scroll;    
+    padding: 20px;
+    position: relative;
+}
+
+.closeLikes {
+    padding: 8px;
+    position: absolute;
+    top: -10px;
+    right: 0px;
+    font-size: 30px;
+    cursor: pointer;
+    color: lightgray;
+    transition: color 0.3s;
+  }
+  
+  .closeLikes:hover {
+    color: black;
+    transition: color 0.3s;
+  }
+
+.titleLike {
+    text-align: center;
+    font-size: 16px;
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.titleLike::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.6);
+    width: 100%;
+
+}
+
 
 .favorite {
     color: red;
