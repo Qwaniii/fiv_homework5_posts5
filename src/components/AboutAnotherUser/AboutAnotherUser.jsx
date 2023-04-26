@@ -1,8 +1,24 @@
 import React from 'react'
 import s from "./aboutanotheruser.module.css"
+import FilterNoneIcon from '@mui/icons-material/FilterNone';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { useNavigate } from 'react-router-dom';
 
 export default function AboutAnotherUser({ commentInfo, setPopup }) {
     const backgtoundAvatar = "http://cdn.onlinewebfonts.com/svg/img_506770.png"
+    const navigate = useNavigate()
+
+    const postsLink = () => {
+        setPopup(false)
+        navigate(`/fo_homework4_post4/post-user/${commentInfo.author._id}`)
+    }
+
+    const commentsLink = () => {
+        setPopup(false)
+        navigate(`/fo_homework4_post4/user-comments/${commentInfo.author._id}`)
+
+    }
+
     return (
             <div className={s.container}>
                     <h3>Информация о пользователе</h3>
@@ -32,6 +48,14 @@ export default function AboutAnotherUser({ commentInfo, setPopup }) {
                     </div>
                 </div>
                 <span className={s.close} onClick={() => setPopup(false)}>&times;</span>
+                <div className={s.menuUser}>
+                    <span className={s.postsUser}>
+                        <FilterNoneIcon onClick={() => postsLink()}/>
+                    </span>
+                    <span className={s.commentUser}>
+                        <ChatBubbleOutlineIcon onClick={() => commentsLink()}/>
+                    </span>
+                </div>
             </div>
     )
 }

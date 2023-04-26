@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import api from "../../utils/Api";
 import Notification from "../Notification/Notification";
 import s from "./newpost.module.css";
+import { PostsContext } from "../../Context/PostsContext";
 
 export default function Newpost({
   setPopup,
-  setPosts,
-  anchorNewPost,
-  setAnchorNewPost,
   setSelectedTab,
   setVisiblePost
 }) {
+
+  const { setPosts, setMyPosts } = useContext(PostsContext)
   
-  const backgroundImage = "https://www.sundayairlines.kz/local/frontend/dist/img/no_pic.24654b31.jpg"
+  const backgroundImage = "https://ih1.redbubble.net/image.343726250.4611/flat,1000x1000,075,f.jpg"
   const [newPostData, setNewPostData] = useState({
     title: "",
     text: "",
@@ -21,36 +21,32 @@ export default function Newpost({
   });
   const [isError, setIsError]= useState("")
 
-  // function clearForm() {
-  //   setNewPostData = {}
-  // }
-
   function handleCreatePost(e, data) {
     e.preventDefault();
     for (let key in data) {
       if (!data[key]) delete data[key]
     }
     console.log(data);
-    api
-      .setNewPost(data)
-      .then((res) => {
-        console.log(res);
-        setAnchorNewPost(!anchorNewPost)
-        setPopup(false);
-        setSelectedTab("new")
-        setVisiblePost(true)
-      })
-      .catch((err) =>{
-        console.log(err.status)
-        err.json()
-          .then(data => {
-            console.log(data)
-            setIsError(data.message)
-            setTimeout(() => {
-              setIsError("")
-            }, 5000)
-          })
-      });
+    api.setNewPost(data)
+        .then((res) => {
+          console.log(res);
+          setPosts(prevState => [...prevState, res])
+          setMyPosts(prevState => [...prevState, res])
+          setPopup(false);
+          setSelectedTab("new")
+          setVisiblePost(true)
+        })
+        .catch((err) =>{
+          console.log(err.status)
+          err.json()
+            .then(data => {
+              console.log(data)
+              setIsError(data.message)
+              setTimeout(() => {
+                setIsError("")
+              }, 5000)
+            })
+        });
 
   }
   

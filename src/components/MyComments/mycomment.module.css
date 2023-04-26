@@ -43,8 +43,8 @@
     padding: 10px;
     border-radius: 10px;
     background-color: rgba(211, 211, 211, 0.7);
-    width: max-content;
-    min-width: 200px;
+    word-wrap: break-word;
+    max-width: 200px;
 }
 
 .delete {

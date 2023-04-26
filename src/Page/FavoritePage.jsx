@@ -3,15 +3,12 @@ import Posts from '../components/Posts/Posts'
 
 export default function FavoritePage({
   posts,
-  setPosts,
   onPostLike,
   active,
   setActive,
   postDelete,
   anchorEl,
   setAnchorEl,
-  handleClick,
-  handleClose,
   setSearchQuery,
   searchQuery,
   isLoading,
@@ -27,21 +24,16 @@ export default function FavoritePage({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleLikeAllPosts = (post) => {
-    onPostLike(post, posts, setPosts)
-  }
   return (
     <div>
       {posts.length > 0 ? 
       <Posts
         posts={posts}
-        onPostLike={handleLikeAllPosts}
+        onPostLike={onPostLike}
         active={active}
         setActive={setActive}
         postDelete={postDelete}
         anchorEl={anchorEl}
-        handleClick={handleClick}
-        handleClose={handleClose}
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
         isLoading={isLoading}

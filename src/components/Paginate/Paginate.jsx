@@ -11,7 +11,7 @@ export default function Paginate({ page }) {
         top: 0,
         behavior: "auto" 
     })
-}
+  }
 
   const dispatch = useDispatch()
 
@@ -19,6 +19,7 @@ export default function Paginate({ page }) {
     dispatch(nextPageAction(data))
     toUp()
   }
+  
   const currentPage = useSelector(state => state.paginate.page)
 
   return (

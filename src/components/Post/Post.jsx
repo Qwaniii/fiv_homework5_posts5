@@ -17,60 +17,40 @@ import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import ChatBubbleOutlinedIcon from "@mui/icons-material/ChatBubbleOutlined";
 
-// const ExpandMore = styled((props) => {
-//   const { expand, ...other } = props;
-//   return <IconButton {...other} />;
-// })(({ theme, expand }) => ({
-//   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-//   marginLeft: 'auto',
-//   transition: theme.transitions.create('transform', {
-//     duration: theme.transitions.duration.shortest,
-//   }),
-// }));
-
 export default function Post({
   post,
   onPostLike,
   postDelete,
   setIsLoading,
   setConfirmDelete,
-  setModalDelete
+  setModalDelete,
+  handleTagSearch
 }) {
+
   const { currentUser } = useContext(UserContext);
 
-  const isAuthor = post.author._id === currentUser._id ? true : false;
+  const isAuthor = post?.author?._id === currentUser._id ? true : false;
   const isLike = post.likes.some((id) => id === currentUser._id);
   const location = useLocation();
-  const pathArray = ['/my-posts', '/favorite']
+  const pathArray = ['/my-posts', '/favorite', '/post-user', 'search-tag']
 
   function handleLikeClick() {
     onPostLike(post);
   }
-
-  // function deletePost() {
-  //   postDelete(post);
-  // }
 
   const deletePost = () => {
     setModalDelete(true)
     setConfirmDelete(() => () => postDelete(post))
   }
 
-  //   const [expanded, setExpanded] = React.useState(false);
-
-  //   const handleExpandClick = () => {
-  //     setExpanded(!expanded);
-  //   };
-
   const created = new Date(post.created_at);
 
   return (
-    // <Card sx={{ width: 250 }}>
     <Card className={s.post}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: grey[100] }} aria-label="recipe">
-            {post.author.avatar === currentUser.avatar ? (
+            {isAuthor ? (
               <img
                 src={currentUser.avatar}
                 className={s.avatar}
@@ -87,20 +67,16 @@ export default function Post({
         }
         action={
           isAuthor && (
-            // <IconButton aria-label="settings">
             <div className={s.deleteBtn}>
-              {/* <DelBtn deletePost={deletePost} /> */}
               <DelBtn deletePost={deletePost} />
             </div>
           )
-          // </IconButton>
         }
         title={
-          post.author.name === currentUser.name
+          isAuthor
             ? currentUser.name
             : post.author.name
         }
-        // subheader={post.created_at.slice(0, 10).split("-").reverse().join(".")}
         subheader={created.toLocaleDateString("ru-RU", {
           month: "2-digit",
           day: "numeric",
@@ -155,20 +131,20 @@ export default function Post({
           )}
         </IconButton>
         <div className={s.bottomTags}>
-          <IconButton aria-label="share" className={s.icon}>
+          {post.tags.length > 0 && <IconButton  disableRipple className={s.icon} >
             {/* <ShareIcon /> */}
             {post.tags.length < 4 &&
               post.tags.map(
-                (tag, index) => tag.length < 10 && <Tags tag={tag} key={index} />
+                (tag, index) => tag.length < 10 && <Tags tag={tag} key={index} handleTagSearch={handleTagSearch}/> 
               )}
             {post.tags.length >= 4 &&
               post.tags
                 .map(
                   (tag, index) =>
-                    tag.length < 10 && <Tags tag={tag} key={index} />
+                    tag.length < 10 && <Tags tag={tag} key={index} handleTagSearch={handleTagSearch}/>
                 )
                 .slice(0, 3)}
-          </IconButton>
+          </IconButton>}
         </div>
       </CardActions>
     </Card>

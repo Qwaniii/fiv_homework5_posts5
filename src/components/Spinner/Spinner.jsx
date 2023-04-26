@@ -7,7 +7,6 @@ export default function Spinner() {
   return (
     <Box sx={{ display: 'flex' }} className={s.spinner}>
       <CircularProgress 
-        // color= 'success'
         className={s.color}/>
     </Box>
   )

@@ -8,7 +8,7 @@ import AboutUser from '../AboutUser/AboutUser';
 import { useDispatch } from 'react-redux';
 import { nextPageAction } from '../../storage/reducers/paginateReducers';
 
-export default function Header({ setPopupEdit, scrollTop, setModalLogin, setModalRegistr, isAuth, setIsAuth, setSelectedTab }) {
+export default function Header({ setPopupEdit, scrollTop, isAuth, setIsAuth, setSelectedTab }) {
     const scrollNum = 178
 
     //контект информации о пользователе
