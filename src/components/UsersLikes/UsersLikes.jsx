@@ -19,9 +19,9 @@ export default function UsersLikes({ like, setModalLike, setAboutUserLike }) {
 
 
   return (
-    <div className={s.wrapper}>
+    <div className={s.wrapper} onClick={() => aboutFunc()}>
       <div className={s.imgWrapper}><img src={likeUser.avatar} alt={likeUser.name}></img></div>
-      <div className={s.name} onClick={() => aboutFunc()}>{likeUser.name}</div>
+      <div className={s.name} >{likeUser.name}</div>
     </div>
   )
 }
