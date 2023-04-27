@@ -365,7 +365,7 @@ export default function PostWindow({
                           )}
                         </IconButton>
                         {postWindow?.likes?.length > 0 && 
-                        <div className={s.likesUser} onClick={() => setModalUsersLikes(true)}><SupervisorAccountIcon/></div>}
+                        <div className={s.likesUser} onClick={() => setModalUsersLikes(true)} title="Кому понравилось"><SupervisorAccountIcon/></div>}
                       </div>
                       <div className={s.tag}>
                         {editPost ? (
