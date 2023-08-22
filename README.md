@@ -2,6 +2,10 @@
 
 Данный проект создан с использованием [Create React App](https://github.com/facebook/create-react-app).
 
+## Gh-pages (Demo)
+
+[Posts](https://qwaniii.github.io/fo_homework4_post4/)
+
 ## Скриншоты
 ![Screenshots](/public/gif-screen.gif) 
 
@@ -28,8 +32,3 @@ npm i
 ```bash
 npm start
 ```
-
-## Gh-pages (Demo)
-
-[Posts](https://qwaniii.github.io/fo_homework4_post4/)
-
