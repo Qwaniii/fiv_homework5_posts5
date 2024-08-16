@@ -46,7 +46,7 @@ function App() {
   const [scrollTop, setScrollTop] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState("stock");
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [userLogin, setUserLogin] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(() => () => null);
